@@ -99,7 +99,7 @@ const SimpleCinematicCarousel = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center overflow-hidden animated-carousel-bg"
+      className="relative min-h-[75vh] md:min-h-[90vh] flex flex-col items-center overflow-hidden animated-carousel-bg"
       style={{ color: '#d3a345' }}
     >
       <style>{`
@@ -126,10 +126,10 @@ const SimpleCinematicCarousel = () => {
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* HEADER */}
         <header className="w-full px-6 pt-16 pb-6">
-          <h1 className="text-5xl md:text-5xl font-aboreto tracking-tight text-left ml-0 md:ml-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-aboreto tracking-tight text-center md:text-left ml-0 md:ml-8">
             <span style={{ color: '#d3a345' }}>{typed}</span>
             {startTyping && inView && (
-              <span className="inline-block ml-1 h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
+              <span className="inline-block ml-1 h-6 md:h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
             )}
           </h1>
         </header>
@@ -137,12 +137,12 @@ const SimpleCinematicCarousel = () => {
         {/* CAROUSEL FADE + SLIDE IN */}
         <main
           className={`
-            w-full max-w-6xl px-6 mb-16 -mt-8
+            w-full max-w-6xl px-6 mb-16 md:-mt-8
             transition-all duration-[1100ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]
             ${typingDone && inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
           `}
         >
-          <div className="relative w-full h-[62vh] md:h-[60vh] flex items-center justify-center">
+          <div className="relative w-full h-[45vh] sm:h-[50vh] md:h-[60vh] flex items-center justify-center">
             <div
               className="relative w-full h-full"
               style={{
@@ -167,16 +167,22 @@ const SimpleCinematicCarousel = () => {
                   const opacity = 0.35 + depth * 0.65;
                   const scale = 0.85 + depth * 0.18;
 
+                  // Mobile-specific dimensions
+                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                  const cardWidth = isMobile ? 140 : 210;
+                  const cardHeight = isMobile ? 190 : 280;
+                  const mobileRadius = isMobile ? 300 : radius;
+
                   return (
                     <div
                       key={index}
                       className="absolute rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.35)]"
                       style={{
-                        width: "210px",
-                        height: "280px",
-                        transform: `rotateY(${angle}deg) translateZ(${radius}px) scale(${scale})`,
-                        left: "-105px",
-                        top: "-170px",
+                        width: `${cardWidth}px`,
+                        height: `${cardHeight}px`,
+                        transform: `rotateY(${angle}deg) translateZ(${mobileRadius}px) scale(${scale})`,
+                        left: `-${cardWidth / 2}px`,
+                        top: `-${cardHeight / 2 + 30}px`,
                         opacity,
                         boxShadow: '0 18px 38px rgba(0,0,0,0.35), 0 0 0 1px rgba(211,163,69,0.2)'
                       }}
@@ -186,8 +192,8 @@ const SimpleCinematicCarousel = () => {
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-3 left-3" style={{ color: '#d3a345', textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
-                        <h3 className="font-arapey italic text-sm">{item.title}</h3>
+                      <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3" style={{ color: '#d3a345', textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+                        <h3 className="font-arapey italic text-xs md:text-sm">{item.title}</h3>
                       </div>
                     </div>
                   );
@@ -196,7 +202,7 @@ const SimpleCinematicCarousel = () => {
 
               {/* Glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                <div className="w-36 h-36 rounded-full blur-3xl"
+                <div className="w-24 h-24 md:w-36 md:h-36 rounded-full blur-3xl"
                   style={{ background: "radial-gradient(circle, rgba(211,163,69,0.12), transparent)" }}
                 />
               </div>
@@ -206,8 +212,8 @@ const SimpleCinematicCarousel = () => {
       </div>
 
       {/* BOTTOM RIGHT HEADER */}
-      <div className="absolute bottom-22 right-6 z-10">
-        <h2 className="text-5xl md:text-5xl font-aboreto tracking-tight text-right leading-tight" style={{ color: '#d3a345' }}>
+      <div className="absolute bottom-8 md:bottom-22 left-6 right-6 md:left-auto md:right-6 z-10">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-aboreto tracking-tight text-center md:text-right leading-tight" style={{ color: '#d3a345' }}>
           Where vision meets<br />cinematic precision
         </h2>
       </div>
