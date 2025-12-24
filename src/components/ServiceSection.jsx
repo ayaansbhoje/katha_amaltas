@@ -1,0 +1,220 @@
+import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+const CARD_HEIGHT = 320;
+const CARD_GAP = 24;
+
+const services = [
+  {
+    id: 1,
+    title: "Artist Films",
+    description:
+      " Intimate film portraits that document an artist's practice, process, and thinking. These films are built through listening, observation, and time — allowing the work to speak without performance or simplification.",
+    category: "01",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80",
+  },
+  {
+    id: 2,
+    title: "Cultural Documentaries",
+    description:
+      "Short-form and long-form documentaries focused on culture as it is lived — across people, spaces, traditions, and contemporary practice.",
+    category: "02",
+    image:
+      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80",
+  },
+  {
+    id: 3,
+    title: "Exhibition & Gallery Films",
+    description:
+      "Films created to accompany exhibitions — including walkthroughs, installation documentation, and contextual films that support how a body of work is experienced in space.",
+    category: "03",
+    image:
+      "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&q=80",
+  },
+  {
+    id: 4,
+    title: "Short-Form & Vertical Stories",
+    description:
+      "Digital-first films designed for smaller frames and shorter durations — adapting storytelling to contemporary platforms without losing emotional depth, authorship, or intent.",
+    category: "04",
+    image:
+      "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=600&q=80",
+  },
+  {
+    id: 5,
+    title: "Brand Narratives (Culture-Led)",
+    description:
+      "Meticulous color grading, editing, and visual effects that transform raw footage into cinematic art.",
+    category: "05",
+    image:
+      "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80",
+  },
+  {
+    id: 6,
+    title: "Treatment Notes & Narrative Development",
+    description:
+      "Narrative and visual treatments developed for commissioned films, including advertising work. These outline tone, structure, and cinematic approach — serving as a bridge between intention and execution.",
+    category: "06",
+    image:
+      "https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&q=80",
+  },
+];
+
+/* ---------------- SERVICE CARD (UNCHANGED) ---------------- */
+
+const ServiceCard = ({ service, index, activeIndex }) => {
+  const distance = index - activeIndex;
+  const isActive = Math.abs(distance) < 0.5;
+
+  return (
+    <motion.div
+      className="absolute left-0 right-0 px-6"
+      style={{
+        height: CARD_HEIGHT,
+        zIndex: 10 - Math.abs(distance),
+      }}
+      animate={{
+        y: distance * (CARD_HEIGHT + CARD_GAP),
+        scale: isActive ? 1 : 0.9,
+        opacity: isActive ? 1 : 0.5,
+        filter: `blur(${Math.abs(distance) * 4}px)`,
+      }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="w-full max-w-lg mx-auto h-full rounded-lg overflow-hidden backdrop-blur-sm" style={{ backgroundColor: '#D3A345', border: '2px solid #650B0F' }}>
+        <div className="flex h-full">
+          <div className="w-2/5 h-full">
+            <img src={service.image} className="w-full h-full object-cover" />
+          </div>
+          <div className="flex-1 p-5 flex flex-col justify-center">
+            <span className="text-xs tracking-widest mb-2" style={{ color: '#650B0F' }}>
+              {service.category}
+            </span>
+            <h3 className="text-xl mb-2 font-arapey italic" style={{ color: '#650B0F' }}>{service.title}</h3>
+            <p className="text-sm font-work-sans" style={{ color: '#f8e6d2' }}>{service.description}</p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+/* ---------------- SERVICE SECTION (FIXED) ---------------- */
+
+const ServiceSection = () => {
+  const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(
+    typeof window !== "undefined" ? window.innerHeight : 1000
+  );
+
+  /* MATCH PROJECTSECTION HEIGHT LOGIC */
+  useEffect(() => {
+    const calculateHeight = () => {
+      const viewportH = window.innerHeight;
+      const scrollLength = (services.length + 1) * viewportH * 0.8;
+      setContainerHeight(viewportH + scrollLength);
+    };
+
+    calculateHeight();
+    window.addEventListener("resize", calculateHeight);
+    return () => window.removeEventListener("resize", calculateHeight);
+  }, []);
+
+  /* SCROLL → PROGRESS */
+  useEffect(() => {
+    const onScroll = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const scrollStart = Math.max(0, -rect.top);
+      const scrollEnd = Math.max(1, containerHeight - viewportH);
+
+      const progress = Math.min(1, scrollStart / scrollEnd);
+      setScrollProgress(progress);
+
+      const index = Math.min(
+        services.length - 1,
+        progress * services.length
+      );
+      setActiveIndex(index);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [containerHeight]);
+
+  const showFixed = scrollProgress > 0 && scrollProgress < 1;
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative bg-black"
+      style={{ height: `${containerHeight}px` }}
+    >
+      {/* FIXED VIEWPORT */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{
+          opacity: showFixed ? 1 : 0,
+          y: showFixed ? 0 : 40,
+        }}
+        transition={{ duration: 0.6 }}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 60,
+          pointerEvents: showFixed ? "auto" : "none",
+        }}
+      >
+        {/* Blurred backdrop matching active service */}
+        <div className="absolute inset-0 overflow-hidden -z-10">
+          <img
+            src={services[activeIndex]?.image}
+            alt={services[activeIndex]?.title || 'Backdrop'}
+            className="w-full h-full object-cover scale-110"
+            style={{ filter: 'blur(25px)', opacity: 0.2 }}
+          />
+          <div className="absolute inset-0" style={{ backgroundColor: 'rgba(101, 11, 15, 0.1)' }} />
+        </div>
+        
+        <div className="h-full flex relative z-10">
+          {/* LEFT */}
+          <div className="w-1/2 h-full flex flex-col justify-center px-20">
+            <span className="text-blue-500 text-xs tracking-widest mb-6">
+              Services
+            </span>
+            <h2 className="text-6xl mb-6 font-aboreto" style={{ color: '#f8e6d2' }}>
+              What we <br />
+              <span className="italic">Do</span>
+            </h2>
+            <p className="text-gray-400 max-w-sm font-work-sans">
+              We work across film, documentation, and cultural storytelling — creating work that is research-led, visually grounded, and shaped from inside the worlds it documents.
+
+            </p>
+          </div>
+
+          {/* RIGHT */}
+          <div className="w-1/2 h-full flex items-center justify-center relative">
+            <div className="relative w-full" style={{ height: CARD_HEIGHT }}>
+              {services.map((service, index) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  index={index}
+                  activeIndex={activeIndex}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default ServiceSection;

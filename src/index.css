@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Aboreto';
+  src: url('/fonts/Aboreto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arapey';
+  src: url('/fonts/Arapey-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tailwind Theme Configuration for Fonts */
+@theme {
+  --font-aboreto: 'Aboreto', serif;
+  --font-arapey: 'Arapey', serif;
+  --font-work-sans: 'Work Sans', sans-serif;
+}
+
+/* Basic defaults so sections can span the full viewport */
+:root {
+  color: #e5e7eb;
+  background-color: #000;
+  font-family: 'Work Sans', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+}

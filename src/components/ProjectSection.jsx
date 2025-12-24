@@ -1,0 +1,427 @@
+import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+// Sample project images - replace with your actual image URLs
+const project1 = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop';
+const project2 = 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop';
+const project3 = 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop';
+const project4 = 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=1000&fit=crop';
+const project5 = 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&h=1000&fit=crop';
+const project6 = 'https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=800&h=1000&fit=crop';
+
+const projects = [
+  {
+    id: 1,
+    title: "Mountain Echoes",
+    year: "2024",
+    description: "A visual journey through the misty peaks of the Himalayas, capturing the golden hour silence and the raw majesty of untouched nature.",
+    image: project1,
+  },
+  {
+    id: 2,
+    title: "River's Whisper",
+    year: "2023",
+    description: "Aerial cinematography of the serpentine rivers cutting through ancient forests, where fog dances with the morning light.",
+    image: project2,
+  },
+  {
+    id: 3,
+    title: "Coastal Dreams",
+    year: "2023",
+    description: "The eternal dialogue between ocean and shore, captured in dramatic slow-motion as waves embrace volcanic rocks.",
+    image: project3,
+  },
+  {
+    id: 4,
+    title: "Lost Temples",
+    year: "2022",
+    description: "Documenting forgotten sanctuaries in the Southeast Asian jungles, where nature reclaims sacred architecture.",
+    image: project4,
+  },
+  {
+    id: 5,
+    title: "Desert Solitude",
+    year: "2022",
+    description: "The shifting sands of the Sahara at twilight, where shadows tell stories older than civilization itself.",
+    image: project5,
+  },
+  {
+    id: 6,
+    title: "Aurora Visions",
+    year: "2021",
+    description: "Chasing the northern lights across Arctic landscapes, capturing the celestial dance in its full glory.",
+    image: project6,
+  },
+];
+
+// Wind Chime Component
+const WindChime = () => {
+  const chimeImages = [project1, project2, project3];
+  const swayAnimations = [
+    { rotate: [0, 4, 0, -3, 0], duration: 3 },
+    { rotate: [0, -3, 0, 4, 0], duration: 3.5 },
+    { rotate: [0, 5, 0, -4, 0], duration: 4 }
+  ];
+  return (
+    <div className="relative flex items-start scale-110 md:scale-125">
+      <div className="relative">
+        <div
+          className="w-96 h-4 bg-gradient-to-r from-transparent to-transparent rounded-full"
+          style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(225,211,182,0.8) 50%, transparent 100%)' }}
+        />
+        <div className="flex justify-between px-8 mt-0">
+          {chimeImages.map((img, index) => (
+            <div key={index} className="flex flex-col items-center" style={{ transformOrigin: 'top center' }}>
+              <div
+                className="bg-gradient-to-b"
+                style={{
+                  width: '2px',
+                  height: `${160 + index * 60}px`,
+                  backgroundImage: 'linear-gradient(180deg, rgba(225,211,182,0.9), rgba(225,211,182,0.3))'
+                }}
+              />
+              <motion.div
+                initial={{ opacity: 0, rotate: 0 }}
+                animate={{ opacity: 1, rotate: swayAnimations[index].rotate }}
+                transition={{
+                  opacity: { delay: 0.5 + index * 0.2, duration: 0.8 },
+                  rotate: { delay: 1.3 + index * 0.3, duration: swayAnimations[index].duration, repeat: Infinity, ease: "easeInOut" }
+                }}
+                style={{ transformOrigin: 'top center' }}
+              >
+                <motion.div
+                  className="relative overflow-hidden rounded-sm shadow-2xl"
+                  style={{ width: `${120 + index * 20}px`, height: `${160 + index * 30}px` }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <img src={img} alt={`Chime image ${index + 1}`} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
+                </motion.div>
+                <div
+                  className="w-2 h-6 mt-1 rounded-full mx-auto"
+                  style={{ backgroundColor: 'rgba(225,211,182,0.5)' }}
+                />
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Flying Poster Component
+const FlyingPoster = ({ project, index, scrollProgress, isActive }) => {
+  const posterSpacing = 55; // vw
+  const totalWidth = projects.length * posterSpacing; // vw
+  const startPosition = 25; // vw
+
+  const xPosition = startPosition + (index * posterSpacing) - (scrollProgress * totalWidth);
+
+  const distanceFromCenter = Math.abs(xPosition);
+  const zPosition = isActive ? 100 : -80 - distanceFromCenter * 1.2;
+  const rotateY = xPosition * 0.06;
+  const rotateX = Math.sin(scrollProgress * Math.PI * 2 + index) * 2;
+  const skewY = xPosition * 0.012;
+
+  const scale = isActive ? 1 : 0.8;
+  const opacity = isActive ? 1 : Math.max(0.25, 1 - distanceFromCenter * 0.012);
+
+  return (
+    <motion.div
+      className="absolute top-1/2 left-1/2"
+      animate={{
+        x: `calc(-50% + ${xPosition}vw)`,
+        y: '-50%',
+        z: zPosition,
+        rotateY: rotateY,
+        rotateX: rotateX,
+        skewY: skewY,
+        scale: scale,
+        opacity: opacity,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 70,
+        damping: 22,
+        mass: 0.9,
+      }}
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      <div
+        className="relative overflow-hidden aspect-[16/9]"
+        style={{
+          width: 'clamp(400px, 80vw, 700px)',
+          clipPath: isActive
+            ? "polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%)"
+            : "polygon(18% 0%, 82% 0%, 96% 100%, 4% 100%)",
+          transition: 'clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: isActive
+            ? '0 30px 100px -25px rgba(0,0,0,0.9), 0 0 80px rgba(182, 155, 100, 0.15)'
+            : '0 20px 60px -15px rgba(0,0,0,0.7)',
+        }}
+      >
+        <motion.img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover"
+          animate={{
+            scale: 1 + Math.abs(rotateY) * 0.008,
+            filter: isActive ? 'brightness(1) saturate(1.1)' : 'brightness(0.55) saturate(0.7)',
+          }}
+          transition={{ duration: 0.4 }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/25 via-transparent to-zinc-900/25" />
+        {isActive && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-amber-600/10 via-transparent to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          />
+        )}
+        <motion.div className="absolute bottom-6 left-0 right-0 text-center" animate={{ opacity: isActive ? 1 : 0.4 }}>
+          <p className="text-amber-600/80 text-xs tracking-[0.25em] uppercase mb-2 font-sans">
+            {project.year}
+          </p>
+          <h4 className="text-lg md:text-xl font-arapey italic text-zinc-100">
+            {project.title}
+          </h4>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Cinematic Gallery Component (fixed viewport with fade/slide)
+const CinematicGallery = () => {
+  const containerRef = useRef(null);
+  const [activeProject, setActiveProject] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1000);
+
+  // Keep these in sync with FlyingPoster if you edit spacing
+  const posterSpacing = 55; // vw per poster
+  const totalWidthVW = projects.length * posterSpacing; // vw total horizontal extent
+
+  useEffect(() => {
+    const calculateHeights = () => {
+      const vwToPx = (vw) => (vw / 100) * window.innerWidth;
+      const horizontalPx = vwToPx(totalWidthVW);
+
+      const viewportH = window.innerHeight;
+      const viewportW = window.innerWidth;
+
+      // little buffer for nicer entry/exit
+      const buffer = Math.round(viewportH * 0.06);
+      const newContainerHeight = Math.max(viewportH, Math.ceil(viewportH + horizontalPx - viewportW + buffer));
+
+      setContainerHeight(newContainerHeight);
+    };
+
+    calculateHeights();
+    window.addEventListener('resize', calculateHeights);
+    return () => window.removeEventListener('resize', calculateHeights);
+  }, [totalWidthVW]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const containerH = containerHeight;
+
+      const scrollStart = Math.max(0, -rect.top);
+      const scrollEnd = Math.max(1, containerH - viewportHeight);
+
+      if (scrollStart <= 0) {
+        setScrollProgress(0);
+        setActiveProject(0);
+      } else if (scrollStart >= scrollEnd) {
+        setScrollProgress(1);
+        setActiveProject(projects.length - 1);
+      } else {
+        const progress = scrollStart / scrollEnd;
+        setScrollProgress(progress);
+        const projectIndex = Math.min(Math.floor(progress * projects.length), projects.length - 1);
+        setActiveProject(Math.max(0, projectIndex));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [containerHeight]);
+
+  // show the fixed viewport when scrollProgress is between 0 and 1
+  const showFixedViewport = scrollProgress > 0 && scrollProgress < 1;
+
+  return (
+    <div ref={containerRef} className="relative bg-zinc-900" style={{ height: `${containerHeight}px` }}>
+      {/* Fixed viewport — always rendered but animated in/out for smoothness */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: showFixedViewport ? 1 : 0, y: showFixedViewport ? 0 : 40 }}
+        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: 80,
+          pointerEvents: showFixedViewport ? 'auto' : 'none',
+          overflow: 'hidden'
+        }}
+      >
+        {/* 3D stage */}
+        <div className="absolute inset-0" style={{ perspective: '1400px', perspectiveOrigin: '50% 50%', transformStyle: 'preserve-3d' }}>
+          {/* Blurred backdrop matching active poster */}
+          <div className="absolute inset-0 overflow-hidden -z-10">
+            <img
+              src={projects[activeProject]?.image}
+              alt={projects[activeProject]?.title || 'Backdrop'}
+              className="w-full h-full object-cover scale-110"
+              style={{ filter: 'blur(25px)', opacity: 0.4 }}
+            />
+            <div className="absolute inset-0 bg-black/55" />
+          </div>
+          {/* Header */}
+          <motion.div
+            className="absolute top-8 md:top-24 left-6 md:left-14 z-30"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-aboreto font-light text-zinc-100" style={{ textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
+              Extended 
+            </h2>
+            <h3 className="text-xl md:text-4xl lg:text-5xl font-aboreto italic text-amber-600 mt-1">Narratives</h3>
+            <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase mb-2 font-sans">Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
+          </motion.div>
+
+          {/* Flying posters */}
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+            {projects.map((project, index) => (
+              <FlyingPoster
+                key={project.id}
+                project={project}
+                index={index}
+                scrollProgress={scrollProgress}
+                isActive={activeProject === index}
+              />
+            ))}
+          </div>
+
+          {/* Project info */}
+          <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-60 md:w-72 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+            <motion.div key={activeProject} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-right">
+              <p className="text-amber-600 text-xs tracking-[0.2em] uppercase mb-2 font-sans font-medium">{projects[activeProject]?.year}</p>
+              <h4 className="text-lg md:text-xl font-arapey italic text-zinc-100 mb-2">{projects[activeProject]?.title}</h4>
+              <p className="text-zinc-400 text-xs md:text-sm leading-relaxed font-work-sans">{projects[activeProject]?.description}</p>
+
+              <div className="flex justify-end gap-1.5 mt-6">
+                {projects.map((_, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="rounded-full h-0.5"
+                    animate={{
+                      width: idx === activeProject ? 20 : 6,
+                      backgroundColor: idx === activeProject ? 'rgb(217, 119, 6)' : 'rgb(63, 63, 70)',
+                    }}
+                    transition={{ duration: 0.25 }}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-4 text-zinc-400 text-xs font-sans">
+                <span className="text-amber-600 text-base font-serif">{String(activeProject + 1).padStart(2, '0')}</span>
+                <span className="mx-1.5 opacity-40">/</span>
+                <span className="opacity-60">{String(projects.length).padStart(2, '0')}</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// Main Hero Section Component
+const ProjectSection = () => {
+  return (
+    <>
+      <section
+        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: "url('assets/projects_background.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Light black vignette overlay */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%)'
+          }}
+        />
+        
+        {/* Repeating text pattern background */}
+        <div className="absolute inset-0 flex flex-col justify-start items-center pointer-events-none overflow-x-hidden pt-0">
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.1 * i }}
+              className="w-full whitespace-nowrap text-center py-1 md:py-2"
+            >
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wide text-stone-300/30 uppercase px-4">
+                THE SOUND OF A CHIME BEFORE ENTERING A SPACE
+              </h1>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Center Wind Chime */}
+        <div className="relative z-10 flex flex-col items-center justify-center mt-16 md:mt-20">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 1.5, delay: 1 }}
+          >
+            <WindChime />
+          </motion.div>
+          
+          {/* Portfolio Showcase text below chime */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.8 }}
+            className="-mt-2 text-center"
+          >
+            <p className="text-stone-300/90 text-sm md:text-base tracking-[0.4em] uppercase font-sans font-semibold">
+              PORTFOLIO<br />SHOWCASE
+            </p>
+          </motion.div>
+        </div>
+
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 2 }} className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
+          <span className="text-stone-300/60 text-xs tracking-widest uppercase mb-4 font-sans">Scroll to explore</span>
+          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-px h-16 bg-gradient-to-b from-stone-400 to-transparent" />
+        </motion.div>
+      </section>
+
+      {/* Cinematic Gallery Section — pulled up slightly to sit closer to WindChime */}
+      <div className="-mt-32">
+        <CinematicGallery />
+      </div>
+    </>
+  );
+};
+
+export default ProjectSection;
