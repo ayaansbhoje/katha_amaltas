@@ -318,7 +318,7 @@ const CinematicGallery = () => {
           </div>
           {/* Header */}
           <motion.div
-            className="absolute top-8 md:top-24 left-6 md:left-14 z-30"
+            className="absolute top-16 md:top-24 left-6 md:left-14 z-30"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
