@@ -160,7 +160,7 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
       <div
         className="relative overflow-hidden aspect-[16/9]"
         style={{
-          width: 'clamp(400px, 80vw, 700px)',
+          width: isMobile ? 'clamp(280px, 70vw, 500px)' : 'clamp(400px, 80vw, 700px)',
           clipPath: isActive
             ? "polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%)"
             : "polygon(18% 0%, 82% 0%, 96% 100%, 4% 100%)",
