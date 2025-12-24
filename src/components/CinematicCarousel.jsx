@@ -126,10 +126,10 @@ const SimpleCinematicCarousel = () => {
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* HEADER */}
         <header className="w-full px-6 pt-16 pb-6">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-aboreto tracking-tight text-center md:text-left ml-0 md:ml-8">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-aboreto tracking-tight text-center md:text-left ml-0 md:ml-8">
             <span style={{ color: '#d3a345' }}>{typed}</span>
             {startTyping && inView && (
-              <span className="inline-block ml-1 h-6 md:h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
+              <span className="inline-block ml-1 h-5 md:h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
             )}
           </h1>
         </header>
@@ -142,7 +142,7 @@ const SimpleCinematicCarousel = () => {
             ${typingDone && inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
           `}
         >
-          <div className="relative w-full h-[45vh] sm:h-[50vh] md:h-[60vh] flex items-center justify-center">
+          <div className="relative w-full h-[40vh] sm:h-[45vh] md:h-[60vh] flex items-center justify-center">
             <div
               className="relative w-full h-full"
               style={{
@@ -169,9 +169,9 @@ const SimpleCinematicCarousel = () => {
 
                   // Mobile-specific dimensions
                   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                  const cardWidth = isMobile ? 140 : 210;
-                  const cardHeight = isMobile ? 190 : 280;
-                  const mobileRadius = isMobile ? 300 : radius;
+                  const cardWidth = isMobile ? 120 : 210;
+                  const cardHeight = isMobile ? 160 : 280;
+                  const mobileRadius = isMobile ? 250 : radius;
 
                   return (
                     <div
@@ -213,7 +213,7 @@ const SimpleCinematicCarousel = () => {
 
       {/* BOTTOM RIGHT HEADER */}
       <div className="absolute bottom-8 md:bottom-22 left-6 right-6 md:left-auto md:right-6 z-10">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-aboreto tracking-tight text-center md:text-right leading-tight" style={{ color: '#d3a345' }}>
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-aboreto tracking-tight text-center md:text-right leading-tight" style={{ color: '#d3a345' }}>
           Where vision meets<br />cinematic precision
         </h2>
       </div>
