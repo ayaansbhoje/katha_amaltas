@@ -50,13 +50,22 @@ const FilmDeck = () => {
     },
   ];
 
-  // Dispersal positions for images
-  const dispersalPositions = [
+  // Dispersal positions for images - Desktop
+  const dispersalPositionsDesktop = [
     { x: -200, y: -180, rotate: -8, scale: 0.95 },
     { x: 220, y: -150, rotate: 12, scale: 0.98 },
     { x: -180, y: 120, rotate: -15, scale: 0.96 },
     { x: 240, y: 140, rotate: 10, scale: 0.97 },
     { x: 0, y: -220, rotate: 5, scale: 0.94 },
+  ];
+
+  // Dispersal positions for images - Mobile (smaller spread)
+  const dispersalPositionsMobile = [
+    { x: -120, y: -100, rotate: -8, scale: 0.9 },
+    { x: 130, y: -90, rotate: 12, scale: 0.92 },
+    { x: -110, y: 70, rotate: -15, scale: 0.91 },
+    { x: 140, y: 80, rotate: 10, scale: 0.93 },
+    { x: 0, y: -130, rotate: 5, scale: 0.89 },
   ];
 
   const handleDeckClick = (deckId) => {
@@ -79,7 +88,7 @@ const FilmDeck = () => {
 
   return (
     <div 
-      className="min-h-screen pt-4 pb-2 px-4 relative overflow-hidden"
+      className="min-h-screen pt-4 pb-2 px-2 sm:px-4 relative overflow-hidden"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -88,31 +97,29 @@ const FilmDeck = () => {
         backgroundAttachment: 'fixed'
       }}
     >
-
-
       {/* Content wrapper with relative positioning */}
       <div className="relative z-10">
         {/* Header */}
-        <div className="max-w-7xl mx-auto mb-4 text-center">
-          <div className="inline-flex items-center gap-3 mb-6 bg-white/90 px-6 py-2 rounded-full shadow-lg">
-            <Film className="w-5 h-5 text-gray-700" />
-            <span className="text-sm font-medium text-gray-700 uppercase tracking-wider">Portfolio</span>
+        <div className="max-w-7xl mx-auto mb-3 md:mb-4 text-center">
+          <div className="inline-flex items-center gap-2 md:gap-3 mb-4 md:mb-6 bg-white/90 px-4 py-1.5 md:px-6 md:py-2 rounded-full shadow-lg">
+            <Film className="w-4 h-4 md:w-5 md:h-5 text-gray-700" />
+            <span className="text-xs md:text-sm font-medium text-gray-700 uppercase tracking-wider">Portfolio</span>
           </div>
-          <h1 className="text-6xl md:text-7xl font-bold mb-4 text-white drop-shadow-2xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 text-white drop-shadow-2xl px-2">
             Treatment Notes
           </h1>
-          <p className="text-white text-lg max-w-2xl mx-auto italic drop-shadow-lg">
+          <p className="text-white text-sm md:text-lg max-w-2xl mx-auto italic drop-shadow-lg px-4">
             Narrative and visual treatments created for commissioned advertising brand and films
           </p>
         </div>
 
         {/* Decks Grid */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
           {decks.map((deck) => (
             <div
               key={deck.id}
               className="relative flex justify-center items-center"
-              style={{ minHeight: '600px' }}
+              style={{ minHeight: window.innerWidth < 768 ? '400px' : '600px' }}
             >
               {/* Main Deck/Folder */}
               <div
@@ -122,7 +129,7 @@ const FilmDeck = () => {
                 }`}
               >
                 {/* Folder Tab */}
-                <div className="absolute -top-3 left-8 w-32 h-10 rounded-t-lg shadow-lg z-0" style={{ backgroundColor: '#650B0F' }}>
+                <div className="absolute -top-2 md:-top-3 left-6 md:left-8 w-24 h-8 md:w-32 md:h-10 rounded-t-lg shadow-lg z-0" style={{ backgroundColor: '#650B0F' }}>
                   <div className="absolute inset-0 bg-black/10 rounded-t-lg"></div>
                   <div className="relative z-10 flex items-center justify-center h-full">
                     <span className="text-white text-xs font-semibold tracking-wide">{deck.category}</span>
@@ -131,7 +138,7 @@ const FilmDeck = () => {
 
                 {/* Main Folder Body */}
                 <div
-                  className="w-72 h-96 rounded-2xl shadow-2xl flex flex-col items-start justify-between p-8 relative overflow-hidden border border-black/10 transition-all duration-300"
+                  className="w-56 h-80 md:w-72 md:h-96 rounded-xl md:rounded-2xl shadow-2xl flex flex-col items-start justify-between p-6 md:p-8 relative overflow-hidden border border-black/10 transition-all duration-300"
                   style={{ backgroundColor: '#650B0F' }}
                 >
                   {/* Subtle texture overlay */}
@@ -144,25 +151,25 @@ const FilmDeck = () => {
                   {/* Content */}
                   <div className="relative z-10 w-full">
                     <div className="flex items-center gap-2 mb-2">
-                      <Folder className="w-5 h-5 text-white/70" />
+                      <Folder className="w-4 h-4 md:w-5 md:h-5 text-white/70" />
                       <span className="text-xs text-white/60 uppercase tracking-wider font-medium">
                         {deck.images.length} Files
                       </span>
                     </div>
-                    <h2 className="text-3xl font-bold text-white mb-2">{deck.title}</h2>
-                    <p className="text-white/70 text-sm">{deck.subtitle}</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{deck.title}</h2>
+                    <p className="text-white/70 text-xs md:text-sm">{deck.subtitle}</p>
                   </div>
 
                   {/* Bottom decoration */}
                   <div className="relative z-10 w-full">
                     <div className="flex items-center justify-between text-white/50 text-xs">
                       <span>Click to expand</span>
-                      <div className="w-8 h-1 bg-white/30 rounded-full"></div>
+                      <div className="w-6 h-0.5 md:w-8 md:h-1 bg-white/30 rounded-full"></div>
                     </div>
                   </div>
 
                   {/* Light reflection effect */}
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-3xl"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-3xl"></div>
                 </div>
               </div>
 
@@ -170,13 +177,14 @@ const FilmDeck = () => {
               {activeDeck === deck.id && (
                 <>
                   {deck.images.map((image, index) => {
-                    const pos = dispersalPositions[index];
+                    const isMobile = window.innerWidth < 768;
+                    const pos = isMobile ? dispersalPositionsMobile[index] : dispersalPositionsDesktop[index];
                     const isVisible = visibleImages.includes(image.id);
                     
                     return (
                       <div
                         key={image.id}
-                        className="absolute w-56 h-72 rounded-2xl shadow-2xl transform cursor-pointer hover:scale-110 hover:z-50 hover:shadow-3xl"
+                        className="absolute w-44 h-56 md:w-56 md:h-72 rounded-xl md:rounded-2xl shadow-2xl transform cursor-pointer hover:scale-110 hover:z-50 hover:shadow-3xl"
                         style={{
                           transform: isVisible 
                             ? `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rotate}deg) scale(${pos.scale})`
@@ -185,12 +193,12 @@ const FilmDeck = () => {
                           transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
                         }}
                       >
-                        <div className={`w-full h-full bg-gradient-to-br ${image.bg} rounded-2xl overflow-hidden relative group border-4 border-white shadow-xl`}>
+                        <div className={`w-full h-full bg-gradient-to-br ${image.bg} rounded-xl md:rounded-2xl overflow-hidden relative group border-2 md:border-4 border-white shadow-xl`}>
                           {/* Image placeholder with gradient */}
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center text-white p-6">
-                              <Film className="w-12 h-12 mx-auto mb-3 opacity-70" />
-                              <p className="font-semibold text-lg">{image.title}</p>
+                            <div className="text-center text-white p-4 md:p-6">
+                              <Film className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 opacity-70" />
+                              <p className="font-semibold text-base md:text-lg">{image.title}</p>
                             </div>
                           </div>
 
@@ -214,8 +222,8 @@ const FilmDeck = () => {
         </div>
 
         {/* Footer note */}
-        <div className="max-w-7xl mx-auto mt-2 text-center">
-          <p className="text-white text-sm drop-shadow-lg">
+        <div className="max-w-7xl mx-auto mt-2 text-center px-4">
+          <p className="text-white text-xs md:text-sm drop-shadow-lg">
             Click on any folder to explore the collection • Hover over images for details
           </p>
         </div>
