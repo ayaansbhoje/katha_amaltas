@@ -184,7 +184,7 @@ const FilmDeck = () => {
                     return (
                       <div
                         key={image.id}
-                        className="absolute w-44 h-56 md:w-56 md:h-72 rounded-xl md:rounded-2xl shadow-2xl transform cursor-pointer hover:scale-110 hover:z-50 hover:shadow-3xl"
+                        className="absolute w-36 h-48 md:w-56 md:h-72 rounded-xl md:rounded-2xl shadow-2xl transform cursor-pointer hover:scale-110 hover:z-50 hover:shadow-3xl"
                         style={{
                           transform: isVisible 
                             ? `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rotate}deg) scale(${pos.scale})`
