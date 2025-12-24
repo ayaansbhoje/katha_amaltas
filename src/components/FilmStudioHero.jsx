@@ -191,7 +191,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Progress Bar */}
-          <div className="absolute bottom-36 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4 w-96">
+          <div className="absolute bottom-26 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4 w-96">
             <span className="text-white font-semibold text-lg">1</span>
             <div className="flex-1 h-1 bg-gray-600 rounded-full overflow-hidden">
               <div 
