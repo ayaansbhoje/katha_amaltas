@@ -136,10 +136,10 @@ const ServiceSection = () => {
       const progress = Math.min(1, scrollStart / scrollEnd);
       setScrollProgress(progress);
 
-      const index = Math.min(
+      const index = Math.floor(Math.min(
         services.length - 1,
-        progress * services.length
-      );
+        Math.max(0, progress * services.length)
+      ));
       setActiveIndex(index);
     };
 
@@ -173,11 +173,15 @@ const ServiceSection = () => {
       >
         {/* Blurred backdrop matching active service */}
         <div className="absolute inset-0 overflow-hidden -z-10">
-          <img
+          <motion.img
+            key={activeIndex}
             src={services[activeIndex]?.image}
             alt={services[activeIndex]?.title || 'Backdrop'}
             className="w-full h-full object-cover scale-110"
             style={{ filter: 'blur(25px)', opacity: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 0.3 }}
           />
           <div className="absolute inset-0" style={{ backgroundColor: 'rgba(101, 11, 15, 0.1)' }} />
         </div>

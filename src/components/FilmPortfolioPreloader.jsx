@@ -25,24 +25,24 @@ export default function FilmPortfolioPreloader({ onComplete }) {
     <div className="relative w-full h-screen overflow-hidden bg-black">
       {/* Top Half with Video */}
       <div
-        style={{ backgroundColor: '#91222c' }}
+        style={{ backgroundColor: '#770e11' }}
         className={`absolute top-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-end justify-center pb-2 ${
           splitScreen ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
         <video 
-          src="/assets/AMALTAS_LOGO_ANIMATION_YELLOW - Trim.mp4" 
+          src="assets/AMALTAS_LOGO_ANIMATION - Trim.mp4" 
           autoPlay
           muted
           playsInline
           onEnded={handleVideoEnd}
-          className="h-24 md:h-32 w-auto object-contain"
+          className="h-36 md:h-46 w-auto object-contain"
         />
       </div>
       
       {/* Bottom Half with Line */}
       <div
-        style={{ backgroundColor: '#91222c' }}
+        style={{ backgroundColor: '#770e11' }}
         className={`absolute bottom-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-start justify-center pt-2 ${
           splitScreen ? 'translate-y-full' : 'translate-y-0'
         }`}

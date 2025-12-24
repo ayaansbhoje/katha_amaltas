@@ -348,7 +348,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
   // Founder image element
   const imageBlock = (
     <div className="relative group">
-      <div className="w-56 h-72 md:w-64 md:h-80 overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
+      <div className="w-48 h-60 md:w-64 md:h-80 overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
         <img
           src={imageUrl}
           alt={name}
@@ -356,8 +356,8 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
         />
       </div>
       <div className="text-center mt-4">
-        <h3 className="text-3xl md:text-4xl text-[#704d3b] font-arapey italic">{name}</h3>
-        <p className="text-xl text-[#704d3b] font-work-sans">{role}</p>
+        <h3 className="text-2xl md:text-4xl text-[#704d3b] font-arapey italic">{name}</h3>
+        <p className="text-lg md:text-xl text-[#704d3b] font-work-sans">{role}</p>
       </div>
     </div>
   );
@@ -365,7 +365,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
   // Envelope / letter element
   const envelopeBlock = (
     <div 
-      className="relative w-72 md:w-80 h-56 cursor-pointer group"
+      className="relative w-64 md:w-80 h-48 md:h-56 cursor-pointer group"
       onClick={() => setIsOpen(!isOpen)}
       style={{ perspective: '1200px' }}
     >
@@ -409,7 +409,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
           className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
           style={{ top: '55%' }}
         >
-          <div className="relative w-16 h-16 transition-transform duration-300 group-hover:rotate-6 drop-shadow-md">
+          <div className="relative w-12 h-12 md:w-16 md:h-16 transition-transform duration-300 group-hover:rotate-6 drop-shadow-md">
             <img
               src="/assets/waxed_stamp.png"
               alt="Wax seal"
@@ -420,7 +420,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
 
         {/* Envelope flap with better shading */}
         <div
-          className="absolute top-0 left-0 right-0 h-28 origin-top transition-all duration-700 ease-out"
+          className="absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-700 ease-out"
           style={{ 
             transformStyle: "preserve-3d",
             background: "linear-gradient(180deg, #e8dcc8 0%, #f0e8dc 50%, #faf6f0 100%)",
@@ -462,9 +462,9 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
 
         {/* Click instruction */}
         {!isOpen && (
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center">
+          <div className="absolute bottom-2 md:bottom-3 left-0 right-0 flex justify-center">
             <p
-              className="text-xs font-serif italic tracking-wide"
+              className="text-[10px] md:text-xs font-serif italic tracking-wide"
               style={{ color: "#704d3b", opacity: 0.75 }}
             >
               tap to open
@@ -507,9 +507,9 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
             transitionDelay: showContent ? '200ms' : '0ms'
           }}
         >
-          <p className="text-sm text-[#704d3b] leading-relaxed mb-3">{bio}</p>
+          <p className="text-xs md:text-sm text-[#704d3b] leading-relaxed mb-3">{bio}</p>
           <div className="border-l-2 border-amber-700/30 pl-3 py-1 bg-amber-700/5 rounded-r">
-            <p className="text-base text-[#704d3b] italic font-serif">"{quote}"</p>
+            <p className="text-sm md:text-base text-[#704d3b] italic font-serif">"{quote}"</p>
           </div>
         </div>
       </div>
@@ -518,7 +518,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
 
   return (
     <div className="flex flex-col items-center opacity-0 translate-y-12 animate-fadeInUp">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
         {isEnvelopeFirst && envelopeBlock}
         {imageBlock}
         {!isEnvelopeFirst && envelopeBlock}
@@ -615,7 +615,7 @@ const AboutUs = () => {
           </div>
 
           <p
-            className="text-lg md:text-xl text-[#704d3b] mt-6 italic"
+            className="text-base md:text-xl text-[#704d3b] mt-4 md:mt-6 italic"
             style={{
               opacity: hasAnimated ? 1 : 0,
               transition: 'opacity 0.5s 3.5s'
@@ -626,7 +626,7 @@ const AboutUs = () => {
         </div>
 
         {/* Founders section */}
-        <div className="space-y-24 md:space-y-0 md:flex md:items-center md:justify-center md:gap-10 lg:gap-14">
+        <div className="space-y-16 md:space-y-0 md:flex md:items-center md:justify-center md:gap-10 lg:gap-14">
           <FounderLetter
             key={founders[0].name}
             {...founders[0]}
@@ -640,11 +640,11 @@ const AboutUs = () => {
         </div>
 
         {/* Footer decoration */}
-        <div className="mt-20 md:mt-32 text-center">
-          <div className="inline-flex items-center gap-4">
-            <div className="w-12 h-px bg-blue-900/30" />
-            <span className="text-2xl text-[#704d3b] font-serif italic">together, we create magic</span>
-            <div className="w-12 h-px bg-blue-900/30" />
+        <div className="mt-16 md:mt-32 text-center">
+          <div className="inline-flex items-center gap-3 md:gap-4">
+            <div className="w-8 md:w-12 h-px bg-blue-900/30" />
+            <span className="text-lg md:text-2xl text-[#704d3b] font-serif italic">together, we create magic</span>
+            <div className="w-8 md:w-12 h-px bg-blue-900/30" />
           </div>
         </div>
       </div>
