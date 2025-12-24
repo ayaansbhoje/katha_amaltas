@@ -63,7 +63,7 @@ const WindChime = () => {
     { rotate: [0, 5, 0, -4, 0], duration: 4 }
   ];
   return (
-    <div className="relative flex items-start scale-110 md:scale-125">
+    <div className="relative flex items-start scale-75 md:scale-125">
       <div className="relative">
         <div
           className="w-96 h-4 bg-gradient-to-r from-transparent to-transparent rounded-full"
@@ -111,25 +111,34 @@ const WindChime = () => {
 };
 
 // Flying Poster Component
-const FlyingPoster = ({ project, index, scrollProgress, isActive }) => {
+const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, activeProject }) => {
   const posterSpacing = 55; // vw
   const totalWidth = projects.length * posterSpacing; // vw
   const startPosition = 25; // vw
 
-  const xPosition = startPosition + (index * posterSpacing) - (scrollProgress * totalWidth);
+  // For mobile, calculate position based on active project to center it
+  let xPosition;
+  if (isMobile) {
+    // Center the active project, offset others
+    const offset = (index - activeProject) * 100; // 100vw per project
+    xPosition = offset;
+  } else {
+    // Desktop: original scroll-based positioning
+    xPosition = startPosition + (index * posterSpacing) - (scrollProgress * totalWidth);
+  }
 
   const distanceFromCenter = Math.abs(xPosition);
   const zPosition = isActive ? 100 : -80 - distanceFromCenter * 1.2;
-  const rotateY = xPosition * 0.06;
-  const rotateX = Math.sin(scrollProgress * Math.PI * 2 + index) * 2;
-  const skewY = xPosition * 0.012;
+  const rotateY = isMobile ? 0 : xPosition * 0.06; // No rotation on mobile for cleaner look
+  const rotateX = isMobile ? 0 : Math.sin(scrollProgress * Math.PI * 2 + index) * 2;
+  const skewY = isMobile ? 0 : xPosition * 0.012;
 
   const scale = isActive ? 1 : 0.8;
   const opacity = isActive ? 1 : Math.max(0.25, 1 - distanceFromCenter * 0.012);
 
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2"
+      className="absolute top-1/2 left-1/2 pointer-events-none"
       animate={{
         x: `calc(-50% + ${xPosition}vw)`,
         y: '-50%',
@@ -200,6 +209,7 @@ const CinematicGallery = () => {
   const [activeProject, setActiveProject] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [containerHeight, setContainerHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1000);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
   // Keep these in sync with FlyingPoster if you edit spacing
   const posterSpacing = 55; // vw per poster
@@ -212,6 +222,9 @@ const CinematicGallery = () => {
 
       const viewportH = window.innerHeight;
       const viewportW = window.innerWidth;
+
+      // Check if mobile
+      setIsMobile(viewportW < 768);
 
       // little buffer for nicer entry/exit
       const buffer = Math.round(viewportH * 0.06);
@@ -244,18 +257,34 @@ const CinematicGallery = () => {
       } else {
         const progress = scrollStart / scrollEnd;
         setScrollProgress(progress);
-        const projectIndex = Math.min(Math.floor(progress * projects.length), projects.length - 1);
-        setActiveProject(Math.max(0, projectIndex));
+        // On mobile, don't auto-change active project based on scroll
+        if (!isMobile) {
+          const projectIndex = Math.min(Math.floor(progress * projects.length), projects.length - 1);
+          setActiveProject(Math.max(0, projectIndex));
+        }
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [containerHeight]);
+  }, [containerHeight, isMobile]);
 
   // show the fixed viewport when scrollProgress is between 0 and 1
   const showFixedViewport = scrollProgress > 0 && scrollProgress < 1;
+
+  // Mobile navigation handlers
+  const handlePrevProject = () => {
+    if (isMobile) {
+      setActiveProject((prev) => (prev > 0 ? prev - 1 : projects.length - 1));
+    }
+  };
+
+  const handleNextProject = () => {
+    if (isMobile) {
+      setActiveProject((prev) => (prev < projects.length - 1 ? prev + 1 : 0));
+    }
+  };
 
   return (
     <div ref={containerRef} className="relative bg-zinc-900" style={{ height: `${containerHeight}px` }}>
@@ -303,7 +332,7 @@ const CinematicGallery = () => {
           </motion.div>
 
           {/* Flying posters */}
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d' }}>
+          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', zIndex: 10 }}>
             {projects.map((project, index) => (
               <FlyingPoster
                 key={project.id}
@@ -311,6 +340,8 @@ const CinematicGallery = () => {
                 index={index}
                 scrollProgress={scrollProgress}
                 isActive={activeProject === index}
+                isMobile={isMobile}
+                activeProject={activeProject}
               />
             ))}
           </div>
@@ -343,6 +374,55 @@ const CinematicGallery = () => {
               </div>
             </motion.div>
           </motion.div>
+
+          {/* Mobile Navigation Arrows */}
+          {isMobile && showFixedViewport && (
+            <>
+              {/* Left Arrow */}
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                onClick={handlePrevProject}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-95 transition-transform shadow-xl"
+                aria-label="Previous project"
+                style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-amber-600"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </motion.button>
+
+              {/* Right Arrow */}
+              <motion.button
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                onClick={handleNextProject}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-95 transition-transform shadow-xl"
+                aria-label="Next project"
+                style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-amber-600"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </motion.button>
+            </>
+          )}
         </div>
       </motion.div>
     </div>
@@ -380,7 +460,7 @@ const ProjectSection = () => {
               transition={{ duration: 1, delay: 0.1 * i }}
               className="w-full whitespace-nowrap text-center py-1 md:py-2"
             >
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wide text-stone-300/30 uppercase px-4">
+              <h1 className="text-sm sm:text-base md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wide text-stone-300/30 uppercase px-4">
                 THE SOUND OF A CHIME BEFORE ENTERING A SPACE
               </h1>
             </motion.div>
