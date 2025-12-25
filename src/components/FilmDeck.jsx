@@ -105,10 +105,10 @@ const FilmDeck = () => {
             <Film className="w-4 h-4 md:w-5 md:h-5 text-gray-700" />
             <span className="text-xs md:text-sm font-medium text-gray-700 uppercase tracking-wider">Portfolio</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 text-white drop-shadow-2xl px-2">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 text-white drop-shadow-2xl px-2" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
             Treatment Notes
           </h1>
-          <p className="text-white text-sm md:text-lg max-w-2xl mx-auto italic drop-shadow-lg px-4">
+          <p className="text-white text-sm md:text-lg max-w-2xl mx-auto drop-shadow-lg px-4" style={{ fontFamily: 'Avenir, sans-serif' }}>
             Narrative and visual treatments created for commissioned advertising brand and films
           </p>
         </div>
@@ -132,7 +132,7 @@ const FilmDeck = () => {
                 <div className="absolute -top-2 md:-top-3 left-6 md:left-8 w-24 h-8 md:w-32 md:h-10 rounded-t-lg shadow-lg z-0" style={{ backgroundColor: '#650B0F' }}>
                   <div className="absolute inset-0 bg-black/10 rounded-t-lg"></div>
                   <div className="relative z-10 flex items-center justify-center h-full">
-                    <span className="text-white text-xs font-semibold tracking-wide">{deck.category}</span>
+                    <span className="text-white text-xs font-semibold tracking-wide font-work-sans">{deck.category}</span>
                   </div>
                 </div>
 
@@ -152,17 +152,17 @@ const FilmDeck = () => {
                   <div className="relative z-10 w-full">
                     <div className="flex items-center gap-2 mb-2">
                       <Folder className="w-4 h-4 md:w-5 md:h-5 text-white/70" />
-                      <span className="text-xs text-white/60 uppercase tracking-wider font-medium">
+                      <span className="text-xs text-white/60 uppercase tracking-wider font-medium font-work-sans">
                         {deck.images.length} Files
                       </span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{deck.title}</h2>
-                    <p className="text-white/70 text-xs md:text-sm">{deck.subtitle}</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>{deck.title}</h2>
+                    <p className="text-white/70 text-xs md:text-sm font-work-sans">{deck.subtitle}</p>
                   </div>
 
                   {/* Bottom decoration */}
                   <div className="relative z-10 w-full">
-                    <div className="flex items-center justify-between text-white/50 text-xs">
+                    <div className="flex items-center justify-between text-white/50 text-xs font-work-sans">
                       <span>Click to expand</span>
                       <div className="w-6 h-0.5 md:w-8 md:h-1 bg-white/30 rounded-full"></div>
                     </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 const SimpleCinematicCarousel = () => {
   const sectionRef = useRef(null);
 
-  const fullHeader = "Spaces We've Worked In";
+  const fullHeader = "SPACES WE'VE WORKED IN";
   
   // States
   const [typed, setTyped] = useState("");
@@ -126,8 +126,8 @@ const SimpleCinematicCarousel = () => {
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* HEADER */}
         <header className="w-full px-6 pt-16 pb-6">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-aboreto tracking-tight text-center md:text-left ml-0 md:ml-8">
-            <span style={{ color: '#d3a345' }}>{typed}</span>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl tracking-tight text-center md:text-left ml-0 md:ml-8" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+            <span style={{ color: '#F8E6D2' }}>{typed}</span>
             {startTyping && inView && (
               <span className="inline-block ml-1 h-5 md:h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
             )}
@@ -192,8 +192,8 @@ const SimpleCinematicCarousel = () => {
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3" style={{ color: '#d3a345', textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
-                        <h3 className="font-arapey italic text-xs md:text-sm">{item.title}</h3>
+                      <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3" style={{ color: '#d3a345', textShadow: '0 1px 6px rgba(0,0,0,0.4)', fontFamily: 'Avenir, sans-serif' }}>
+                        <h3 className="text-xs md:text-sm">{item.title}</h3>
                       </div>
                     </div>
                   );
@@ -213,8 +213,8 @@ const SimpleCinematicCarousel = () => {
 
       {/* BOTTOM RIGHT HEADER */}
       <div className="absolute bottom-8 md:bottom-22 left-6 right-6 md:left-auto md:right-6 z-10">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-aboreto tracking-tight text-center md:text-right leading-tight" style={{ color: '#d3a345' }}>
-          Where vision meets<br />cinematic precision
+        <h2 className="text-2xl sm:text-3xl md:text-5xl tracking-tight text-center md:text-right leading-tight" style={{ color: '#F8E6D2', fontFamily: 'Bebas Neue, sans-serif' }}>
+          WHERE VISION MEETS<br />CINEMATIC PRECISION
         </h2>
       </div>
 
