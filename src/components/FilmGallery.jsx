@@ -112,7 +112,7 @@ const FilmGallery = () => {
       }}
     >
       {/* Mode Selector */}
-      <div className="absolute top-6 right-6 z-50 flex gap-2">
+      <div className="absolute top-26 right-6 z-50 flex gap-2">
         {['stay', 'drift', 'physics'].map((m) => (
           <button
             key={m}
@@ -120,8 +120,12 @@ const FilmGallery = () => {
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               mode === m
                 ? 'bg-white text-black'
-                : 'bg-black/30 text-[#d3a345] hover:bg-black/50'
+                : 'bg-black/30 hover:bg-black/50'
             }`}
+            style={{ 
+              color: mode === m ? '#000' : '#f8e6d2',
+              fontFamily: 'Avenir, sans-serif'
+            }}
           >
             {m.charAt(0).toUpperCase() + m.slice(1)}
           </button>
@@ -129,8 +133,8 @@ const FilmGallery = () => {
       </div>
 
       {/* Top Right Header */}
-      <div className="absolute top-24 right-32 z-40 pointer-events-none max-w-md">
-        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+      <div className="absolute top-46 right-32 z-40 pointer-events-none max-w-md">
+        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
           HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
         </h3>
       </div>
@@ -143,13 +147,13 @@ const FilmGallery = () => {
       >
         {/* Left Header Text */}
         <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
-          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             STORIES
           </h2>
-          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             THAT ARE
           </h2>
-          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             LIVED,
           </h2>
         </div>
@@ -165,10 +169,10 @@ const FilmGallery = () => {
 
         {/* Right Bottom Text */}
         <div className="absolute right-16 bottom-1/4 z-40 pointer-events-none">
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             THEN
           </h2>
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
             FILMED.
           </h2>
         </div>
