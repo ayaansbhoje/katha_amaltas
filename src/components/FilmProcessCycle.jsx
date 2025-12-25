@@ -22,12 +22,12 @@ const FilmProcessCycle = () => {
     },
     {
       title: "DIRECTION",
-      subtitle: "Clarifying the film’s point of view and approach. This may be expressed through written notes, conversations, or treatment material — always shaped by the context established earlier.",
+      subtitle: "Clarifying the film's point of view and approach. This may be expressed through written notes, conversations, or treatment material — always shaped by the context established earlier.",
       color: "from-orange-600 to-red-600"
     },
     {
       title: "MAKING",
-      subtitle: "Filming or documenting. We let the space set the terms. Production remains flexible — present without intrusion &structured without excess.",
+      subtitle: "Filming or documenting. We let the space set the terms. Production remains flexible — present without intrusion & structured without excess.",
       color: "from-indigo-600 to-purple-600"
     },
     {
@@ -50,7 +50,7 @@ const FilmProcessCycle = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-8 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center p-4 lg:p-8 overflow-hidden">
       {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
@@ -63,12 +63,12 @@ const FilmProcessCycle = () => {
       {/* Dark overlay to keep content readable */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
 
-      <div className="relative z-10 w-full max-w-7xl flex items-center justify-between gap-16">
+      <div className="relative z-10 w-full max-w-7xl flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-16">
         
         {/* Film Projector Section */}
-        <div className="flex-shrink-0 relative">
+        <div className="flex-shrink-0 relative lg:rotate-0 rotate-90">
           {/* Projector Body */}
-          <div className="relative">
+          <div className="relative scale-75 lg:scale-100">
             {/* Main projector box */}
             <div className="w-64 h-48 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-2xl relative border-4 border-gray-700">
               {/* Lens */}
@@ -140,18 +140,22 @@ const FilmProcessCycle = () => {
             </div>
           </div>
 
-          {/* Light beam from projector */}
-          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-1 bg-gradient-to-r from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none"></div>
-          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-32 bg-gradient-to-r from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none" style={{ clipPath: 'polygon(0 50%, 100% 0, 100% 100%)' }}></div>
+          {/* Light beam from projector - Desktop */}
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-1 bg-gradient-to-r from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none lg:block hidden"></div>
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-32 bg-gradient-to-r from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none lg:block hidden" style={{ clipPath: 'polygon(0 50%, 100% 0, 100% 100%)' }}></div>
+          
+          {/* Mobile Light beam (downward) */}
+          <div className="absolute left-1/2 -translate-x-1/2 -bottom-32 h-40 w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none lg:hidden"></div>
+          <div className="absolute left-1/2 -translate-x-1/2 -bottom-32 h-40 w-32 bg-gradient-to-b from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none lg:hidden" style={{ clipPath: 'polygon(50% 0, 0 100%, 100% 100%)' }}></div>
         </div>
 
         {/* Projection Screen Section */}
-        <div className="flex-1 relative min-h-[400px] flex items-center justify-center">
+        <div className="flex-1 relative min-h-[300px] lg:min-h-[400px] w-full lg:w-auto flex items-center justify-center mt-24 lg:mt-0">
           {/* Screen frame */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl border-8 border-gray-700"></div>
           
           {/* Screen content area */}
-          <div className="relative z-10 w-full h-full p-12 flex flex-col items-center justify-center">
+          <div className="relative z-10 w-full h-full p-6 lg:p-12 flex flex-col items-center justify-center">
             {/* Film grain overlay */}
             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
@@ -161,33 +165,33 @@ const FilmProcessCycle = () => {
             {/* Content */}
             <div className={`text-center transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
               {/* Step indicator */}
-              <div className="mb-6 flex items-center justify-center gap-2">
-                <div className={`w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
-                <span className="text-gray-400 text-sm font-mono">
+              <div className="mb-4 lg:mb-6 flex items-center justify-center gap-2">
+                <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
+                <span className="text-gray-400 text-xs lg:text-sm font-mono">
                   {String(currentStep + 1).padStart(2, '0')} / {String(processes.length).padStart(2, '0')}
                 </span>
-                <div className={`w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
+                <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
               </div>
 
               {/* Title */}
-              <h2 className={`text-7xl font-aboreto mb-6 bg-gradient-to-r ${processes[currentStep].color} bg-clip-text text-transparent tracking-tight`}>
+              <h2 className={`text-4xl lg:text-7xl font-aboreto mb-4 lg:mb-6 bg-gradient-to-r ${processes[currentStep].color} bg-clip-text text-transparent tracking-tight`}>
                 {processes[currentStep].title}
               </h2>
 
               {/* Subtitle */}
-              <p className="text-2xl text-gray-300 font-arapey italic tracking-wide max-w-lg mx-auto">
+              <p className="text-base lg:text-2xl text-gray-300 font-arapey italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
                 {processes[currentStep].subtitle}
               </p>
 
               {/* Decorative elements */}
-              <div className="mt-8 flex items-center justify-center gap-3">
+              <div className="mt-6 lg:mt-8 flex items-center justify-center gap-2 lg:gap-3">
                 {processes.map((_, index) => (
                   <div
                     key={index}
                     className={`h-1 rounded-full transition-all duration-500 ${
                       index === currentStep 
-                        ? `w-12 bg-gradient-to-r ${processes[currentStep].color}` 
-                        : 'w-6 bg-gray-600'
+                        ? `w-8 lg:w-12 bg-gradient-to-r ${processes[currentStep].color}` 
+                        : 'w-4 lg:w-6 bg-gray-600'
                     }`}
                   ></div>
                 ))}
