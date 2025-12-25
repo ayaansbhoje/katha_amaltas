@@ -2,18 +2,18 @@
 
 /* Font Face Declarations */
 @font-face {
-  font-family: 'Aboreto';
-  src: url('/fonts/Aboreto-Regular.ttf') format('truetype');
+  font-family: 'Bebas Neue';
+  src: url('/fonts/BebasNeue-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Arapey';
-  src: url('/fonts/Arapey-Italic.ttf') format('truetype');
+  font-family: 'Avenir';
+  src: url('/fonts/Avenir-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-style: italic;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -35,8 +35,8 @@
 
 /* Tailwind Theme Configuration for Fonts */
 @theme {
-  --font-aboreto: 'Aboreto', serif;
-  --font-arapey: 'Arapey', serif;
+  --font-bebas-neue: 'Bebas Neue', sans-serif;
+  --font-avenir: 'Avenir', sans-serif;
   --font-work-sans: 'Work Sans', sans-serif;
 }
 

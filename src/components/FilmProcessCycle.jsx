@@ -54,7 +54,7 @@ const FilmProcessCycle = () => {
       {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
-        src="/assets/13163309_1920_1080_25fps.mp4"
+        src="assets/projector_background.mp4"
         autoPlay
         muted
         loop

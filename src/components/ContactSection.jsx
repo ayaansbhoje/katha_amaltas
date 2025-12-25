@@ -77,8 +77,29 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-12 text-white font-sans" style={{ backgroundColor: '#650B0F' }}>
-      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start relative">
+    <section className="min-h-screen flex items-center justify-center px-6 py-12 text-white font-sans relative overflow-hidden">
+      {/* Background Video with Red Tint */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ zIndex: 0 }}
+      >
+        <source src="assets/contact-Background.mp4" type="video/mp4" />
+      </video>
+      
+      {/* Red Tint Overlay */}
+      <div 
+        className="absolute inset-0" 
+        style={{ 
+          backgroundColor: 'rgba(101, 11, 15, 0.7)',
+          zIndex: 1 
+        }}
+      ></div>
+
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start relative" style={{ zIndex: 2 }}>
         {/* Divider Line */}
         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-white/10 transform -translate-x-1/2"></div>
         
@@ -163,7 +184,7 @@ const ContactSection = () => {
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
             }}>
             
-            <form onSubmit={handleSubmit} className="relative z-10">
+            <div className="relative z-10">
               <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Aboreto, serif', color: '#91222c' }}>
                 fill the form. We'll get back within 24 hours.
               </h2>
@@ -225,7 +246,7 @@ const ContactSection = () => {
 
                 {/* Submit Button */}
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
                   className="w-full px-5 py-2.5 rounded-lg border-2 font-medium transition-all duration-300 relative overflow-hidden group text-sm"
                   style={{ 
                     color: '#91222c', 
@@ -247,7 +268,7 @@ const ContactSection = () => {
                   <span className="relative z-10">Submit</span>
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
         

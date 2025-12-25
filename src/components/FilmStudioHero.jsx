@@ -3,27 +3,27 @@ import React, { useEffect, useState } from 'react';
 const FilmStudioHero = () => {
   const slides = [
     {
-      name: 'Miles Davis',
+      name: 'MILES DAVIES',
       image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1920&h=1080&fit=crop',
       category: 'Jazz'
     },
     {
-      name: 'Daft Punk',
+      name: 'DAFT PUNK',
       image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1920&h=1080&fit=crop',
       category: 'Electronic'
     },
     {
-      name: 'Radiohead',
+      name: 'RADIOHEAD',
       image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&h=1080&fit=crop',
       category: 'Alternative'
     },
     {
-      name: 'Kendrick Lamar',
+      name: 'KENDRICK LAMAR',
       image: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=1920&h=1080&fit=crop',
       category: 'Hip Hop'
     },
     {
-      name: 'Pink Floyd',
+      name: 'PINK FLYOD',
       image: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1920&h=1080&fit=crop',
       category: 'Rock'
     }
@@ -32,7 +32,7 @@ const FilmStudioHero = () => {
   // NOTE: The last section ("The Final Chapter") images are removed per your request.
   const storySections = [
     {
-      title: "The Journey Begins",
+      title: "THE JOURNEY BEGINS",
       paragraph: "Every great story starts with a single step. This is where our adventure unfolds, where dreams take shape and possibilities become reality.",
       images: [
         { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop", alt: "Mountain landscape" },
@@ -113,7 +113,7 @@ const FilmStudioHero = () => {
           }
           
           .story-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 600;
             line-height: 1.1;
@@ -155,9 +155,10 @@ const FilmStudioHero = () => {
               <button
                 key={index}
                 onClick={() => handleSlideChange(index)}
-                className={`text-white text-left transition-all duration-300 hover:scale-105 font-aboreto ${
+                className={`text-white text-left transition-all duration-300 hover:scale-105 ${
                   index === currentIndex ? 'font-bold text-sm md:text-lg' : 'font-normal text-xs md:text-base opacity-70'
                 }`}
+                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
               >
                 • {slide.name}
               </button>
@@ -170,9 +171,10 @@ const FilmStudioHero = () => {
               <button
                 key={index}
                 onClick={() => handleSlideChange(index)}
-                className={`text-white text-right transition-all duration-300 hover:scale-105 font-aboreto ${
+                className={`text-white text-right transition-all duration-300 hover:scale-105 ${
                   index === currentIndex ? 'font-bold text-sm md:text-lg' : 'font-normal text-xs md:text-base opacity-70'
                 }`}
+                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
               >
                 {slide.category} •
               </button>
@@ -272,6 +274,7 @@ const FilmStudioHero = () => {
                     <p 
                       className="mt-6 md:mt-8 text-sm md:text-base text-gray-300 max-w-3xl mx-auto leading-relaxed px-4"
                       style={{
+                        fontFamily: 'Avenir, sans-serif',
                         opacity: isVisible ? 1 : 0,
                         transform: isVisible ? 'translateY(0px)' : 'translateY(12px)',
                         transition: 'opacity 700ms cubic-bezier(0.22,0.61,0.36,1), transform 700ms cubic-bezier(0.22,0.61,0.36,1)',

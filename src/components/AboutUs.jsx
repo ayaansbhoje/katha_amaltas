@@ -356,7 +356,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
         />
       </div>
       <div className="text-center mt-4">
-        <h3 className="text-2xl md:text-4xl text-[#704d3b] font-arapey italic">{name}</h3>
+        <h3 className="text-2xl md:text-4xl text-[#704d3b]" style={{ fontFamily: 'Avenir, sans-serif' }}>{name}</h3>
         <p className="text-lg md:text-xl text-[#704d3b] font-work-sans">{role}</p>
       </div>
     </div>
@@ -501,7 +501,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
         
         {/* Letter content */}
         <div 
-          className="h-full overflow-y-auto pr-1 transition-opacity duration-700"
+          className="h-full overflow-y-auto pr-1 transition-opacity duration-700 font-work-sans"
           style={{ 
             opacity: showContent ? 1 : 0,
             transitionDelay: showContent ? '200ms' : '0ms'
@@ -552,15 +552,15 @@ const AboutUs = () => {
 
   const founders = [
     {
-      name: "gurman kaur",
-      role: "designer",
+      name: "Gurman Kaur",
+      role: "Designer",
       bio: "Gurman is a passionate designer with an eye for detail and a love for creating beautiful, functional designs. With over 5 years of experience in UI/UX design, she brings creativity and innovation to every project.",
       quote: "Never let the truth get in the way of a good story.",
       imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=face",
     },
     {
-      name: "mukul kapoor",
-      role: "designer",
+      name: "Mukul Kapoor",
+      role: "Designer",
       bio: "Mukul is a creative force with a unique perspective on design. His background in fine arts combined with digital expertise allows him to craft experiences that are both visually stunning and deeply meaningful.",
       quote: "Design is not just what it looks like, design is how it works.",
       imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",
@@ -595,8 +595,9 @@ const AboutUs = () => {
           <FloatingDoodles isHovered={isHeaderHovered} />
           
           <div
-            className="text-4xl md:text-6xl lg:text-7xl text-[#704d3b] relative z-10 cursor-default px-8 py-4 font-aboreto"
+            className="text-4xl md:text-6xl lg:text-7xl text-[#704d3b] relative z-10 cursor-default px-8 py-4 uppercase"
             style={{
+              fontFamily: 'Bebas Neue, sans-serif',
               opacity: hasAnimated ? 1 : 0,
               transform: hasAnimated ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.5s'
@@ -605,10 +606,10 @@ const AboutUs = () => {
             {hasAnimated && (
               <>
                 <div>
-                  <TypewriterText text="The Duo" delay={300} />
+                  <TypewriterText text="THE DUO" delay={300} />
                 </div>
                 <div>
-                  <TypewriterText text="Two People. One Practice." delay={1500} />
+                  <TypewriterText text="TWO PEOPLE. ONE PRACTICE." delay={1500} />
                 </div>
               </>
             )}
