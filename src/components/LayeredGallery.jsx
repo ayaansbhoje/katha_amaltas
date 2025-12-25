@@ -131,7 +131,7 @@ const LayeredGallery = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Image Card */}
-                <div className="relative w-72 h-52 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <div className="relative w-40 h-28 sm:w-56 sm:h-40 md:w-72 md:h-52 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                   {/* Image */}
                   <img
                     src={item.image}
@@ -152,28 +152,28 @@ const LayeredGallery = () => {
 
                   {/* Content */}
                   <div 
-                    className="absolute bottom-0 left-0 right-0 p-5 transform transition-all duration-500"
+                    className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-5 transform transition-all duration-500"
                     style={{
                       transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
                       opacity: isHovered ? 1 : 0
                     }}
                   >
-                    <h3 className="text-xl font-bold text-white mb-1.5 tracking-wide">
+                    <h3 className="text-sm sm:text-base md:text-xl font-bold text-white mb-0.5 sm:mb-1 md:mb-1.5 tracking-wide">
                       {item.title}
                     </h3>
-                    <p className="text-gray-300 text-xs leading-relaxed">
+                    <p className="text-gray-300 text-[10px] sm:text-xs leading-relaxed">
                       {item.description}
                     </p>
                   </div>
 
                   {/* Hover Ring Indicator */}
                   <div 
-                    className="absolute top-3 right-3 transition-all duration-300"
+                    className="absolute top-2 right-2 md:top-3 md:right-3 transition-all duration-300"
                     style={{
                       opacity: isHovered ? 1 : 0.3
                     }}
                   >
-                    <div className="relative w-3 h-3">
+                    <div className="relative w-2 h-2 md:w-3 md:h-3">
                       <div className={`absolute inset-0 bg-white rounded-full transition-all duration-300 ${isHovered ? 'animate-ping' : ''}`} />
                       <div className="absolute inset-0 bg-white rounded-full" />
                     </div>
@@ -186,35 +186,35 @@ const LayeredGallery = () => {
       </div>
 
       {/* UI Overlay */}
-      <div className="absolute top-8 left-8 z-50">
-        <h1 className="text-5xl font-bold text-white mb-2 tracking-tight">ARTURISTIC</h1>
-        <div className="flex items-center gap-3">
-          <div className="h-px w-12 bg-white/30" />
-          <p className="text-gray-400 text-sm uppercase tracking-widest">Portfolio</p>
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-50">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 sm:mb-2 tracking-tight">ARTURISTIC</h1>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="h-px w-8 sm:w-10 md:w-12 bg-white/30" />
+          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">Portfolio</p>
         </div>
       </div>
 
       {/* Navigation Menu */}
-      <div className="absolute top-8 right-8 z-50 flex gap-6">
-        <button className="text-white/60 hover:text-white text-sm uppercase tracking-wider transition-colors">
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-50 flex gap-3 sm:gap-4 md:gap-6">
+        <button className="text-white/60 hover:text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider transition-colors">
           Studio
         </button>
-        <button className="text-white text-sm uppercase tracking-wider">
+        <button className="text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">
           Portfolio
         </button>
-        <button className="text-white/60 hover:text-white text-sm uppercase tracking-wider transition-colors">
+        <button className="text-white/60 hover:text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider transition-colors">
           Exhibition
         </button>
       </div>
 
       {/* Progress Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-50">
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-3 z-50">
         {items.map((_, index) => (
           <button
             key={index}
             className={`transition-all duration-300 ${
               hoveredIndex === index 
-                ? 'w-10 h-1 bg-white' 
+                ? 'w-8 sm:w-10 h-1 bg-white' 
                 : 'w-1 h-1 bg-gray-600 hover:bg-gray-400 rounded-full'
             }`}
             onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
@@ -223,8 +223,8 @@ const LayeredGallery = () => {
       </div>
 
       {/* Instruction Text */}
-      <div className="absolute bottom-8 left-8 z-50">
-        <p className="text-gray-500 text-xs uppercase tracking-widest">
+      <div className="absolute bottom-6 left-4 sm:bottom-8 sm:left-8 z-50">
+        <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-widest">
           Hover to explore · Click to focus
         </p>
       </div>
