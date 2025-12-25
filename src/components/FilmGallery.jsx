@@ -10,14 +10,14 @@ const FilmGallery = () => {
 
   // Sample film stills/portfolio images
   const imagePool = [
-    'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1574267432644-f74ff6e89a6a?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1551847812-c7c0b0f0b3e7?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1595769816263-9b910be24d5f?w=400&h=300&fit=crop',
+    'assets/gallery_img3.jpg',
+    'assets/gallery_img4.jpg',
+    'assets/gallery_img5.jpg',
+    'assets/gallery_img6.jpg',
+    'assets/gallery_img7.jpg',
+    'assets/gallery_img8.jpg',
+    'assets/gallery_img9.jpg',
+    'assets/gallery_img10.jpg',
   ];
 
   const handleMouseMove = (e) => {
@@ -105,7 +105,7 @@ const FilmGallery = () => {
       className="relative min-h-screen overflow-hidden"
       style={{
         color: '#d3a345',
-        backgroundImage: 'url(/assets/gallery_background.jpeg)',
+        backgroundImage: 'url(/assets/filmgallery_bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -128,12 +128,51 @@ const FilmGallery = () => {
         ))}
       </div>
 
+      {/* Top Right Header */}
+      <div className="absolute top-24 right-32 z-40 pointer-events-none max-w-md">
+        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+          HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
+        </h3>
+      </div>
+
       {/* Gallery Section */}
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}
         className="relative min-h-screen flex items-center justify-center cursor-none"
       >
+        {/* Left Header Text */}
+        <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
+          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+            STORIES
+          </h2>
+          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+            THAT ARE
+          </h2>
+          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+            LIVED,
+          </h2>
+        </div>
+
+        {/* Center Image */}
+        <div className="z-30 pointer-events-none">
+          <img 
+            src="assets/film_gallery_centre.png" 
+            alt="Stories that are lived, then filmed" 
+            className="w-[110rem] h-auto object-contain"
+          />
+        </div>
+
+        {/* Right Bottom Text */}
+        <div className="absolute right-16 bottom-1/4 z-40 pointer-events-none">
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em' }}>
+            THEN
+          </h2>
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Arial Black, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
+            FILMED.
+          </h2>
+        </div>
+
         {/* Image Trail */}
         <div className="absolute inset-0 pointer-events-none">
           {images.map((img) => (
@@ -149,8 +188,17 @@ const FilmGallery = () => {
             >
               <img
                 src={img.src}
-                alt="Gallery"
+                alt=""
                 className="w-full h-full object-cover"
+                loading="eager"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+                style={{
+                  imageRendering: 'auto',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
               />
               <div className="absolute inset-0 border-2 border-[#d3a345]/30"></div>
             </div>
