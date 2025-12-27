@@ -51,10 +51,6 @@
   color: #e5e7eb;
   background-color: #000;
   font-family: 'Work Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  
-  /* Brand colors */
-  --brand-red: #770D11;
-  --brand-red-rgb: 119, 13, 17;
 }
 
 body {
@@ -63,44 +59,17 @@ body {
 }
 
 /* ================================
-   COLOR PROFILE FIXES
-   Force sRGB color space across all devices
+   FONT METRIC NORMALIZATION
+   (THIS is the real fix)
 ================================ */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
   font-kerning: none;
-  
-  /* Force sRGB color space */
-  color-profile: sRGB;
-  -webkit-color-profile: sRGB;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-/* Additional color space enforcement for webkit browsers */
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  * {
-    -webkit-filter: opacity(1);
-  }
 }
 
 /* Lock line box calculation */
 h1, h2, h3, h4, h5, h6, p, span {
   line-height: 1;
-}
-
-/* ================================
-   iOS SPECIFIC COLOR FIXES
-================================ */
-@supports (-webkit-touch-callout: none) {
-  * {
-    -webkit-backface-visibility: hidden;
-    -webkit-perspective: 1000;
-  }
-  
-  body {
-    -webkit-text-size-adjust: 100%;
-  }
 }
