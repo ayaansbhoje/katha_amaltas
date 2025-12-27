@@ -2,24 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const FilmGallery = () => {
   const [images, setImages] = useState([]);
-  const [mode, setMode] = useState('drift');
+  const [mode, setMode] = useState('drift'); // 'stay', 'drift', or 'physics'
   const containerRef = useRef(null);
   const imageIdCounter = useRef(0);
   const lastSpawnTime = useRef(0);
   const animationFrameId = useRef(null);
 
-  // 🔒 FIXED REFERENCE HEIGHT (measured once)
-  const layoutRef = useRef({
-    centerY: 0,
-  });
-
-  useEffect(() => {
-    if (containerRef.current && layoutRef.current.centerY === 0) {
-      const rect = containerRef.current.getBoundingClientRect();
-      layoutRef.current.centerY = rect.height / 2;
-    }
-  }, []);
-
+  // Sample film stills/portfolio images
   const imagePool = [
     'assets/gallery_img3.jpg',
     'assets/gallery_img4.jpg',
@@ -33,6 +22,7 @@ const FilmGallery = () => {
 
   const handleMouseMove = (e) => {
     const now = Date.now();
+    // Spawn new image every 100ms
     if (now - lastSpawnTime.current < 100) return;
     lastSpawnTime.current = now;
 
@@ -40,115 +30,151 @@ const FilmGallery = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    setImages((prev) => [
-      ...prev.slice(-20),
-      {
-        id: imageIdCounter.current++,
-        src: imagePool[Math.floor(Math.random() * imagePool.length)],
-        x,
-        y,
-        rotation: Math.random() * 40 - 20,
-        scale: 0.7 + Math.random() * 0.3,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        rotationSpeed: (Math.random() - 0.5) * 3,
-        opacity: 1,
-      },
-    ]);
+    const newImage = {
+      id: imageIdCounter.current++,
+      src: imagePool[Math.floor(Math.random() * imagePool.length)],
+      x,
+      y,
+      rotation: Math.random() * 40 - 20,
+      scale: 0.7 + Math.random() * 0.3,
+      // Physics properties
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      rotationSpeed: (Math.random() - 0.5) * 3,
+      opacity: 1,
+    };
+
+    setImages((prev) => [...prev, newImage]);
+
+    // Remove old images to prevent memory issues
+    if (images.length > 20) {
+      setImages((prev) => prev.slice(-20));
+    }
   };
 
+  // Animation loop for drift and physics modes
   useEffect(() => {
     if (mode === 'stay' || images.length === 0) return;
 
     const animate = () => {
-      setImages((prev) =>
-        prev
-          .map((img) => ({
-            ...img,
-            x: img.x + img.vx * (mode === 'drift' ? 0.5 : 1),
-            y: img.y + (mode === 'drift' ? img.vy * 0.5 : img.vy + 0.15),
-            vy: mode === 'physics' ? img.vy * 0.99 + 0.15 : img.vy,
-            rotation: img.rotation + img.rotationSpeed * (mode === 'drift' ? 0.2 : 1),
-            opacity: img.opacity - (mode === 'drift' ? 0.005 : 0.003),
-          }))
-          .filter((img) => img.opacity > 0)
-      );
+      setImages((prevImages) => {
+        return prevImages
+          .map((img) => {
+            if (mode === 'drift') {
+              return {
+                ...img,
+                x: img.x + img.vx * 0.5,
+                y: img.y + img.vy * 0.5,
+                rotation: img.rotation + img.rotationSpeed * 0.2,
+                opacity: img.opacity - 0.005,
+              };
+            } else if (mode === 'physics') {
+              const newVy = img.vy + 0.15; // gravity
+              const newX = img.x + img.vx;
+              const newY = img.y + newVy;
+              
+              return {
+                ...img,
+                x: newX,
+                y: newY,
+                vx: img.vx * 0.99,
+                vy: newVy * 0.99,
+                rotation: img.rotation + img.rotationSpeed,
+                opacity: img.opacity - 0.003,
+              };
+            }
+            return img;
+          })
+          .filter((img) => img.opacity > 0);
+      });
 
       animationFrameId.current = requestAnimationFrame(animate);
     };
 
     animationFrameId.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrameId.current);
-  }, [mode, images.length]);
 
-  const centerY = layoutRef.current.centerY;
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, [mode, images.length]);
 
   return (
     <div
       className="relative min-h-screen overflow-hidden"
       style={{
+        color: '#d3a345',
         backgroundImage: 'url(/assets/filmgallery_bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       {/* Mode Selector */}
-      <div
-        className="absolute right-6 z-50 flex gap-2"
-        style={{ top: centerY - 420 }}
-      >
+      <div className="absolute top-26 right-6 z-50 flex gap-2">
         {['stay', 'drift', 'physics'].map((m) => (
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`px-4 py-2 rounded-full text-sm ${
-              mode === m ? 'bg-white text-black' : 'bg-black/30'
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              mode === m
+                ? 'bg-white text-black'
+                : 'bg-black/30 hover:bg-black/50'
             }`}
+            style={{ 
+              color: mode === m ? '#000' : '#f8e6d2',
+              fontFamily: 'Avenir, sans-serif'
+            }}
           >
-            {m}
+            {m.charAt(0).toUpperCase() + m.slice(1)}
           </button>
         ))}
       </div>
 
-      {/* Top Right Text */}
-      <div
-        className="absolute right-32 z-40 max-w-md"
-        style={{ top: centerY - 220 }}
-      >
-        <h3 className="text-2xl font-bold text-right text-[#8B2020]">
+      {/* Top Right Header */}
+      <div className="absolute top-46 right-32 z-40 pointer-events-none max-w-md">
+        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
           HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
         </h3>
       </div>
 
+      {/* Gallery Section */}
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}
         className="relative min-h-screen flex items-center justify-center cursor-none"
       >
-        {/* Left Text */}
-        <div
-          className="absolute left-16 z-40"
-          style={{ top: centerY - 320 }}
-        >
-          <h2 className="text-8xl font-bold text-[#8B2020]">STORIES</h2>
-          <h2 className="text-3xl font-bold text-[#8B2020] mt-1">THAT ARE</h2>
-          <h2 className="text-9xl font-bold text-[#8B2020] mt-6">LIVED,</h2>
+        {/* Left Header Text */}
+        <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
+          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            STORIES
+          </h2>
+          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            THAT ARE
+          </h2>
+          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            LIVED,
+          </h2>
         </div>
 
         {/* Center Image */}
-        <img
-          src="assets/film_gallery_centre.png"
-          alt=""
-          className="z-30 w-[110rem] pointer-events-none"
-        />
+        <div className="z-30 pointer-events-none">
+          <img 
+            src="assets/film_gallery_centre.png" 
+            alt="Stories that are lived, then filmed" 
+            className="w-[110rem] h-auto object-contain"
+          />
+        </div>
 
         {/* Right Bottom Text */}
-        <div
-          className="absolute right-16 z-40"
-          style={{ top: centerY + 260 }}
-        >
-          <h2 className="text-9xl font-bold text-[#8B2020]">THEN</h2>
-          <h2 className="text-9xl font-bold text-[#8B2020] ml-12">FILMED.</h2>
+        <div className="absolute right-16 bottom-1/4 z-40 pointer-events-none">
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            THEN
+          </h2>
+          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
+            FILMED.
+          </h2>
         </div>
 
         {/* Image Trail */}
@@ -156,19 +182,40 @@ const FilmGallery = () => {
           {images.map((img) => (
             <div
               key={img.id}
-              className="absolute w-48 h-32 overflow-hidden"
+              className="absolute w-48 h-32 rounded-lg overflow-hidden shadow-2xl transition-opacity"
               style={{
-                left: img.x,
-                top: img.y,
+                left: `${img.x}px`,
+                top: `${img.y}px`,
                 transform: `translate(-50%, -50%) rotate(${img.rotation}deg) scale(${img.scale})`,
                 opacity: img.opacity,
               }}
             >
-              <img src={img.src} className="w-full h-full object-cover" />
+              <img
+                src={img.src}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="eager"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+                style={{
+                  imageRendering: 'auto',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              />
+              <div className="absolute inset-0 border-2 border-[#d3a345]/30"></div>
             </div>
           ))}
         </div>
+
       </section>
+
+      {/* Additional Info */}
+      <div className="absolute bottom-6 left-6 z-50 text-sm" style={{ color: '#d3a345', opacity: 0.8 }}>
+        <p>Move your cursor to explore</p>
+        <p className="text-xs mt-1">Mode: {mode}</p>
+      </div>
     </div>
   );
 };
