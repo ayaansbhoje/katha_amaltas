@@ -10,7 +10,7 @@ const LayeredGallery = () => {
     {
       id: 1,
       image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop',
-      title: 'Modern Architecture',
+      title: 'techno is dumb',
       description: 'Exploring contemporary design'
     },
     {
