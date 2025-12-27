@@ -21,15 +21,23 @@ export default function FilmPortfolioPreloader({ onComplete }) {
     }
   }, [splitScreen, onComplete]);
 
-  // Consistent background style with explicit color space handling
+  // Consistent background style using RGB values for better cross-device consistency
   const backgroundStyle = {
-    backgroundColor: '#770D11',
+    backgroundColor: 'rgb(119, 13, 17)', // #770D11 in RGB format
     colorSpace: 'srgb',
-    WebkitColorSpace: 'srgb'
+    WebkitColorSpace: 'srgb',
+    WebkitPrintColorAdjust: 'exact',
+    printColorAdjust: 'exact',
+    WebkitFilter: 'opacity(1)', // Forces webkit color rendering
+  };
+
+  const whiteLineStyle = {
+    backgroundColor: 'rgb(255, 255, 255)',
+    colorSpace: 'srgb',
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: '#000000' }}>
+    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'rgb(0, 0, 0)' }}>
       {/* Top Half with Video */}
       <div
         style={backgroundStyle}
@@ -54,7 +62,7 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           splitScreen ? 'translate-y-full' : 'translate-y-0'
         }`}
       >
-        <div className="w-32 h-px" style={{ backgroundColor: '#FFFFFF' }}></div>
+        <div className="w-32 h-px" style={whiteLineStyle}></div>
       </div>
     </div>
   );
