@@ -9,35 +9,51 @@ export default function FilmPortfolioPreloader({ onComplete }) {
   };
 
   useEffect(() => {
+    // Force iOS to use exact colors by adding meta tag
+    const metaTag = document.querySelector('meta[name="color-scheme"]');
+    if (!metaTag) {
+      const meta = document.createElement('meta');
+      meta.name = 'color-scheme';
+      meta.content = 'light dark';
+      document.head.appendChild(meta);
+    }
+
+    // Disable iOS color adjustments
+    document.documentElement.style.webkitTapHighlightColor = 'transparent';
+    
     // After split animation completes (1000ms), call onComplete callback
     if (splitScreen) {
       const timer = setTimeout(() => {
         if (onComplete) {
           onComplete();
         }
-      }, 1000); // Match the transition duration
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
   }, [splitScreen, onComplete]);
 
-  // Consistent background style using RGB values for better cross-device consistency
+  // iOS-optimized background style using important flags
   const backgroundStyle = {
-    backgroundColor: 'rgb(119, 13, 17)', // #770D11 in RGB format
-    colorSpace: 'srgb',
-    WebkitColorSpace: 'srgb',
-    WebkitPrintColorAdjust: 'exact',
-    printColorAdjust: 'exact',
-    WebkitFilter: 'opacity(1)', // Forces webkit color rendering
-  };
-
-  const whiteLineStyle = {
-    backgroundColor: 'rgb(255, 255, 255)',
-    colorSpace: 'srgb',
+    backgroundColor: '#770D11',
+    background: '#770D11',
+    WebkitBackfaceVisibility: 'hidden',
+    backfaceVisibility: 'hidden',
+    transform: 'translateZ(0)',
+    WebkitTransform: 'translateZ(0)',
+    willChange: 'transform',
+    WebkitFontSmoothing: 'antialiased',
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: 'rgb(0, 0, 0)' }}>
+    <div 
+      className="relative w-full h-screen overflow-hidden" 
+      style={{ 
+        backgroundColor: '#000000',
+        WebkitBackfaceVisibility: 'hidden',
+        transform: 'translateZ(0)'
+      }}
+    >
       {/* Top Half with Video */}
       <div
         style={backgroundStyle}
@@ -50,8 +66,13 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           autoPlay
           muted
           playsInline
+          webkit-playsinline="true"
           onEnded={handleVideoEnd}
           className="h-36 md:h-46 w-auto object-contain"
+          style={{
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden'
+          }}
         />
       </div>
       
@@ -62,7 +83,13 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           splitScreen ? 'translate-y-full' : 'translate-y-0'
         }`}
       >
-        <div className="w-32 h-px" style={whiteLineStyle}></div>
+        <div 
+          className="w-32 h-px" 
+          style={{ 
+            backgroundColor: '#FFFFFF',
+            background: '#FFFFFF'
+          }}
+        ></div>
       </div>
     </div>
   );

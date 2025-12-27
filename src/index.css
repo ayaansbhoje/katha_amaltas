@@ -90,3 +90,17 @@ body {
 h1, h2, h3, h4, h5, h6, p, span {
   line-height: 1;
 }
+
+/* ================================
+   iOS SPECIFIC COLOR FIXES
+================================ */
+@supports (-webkit-touch-callout: none) {
+  * {
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+}
