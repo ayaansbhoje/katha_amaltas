@@ -54,7 +54,7 @@ const projects = [
   },
 ];
 
-// Wind Chime Component - Fixed size for all viewports
+// Wind Chime Component
 const WindChime = () => {
   const chimeImages = [project1, project2, project3];
   const swayAnimations = [
@@ -62,36 +62,21 @@ const WindChime = () => {
     { rotate: [0, -3, 0, 4, 0], duration: 3.5 },
     { rotate: [0, 5, 0, -4, 0], duration: 4 }
   ];
-  
   return (
-    <div className="relative flex items-start justify-center">
+    <div className="relative flex items-start scale-75 md:scale-125">
       <div className="relative">
         <div
-          style={{ 
-            width: '320px',
-            height: '14px',
-            borderRadius: '9999px',
-            backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(225,211,182,0.8) 50%, transparent 100%)' 
-          }}
+          className="w-96 h-4 bg-gradient-to-r from-transparent to-transparent rounded-full"
+          style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(225,211,182,0.8) 50%, transparent 100%)' }}
         />
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between',
-          marginTop: '0',
-          paddingLeft: '28px', 
-          paddingRight: '28px' 
-        }}>
+        <div className="flex justify-between px-8 mt-0">
           {chimeImages.map((img, index) => (
-            <div key={index} style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center',
-              transformOrigin: 'top center' 
-            }}>
+            <div key={index} className="flex flex-col items-center" style={{ transformOrigin: 'top center' }}>
               <div
+                className="bg-gradient-to-b"
                 style={{
                   width: '2px',
-                  height: `${140 + index * 50}px`,
+                  height: `${160 + index * 60}px`,
                   backgroundImage: 'linear-gradient(180deg, rgba(225,211,182,0.9), rgba(225,211,182,0.3))'
                 }}
               />
@@ -106,25 +91,15 @@ const WindChime = () => {
               >
                 <motion.div
                   className="relative overflow-hidden rounded-sm shadow-2xl"
-                  style={{ 
-                    width: `${100 + index * 18}px`, 
-                    height: `${140 + index * 26}px` 
-                  }}
+                  style={{ width: `${120 + index * 20}px`, height: `${160 + index * 30}px` }}
                   whileHover={{ scale: 1.05 }}
                 >
                   <img src={img} alt={`Chime image ${index + 1}`} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
                 </motion.div>
                 <div
-                  style={{ 
-                    width: '7px',
-                    height: '20px',
-                    marginTop: '3px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    borderRadius: '9999px',
-                    backgroundColor: 'rgba(225,211,182,0.5)' 
-                  }}
+                  className="w-2 h-6 mt-1 rounded-full mx-auto"
+                  style={{ backgroundColor: 'rgba(225,211,182,0.5)' }}
                 />
               </motion.div>
             </div>
@@ -461,7 +436,7 @@ const ProjectSection = () => {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1920&h=1080&fit=crop')",
+          backgroundImage: "url('assets/project_newbg.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -474,44 +449,9 @@ const ProjectSection = () => {
             background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%)'
           }}
         />
-        
-        {/* Repeating text pattern background - FIXED SIZE */}
-        <div className="absolute inset-0 flex flex-col justify-start items-center pointer-events-none overflow-hidden pt-0">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.1 * i }}
-              style={{ 
-                width: '100%',
-                paddingTop: '12px', 
-                paddingBottom: '12px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <h1 
-                style={{
-                  fontSize: '42px',
-                  fontWeight: 700,
-                  letterSpacing: '0.05em',
-                  color: 'rgba(214, 211, 209, 0.3)',
-                  textTransform: 'uppercase',
-                  whiteSpace: 'nowrap',
-                  margin: 0,
-                  padding: '0 16px'
-                }}
-              >
-                THE SOUND OF A CHIME BEFORE ENTERING A SPACE
-              </h1>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Center Wind Chime */}
-        <div className="relative z-10 flex flex-col items-center justify-center mt-16 md:mt-20">
+        <div className="relative z-10 flex flex-col items-center justify-center mt-4 md:mt-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }} 
             animate={{ opacity: 1, scale: 1 }} 
@@ -520,27 +460,14 @@ const ProjectSection = () => {
             <WindChime />
           </motion.div>
           
-          {/* Portfolio Showcase text below chime - FIXED SIZE */}
+          {/* Portfolio Showcase text below chime */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.8 }}
-            style={{ 
-              marginTop: '-6px',
-              textAlign: 'center'
-            }}
+            className="-mt-2 text-center"
           >
-            <p 
-              style={{
-                color: 'rgba(214, 211, 209, 0.9)',
-                fontSize: '13px',
-                letterSpacing: '0.4em',
-                textTransform: 'uppercase',
-                fontFamily: 'sans-serif',
-                fontWeight: 600,
-                lineHeight: '1.6'
-              }}
-            >
+            <p className="text-stone-300/90 text-sm md:text-base tracking-[0.4em] uppercase font-sans font-semibold">
               PORTFOLIO<br />SHOWCASE
             </p>
           </motion.div>
