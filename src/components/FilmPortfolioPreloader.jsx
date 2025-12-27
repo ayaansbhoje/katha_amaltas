@@ -9,54 +9,23 @@ export default function FilmPortfolioPreloader({ onComplete }) {
   };
 
   useEffect(() => {
-    // Force iOS to use exact colors by adding meta tag
-    const metaTag = document.querySelector('meta[name="color-scheme"]');
-    if (!metaTag) {
-      const meta = document.createElement('meta');
-      meta.name = 'color-scheme';
-      meta.content = 'light dark';
-      document.head.appendChild(meta);
-    }
-
-    // Disable iOS color adjustments
-    document.documentElement.style.webkitTapHighlightColor = 'transparent';
-    
     // After split animation completes (1000ms), call onComplete callback
     if (splitScreen) {
       const timer = setTimeout(() => {
         if (onComplete) {
           onComplete();
         }
-      }, 1000);
+      }, 1000); // Match the transition duration
 
       return () => clearTimeout(timer);
     }
   }, [splitScreen, onComplete]);
 
-  // iOS-optimized background style using important flags
-  const backgroundStyle = {
-    backgroundColor: '#770D11',
-    background: '#770D11',
-    WebkitBackfaceVisibility: 'hidden',
-    backfaceVisibility: 'hidden',
-    transform: 'translateZ(0)',
-    WebkitTransform: 'translateZ(0)',
-    willChange: 'transform',
-    WebkitFontSmoothing: 'antialiased',
-  };
-
   return (
-    <div 
-      className="relative w-full h-screen overflow-hidden" 
-      style={{ 
-        backgroundColor: '#000000',
-        WebkitBackfaceVisibility: 'hidden',
-        transform: 'translateZ(0)'
-      }}
-    >
+    <div className="relative w-full h-screen overflow-hidden bg-black">
       {/* Top Half with Video */}
       <div
-        style={backgroundStyle}
+        style={{ backgroundColor: '#770e11' }}
         className={`absolute top-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-end justify-center pb-2 ${
           splitScreen ? '-translate-y-full' : 'translate-y-0'
         }`}
@@ -66,30 +35,19 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           autoPlay
           muted
           playsInline
-          webkit-playsinline="true"
           onEnded={handleVideoEnd}
           className="h-36 md:h-46 w-auto object-contain"
-          style={{
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden'
-          }}
         />
       </div>
       
       {/* Bottom Half with Line */}
       <div
-        style={backgroundStyle}
+        style={{ backgroundColor: '#770e11' }}
         className={`absolute bottom-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-start justify-center pt-2 ${
           splitScreen ? 'translate-y-full' : 'translate-y-0'
         }`}
       >
-        <div 
-          className="w-32 h-px" 
-          style={{ 
-            backgroundColor: '#FFFFFF',
-            background: '#FFFFFF'
-          }}
-        ></div>
+        <div className="w-32 h-px bg-white"></div>
       </div>
     </div>
   );
