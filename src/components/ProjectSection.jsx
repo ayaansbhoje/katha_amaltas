@@ -437,7 +437,7 @@ const ProjectSection = () => {
         className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
         style={{
           backgroundImage: "url('assets/project_newbg.png')",
-          backgroundSize: 'cover',
+          backgroundSize: '100% 100%',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
