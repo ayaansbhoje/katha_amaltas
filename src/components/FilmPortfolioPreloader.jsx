@@ -21,11 +21,18 @@ export default function FilmPortfolioPreloader({ onComplete }) {
     }
   }, [splitScreen, onComplete]);
 
+  // Consistent background style with explicit color space handling
+  const backgroundStyle = {
+    backgroundColor: '#770D11',
+    colorSpace: 'srgb',
+    WebkitColorSpace: 'srgb'
+  };
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: '#000000' }}>
       {/* Top Half with Video */}
       <div
-        style={{ backgroundColor: '#770D11' }}
+        style={backgroundStyle}
         className={`absolute top-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-end justify-center pb-2 ${
           splitScreen ? '-translate-y-full' : 'translate-y-0'
         }`}
@@ -42,12 +49,12 @@ export default function FilmPortfolioPreloader({ onComplete }) {
       
       {/* Bottom Half with Line */}
       <div
-        style={{ backgroundColor: '#770D11' }}
+        style={backgroundStyle}
         className={`absolute bottom-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-start justify-center pt-2 ${
           splitScreen ? 'translate-y-full' : 'translate-y-0'
         }`}
       >
-        <div className="w-32 h-px bg-white"></div>
+        <div className="w-32 h-px" style={{ backgroundColor: '#FFFFFF' }}></div>
       </div>
     </div>
   );
