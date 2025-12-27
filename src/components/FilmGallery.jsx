@@ -134,7 +134,7 @@ const FilmGallery = () => {
 
       {/* Top Right Header */}
       <div className="absolute top-46 right-32 z-40 pointer-events-none max-w-md">
-        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+        <h3 className="text-xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
           HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
         </h3>
       </div>
@@ -147,13 +147,13 @@ const FilmGallery = () => {
       >
         {/* Left Header Text */}
         <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
-          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-7xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             STORIES
           </h2>
-          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-2xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             THAT ARE
           </h2>
-          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-7xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             LIVED,
           </h2>
         </div>
@@ -169,10 +169,10 @@ const FilmGallery = () => {
 
         {/* Right Bottom Text */}
         <div className="absolute right-16 bottom-1/4 z-40 pointer-events-none">
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+          <h2 className="text-7xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
             THEN
           </h2>
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
+          <h2 className="text-7xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
             FILMED.
           </h2>
         </div>
