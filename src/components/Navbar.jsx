@@ -1,11 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent border-b border-gray-800">
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-gray-800 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-black/20 backdrop-blur-md' 
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo on the left */}
         <Link to="/" className="flex-shrink-0">
@@ -48,4 +72,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
