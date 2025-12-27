@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* Font Face Declarations */
+/* ================================
+   Font Face Declarations
+================================ */
 @font-face {
   font-family: 'Bebas Neue';
   src: url('/fonts/BebasNeue-Regular.ttf') format('truetype');
@@ -33,14 +35,18 @@
   font-display: swap;
 }
 
-/* Tailwind Theme Configuration for Fonts */
+/* ================================
+   Tailwind Theme Configuration
+================================ */
 @theme {
   --font-bebas-neue: 'Bebas Neue', sans-serif;
   --font-avenir: 'Avenir', sans-serif;
   --font-work-sans: 'Work Sans', sans-serif;
 }
 
-/* Basic defaults so sections can span the full viewport */
+/* ================================
+   Global Defaults
+================================ */
 :root {
   color: #e5e7eb;
   background-color: #000;
@@ -50,4 +56,20 @@
 body {
   margin: 0;
   background-color: #000;
+}
+
+/* ================================
+   FONT METRIC NORMALIZATION
+   (THIS is the real fix)
+================================ */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  font-kerning: none;
+}
+
+/* Lock line box calculation */
+h1, h2, h3, h4, h5, h6, p, span {
+  line-height: 1;
 }
