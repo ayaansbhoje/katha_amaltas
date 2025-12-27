@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import FilmStudioHero from '../components/FilmStudioHero';
 import AboutUs from '../components/AboutUs';
 import ProjectSection from '../components/ProjectSection';
-import FilmDeck from '../components/FilmDeck';
+
 import CinematicCarousel from '../components/CinematicCarousel';
 import ServiceSection from '../components/ServiceSection';
 import FilmGallery from '../components/FilmGallery';
@@ -29,7 +29,7 @@ const Home = () => {
           <FilmStudioHero />
           <AboutUs />
           <ProjectSection />
-          <FilmDeck />
+          
           <CinematicCarousel />
           <ServiceSection />
           <FilmGallery />
