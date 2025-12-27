@@ -305,9 +305,9 @@ const CinematicGallery = () => {
         }}
       >
         {/* 3D stage */}
-        <div className="absolute inset-0" style={{ perspective: '1400px', perspectiveOrigin: '50% 50%', transformStyle: 'preserve-3d' }}>
+        <div className="absolute inset-0">
           {/* Blurred backdrop matching active poster */}
-          <div className="absolute inset-0 overflow-hidden -z-10">
+          <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
             <img
               src={projects[activeProject]?.image}
               alt={projects[activeProject]?.title || 'Backdrop'}
@@ -322,6 +322,7 @@ const CinematicGallery = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
+            style={{ pointerEvents: 'none' }}
           >
             
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase" style={{ fontFamily: 'Bebas Neue, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
@@ -332,7 +333,7 @@ const CinematicGallery = () => {
           </motion.div>
 
           {/* Flying posters */}
-          <div className="absolute inset-0" style={{ transformStyle: 'preserve-3d', zIndex: 10 }}>
+          <div className="absolute inset-0" style={{ perspective: '1400px', perspectiveOrigin: '50% 50%', transformStyle: 'preserve-3d', zIndex: 5 }}>
             {projects.map((project, index) => (
               <FlyingPoster
                 key={project.id}
@@ -347,7 +348,7 @@ const CinematicGallery = () => {
           </div>
 
           {/* Project info */}
-          <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-60 md:w-72 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+          <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-60 md:w-72 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ pointerEvents: 'none' }}>
             <motion.div key={activeProject} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-right">
               <p className="text-amber-600 text-xs tracking-[0.2em] uppercase mb-2 font-sans font-medium">{projects[activeProject]?.year}</p>
               <h4 className="text-lg md:text-xl text-zinc-100 mb-2" style={{ fontFamily: 'Avenir, sans-serif' }}>{projects[activeProject]?.title}</h4>
