@@ -87,17 +87,10 @@ const ContactSection = () => {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ zIndex: 0 }}
       >
-        <source src="assets/contact-Background.mp4" type="video/mp4" />
+        <source src="assets/CONTACT_SECTION.mov" type="video/mp4" />
       </video>
       
-      {/* Red Tint Overlay */}
-      <div 
-        className="absolute inset-0" 
-        style={{ 
-          backgroundColor: 'rgba(101, 11, 15, 0.7)',
-          zIndex: 1 
-        }}
-      ></div>
+      
 
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start relative" style={{ zIndex: 2 }}>
         {/* Divider Line */}
