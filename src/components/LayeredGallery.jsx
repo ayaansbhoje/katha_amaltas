@@ -65,10 +65,10 @@ const LayeredGallery = () => {
 
   // Circular motion animation
   useEffect(() => {
-    if (hoveredIndex !== null) return;
-
     const animate = () => {
-      setRotation(prev => prev + 0.2);
+      if (hoveredIndex === null) {
+        setRotation(prev => (prev + 0.2) % 360);
+      }
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -137,7 +137,7 @@ const LayeredGallery = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Video Card */}
-                <div className="relative w-40 h-28 sm:w-56 sm:h-40 md:w-72 md:h-52 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <div className="relative w-40 h-[227px] sm:w-56 sm:h-[318px] md:w-72 md:h-[408px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                   {/* Video */}
                   <video
                     src={item.video}
@@ -196,10 +196,10 @@ const LayeredGallery = () => {
 
       {/* UI Overlay */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-50">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 sm:mb-2 tracking-tight">ARTURISTIC</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 sm:mb-2 tracking-tight">Stories in Short Form</h1>
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="h-px w-8 sm:w-10 md:w-12 bg-white/30" />
-          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">Portfolio</p>
+          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">arratives adapted for the digital present,  brief in duration, complete in feeling.</p>
         </div>
       </div>
 

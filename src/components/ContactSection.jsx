@@ -92,14 +92,15 @@ const ContactSection = () => {
       
       
 
+      {/* Divider Line - Fixed independently */}
+      <div className="hidden lg:block absolute left-1/2 top-1/4 bottom-1/4 w-[2px] transform -translate-x-1/2" style={{ backgroundColor: '#FFF6D0', zIndex: 1 }}></div>
+      
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start relative" style={{ zIndex: 2 }}>
-        {/* Divider Line */}
-        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-white/10 transform -translate-x-1/2"></div>
         
         {/* Left Side - Header, Subtext, Email, Icons */}
         <div className="flex flex-col">
-          {/* Wavy Gradient Title */}
-          <div ref={containerRef} className="w-full flex justify-start items-center overflow-visible mb-6" style={{ minHeight: '200px' }}>
+          {/* Wavy Gradient Title - Moved Left */}
+          <div ref={containerRef} className="w-full flex justify-start items-center overflow-visible mb-6 -ml-12 lg:-ml-30" style={{ minHeight: '200px' }}>
             <svg viewBox="0 0 1000 200" className="w-full" preserveAspectRatio="xMidYMid meet"
               style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-out', overflow: 'visible' }}>
               <defs>
@@ -111,14 +112,19 @@ const ContactSection = () => {
             </svg>
           </div>
 
-          {/* Email Section */}
-          <div className="flex flex-col gap-4 mb-6">
+          {/* Email and Address Section - Aligned Icons */}
+          <div className="flex flex-col gap-6 mb-8">
             <span className="text-lg md:text-xl font-medium" style={{ color: '#FFF6D0' }}>Have a film, exhibition, or cultural project in mind?</span>
-            <a href="mailto:hello@portfolio.com"
-              className="flex items-center gap-3 px-6 py-3 transition-all duration-300 group w-fit">
-              <Mail className="w-5 h-5" style={{ color: '#FFF6D0', filter: 'drop-shadow(0 0 1px rgba(145, 34, 44, 0.3))', animation: 'float 3s ease-in-out infinite' }} />
-              <span className="font-medium" style={{ color: '#FFF6D0' }}>hello@portfolio.com</span>
-            </a>
+            
+            {/* Email with aligned icon */}
+            <div className="flex items-start gap-3">
+              <Mail className="w-5 h-5 mt-0.5" style={{ color: '#FFF6D0', filter: 'drop-shadow(0 0 1px rgba(145, 34, 44, 0.3))', animation: 'float 3s ease-in-out infinite' }} />
+              <a href="mailto:hello@portfolio.com" className="transition-all duration-300 group">
+                <span className="font-medium" style={{ color: '#FFF6D0' }}>hello@portfolio.com</span>
+              </a>
+            </div>
+            
+            {/* Address with aligned icon */}
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 mt-0.5" style={{ color: '#FFF6D0' }} />
               <div className="flex flex-col">
@@ -166,26 +172,26 @@ const ContactSection = () => {
           </div>
         </div>
 
-        {/* Right Side - Cinematic Form */}
+        {/* Right Side - Glassmorphism Form */}
         <div ref={formRef} className="relative">
           <div className="relative p-5 md:p-6 rounded-2xl border shadow-2xl"
             style={{
-              backgroundColor: '#FFF6D0',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              borderColor: 'rgba(255, 246, 208, 0.5)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+              background: 'rgba(255, 246, 208, 0.15)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              borderColor: 'rgba(255, 246, 208, 0.3)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
             }}>
             
             <div className="relative z-10">
-              <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Aboreto, serif', color: '#91222c' }}>
+              <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Aboreto, serif', color: '#FFF6D0' }}>
                 fill the form. We'll get back within 24 hours.
               </h2>
               
               <div className="space-y-3.5">
                 {/* Name Field */}
                 <div className="relative">
-                  <label htmlFor="name" className="block text-xs font-medium mb-1.5" style={{ color: '#91222c' }}>
+                  <label htmlFor="name" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
                     Name
                   </label>
                   <input
@@ -194,8 +200,8 @@ const ContactSection = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
-                    style={{ color: '#91222c', backgroundColor: '#FFF6D0', borderColor: '#D4C89A' }}
+                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
+                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
                     placeholder="Your name"
                     required
                   />
@@ -203,7 +209,7 @@ const ContactSection = () => {
 
                 {/* Email ID Field */}
                 <div className="relative">
-                  <label htmlFor="email" className="block text-xs font-medium mb-1.5" style={{ color: '#91222c' }}>
+                  <label htmlFor="email" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
                     Email ID
                   </label>
                   <input
@@ -212,8 +218,8 @@ const ContactSection = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
-                    style={{ color: '#91222c', backgroundColor: '#FFF6D0', borderColor: '#D4C89A' }}
+                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
+                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
                     placeholder="Your email address"
                     required
                   />
@@ -221,7 +227,7 @@ const ContactSection = () => {
 
                 {/* Query Field */}
                 <div className="relative">
-                  <label htmlFor="query" className="block text-xs font-medium mb-1.5" style={{ color: '#91222c' }}>
+                  <label htmlFor="query" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
                     Query
                   </label>
                   <textarea
@@ -230,8 +236,8 @@ const ContactSection = () => {
                     value={formData.query}
                     onChange={handleInputChange}
                     rows="3"
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 resize-none text-sm"
-                    style={{ color: '#91222c', backgroundColor: '#FFF6D0', borderColor: '#D4C89A' }}
+                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 resize-none text-sm"
+                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
                     placeholder="Tell us about your project..."
                     required
                   ></textarea>
@@ -242,19 +248,21 @@ const ContactSection = () => {
                   onClick={handleSubmit}
                   className="w-full px-5 py-2.5 rounded-lg border-2 font-medium transition-all duration-300 relative overflow-hidden group text-sm"
                   style={{ 
-                    color: '#91222c', 
-                    backgroundColor: '#FFF6D0',
-                    borderColor: '#D4C89A',
+                    color: '#FFF6D0', 
+                    backgroundColor: 'rgba(255, 246, 208, 0.1)',
+                    borderColor: 'rgba(255, 246, 208, 0.3)',
                     boxShadow: 'none',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#5A0A0D';
+                    e.currentTarget.style.backgroundColor = '#91222c';
                     e.currentTarget.style.color = '#FFF6D0';
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(90, 10, 13, 0.5), 0 0 20px rgba(90, 10, 13, 0.3)';
+                    e.currentTarget.style.borderColor = '#91222c';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(145, 34, 44, 0.5), 0 0 20px rgba(145, 34, 44, 0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FFF6D0';
-                    e.currentTarget.style.color = '#91222c';
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 246, 208, 0.1)';
+                    e.currentTarget.style.color = '#FFF6D0';
+                    e.currentTarget.style.borderColor = 'rgba(255, 246, 208, 0.3)';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
@@ -265,10 +273,16 @@ const ContactSection = () => {
           </div>
         </div>
         
-        {/* Copyright Text - Centered below divider */}
-        <div className="col-span-1 lg:col-span-2 flex justify-center mt-12">
-          <p className="text-sm" style={{ color: '#FFF6D0' }}>©2025kathaamaltas</p>
-        </div>
+      </div>
+      
+      {/* Copyright Text - Fixed at bottom */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center" style={{ zIndex: 2 }}>
+        <p className="text-base" style={{ color: '#FFF6D0' }}>©2025kathaamaltas</p>
+      </div>
+      
+      {/* Logo - Bottom Left Corner */}
+      <div className="absolute -bottom-8 left-6" style={{ zIndex: 2 }}>
+        <img src="assets/Asset 5@4x (1).png" alt="Logo" className="w-16 h-16 md:w-40 md:h-40 object-contain" />
       </div>
 
       <style>{`
