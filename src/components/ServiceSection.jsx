@@ -84,11 +84,11 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
             <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
           </div>
           <div className={`flex-1 ${isMobile ? 'p-4' : 'p-5'} flex flex-col justify-center`}>
-            <span className={`${isMobile ? 'text-xs' : 'text-xs'} tracking-widest mb-2`} style={{ color: '#650B0F', fontFamily: 'Avenir, sans-serif' }}>
+            <span className={`${isMobile ? 'text-xs' : 'text-xs'} tracking-widest mb-2`} style={{ color: '#650B0F', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
               {service.category}
             </span>
-            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2`} style={{ color: '#650B0F', fontFamily: 'Bebas Neue, sans-serif' }}>{service.title}</h3>
-            <p className={`${isMobile ? 'text-xs' : 'text-sm'}`} style={{ color: '#f8e6d2', fontFamily: 'Avenir, sans-serif' }}>{service.description}</p>
+            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2`} style={{ color: '#650B0F', fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400 }}>{service.title}</h3>
+            <p className={`${isMobile ? 'text-xs' : 'text-sm'}`} style={{ color: '#f8e6d2', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>{service.description}</p>
           </div>
         </div>
       </div>
@@ -190,14 +190,22 @@ const ServiceSection = () => {
         <div className={`h-full flex relative z-10 ${isMobile ? 'flex-col' : ''}`}>
           {/* LEFT */}
           <div className={`${isMobile ? 'w-full h-auto pt-12 pb-8' : 'w-1/2 h-full'} flex flex-col justify-center ${isMobile ? 'px-6 text-center items-center' : 'px-20'}`}>
-            <span className="text-xs tracking-widest mb-6" style={{ color: '#d3a345', fontFamily: 'Avenir, sans-serif' }}>
+            <span className="text-xs tracking-widest mb-6" style={{ color: '#d3a345', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
               Services
             </span>
-            <h2 className={`${isMobile ? 'text-4xl' : 'text-6xl'} mb-6`} style={{ color: '#d3a345', fontFamily: 'Bebas Neue, sans-serif' }}>
+            <h2 className={`${isMobile ? 'text-4xl' : 'text-6xl'} mb-6`} style={{ 
+              color: '#d3a345', 
+              fontFamily: "'Bebas Neue', sans-serif", 
+              fontWeight: 400,
+              fontStyle: 'normal',
+              fontStretch: 'normal',
+              letterSpacing: 'normal',
+              textTransform: 'uppercase'
+            }}>
               WHAT <br />
               WE DO
             </h2>
-            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: 'Avenir, sans-serif' }}>
+            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
               We work across film, documentation, and cultural storytelling — creating work that is research-led, visually grounded, and shaped from inside the worlds it documents.
             </p>
           </div>
