@@ -17,12 +17,17 @@ const SimpleCinematicCarousel = () => {
 
   // Images - replace the paths with your local GIF paths
   const mediaItems = [
-    { src: "assets/client_1.gif", title: "Mountain" },
-    { src: "assets/client_2.gif", title: "Forest" },
-    { src: "assets/gifs/client_3.gif", title: "Desert" },
-    { src: "assets/gifs/client_4.gif", title: "Ocean" },
-    { src: "assets/gifs/client_5.gif", title: "Autumn" },
-    { src: "assets/gifs/client_6.gif", title: "Night" }
+    { src: "assets/client_1.gif", title: "Space 1" },
+    { src: "assets/client_2.gif", title: "Space 2" },
+    { src: "assets/client_3.gif", title: "Space 3" },
+    { src: "assets/client_4.gif", title: "Space 4" },
+    { src: "assets/client_5.gif", title: "Space 5" },
+    { src: "assets/client_6.gif", title: "Space 6" },
+    { src: "assets/client_7.gif", title: "Space 7" },
+    { src: "assets/client_8.gif", title: "Space 8" },
+    { src: "assets/client_9.gif", title: "Space 9" },
+    { src: "assets/client_10.gif", title: "Space 10" },
+    { src: "assets/client_11.gif", title: "Space 11" }
   ];
 
   const radius = 500;
