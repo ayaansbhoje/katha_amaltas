@@ -238,7 +238,7 @@ const FilmStudioHero = () => {
           {/* Dynamic Center Header */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
             <h2 
-              className="text-2xl md:text-4xl font-bold text-white transition-opacity duration-700"
+              className="text-2xl md:text-3xl font-bold text-white transition-opacity duration-700"
               style={{ 
                 fontFamily: 'Bebas Neue, sans-serif',
                 opacity: isTransitioning ? 0 : 1
