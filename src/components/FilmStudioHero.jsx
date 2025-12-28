@@ -3,29 +3,28 @@ import React, { useEffect, useState } from 'react';
 const FilmStudioHero = () => {
   const slides = [
     {
-      name: 'MILES DAVIES',
-      image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1920&h=1080&fit=crop',
-      category: 'Jazz'
+      name: 'LISTENING',
+      image: '/assets/hero_sec1.jpg',
+      category: 'BEFORE FILMING',
+      header: 'OUR WORK BEGINS WITH RELATIONSHIPS'
     },
     {
-      name: 'DAFT PUNK',
-      image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1920&h=1080&fit=crop',
-      category: 'Electronic'
+      name: 'TRUTH',
+      image: '/assets/hero_sec2.jpg',
+      category: 'BEFORE NARRATIVES',
+      header: 'AUTHENTIC STORIES'
     },
     {
-      name: 'RADIOHEAD',
-      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&h=1080&fit=crop',
-      category: 'Alternative'
+      name: 'PROCESS',
+      image: '/assets/hero_sec3.jpg',
+      category: 'BEFORE POLISH',
+      header: 'CREATIVE JOURNEY'
     },
     {
-      name: 'KENDRICK LAMAR',
-      image: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=1920&h=1080&fit=crop',
-      category: 'Hip Hop'
-    },
-    {
-      name: 'PINK FLYOD',
-      image: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1920&h=1080&fit=crop',
-      category: 'Rock'
+      name: 'RESEARCH',
+      image: '/assets/hero_sec4.jpg',
+      category: 'BEFORE FORM',
+      header: 'DEEP DIVE'
     }
   ];
 
@@ -138,18 +137,22 @@ const FilmStudioHero = () => {
         <div className="relative w-screen h-[80vh] md:h-screen overflow-hidden">
           {/* Background Image with Fade Transition */}
           <div
-            className="absolute inset-0 bg-cover bg-center transition-opacity duration-700 z-0"
+            className="absolute inset-0 transition-opacity duration-700"
             style={{
               backgroundImage: `url(${slides[currentIndex].image})`,
-              opacity: isTransitioning ? 0 : 1
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              opacity: isTransitioning ? 0 : 1,
+              zIndex: 1
             }}
           >
             {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div className="absolute inset-0 bg-black/20"></div>
           </div>
 
           {/* Left Navigation */}
-          <div className="absolute left-2 md:left-10 top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-20 -translate-y-24 md:translate-y-0">
+          <div className="absolute left-2 md:left-10 top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
@@ -165,7 +168,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Right Categories */}
-          <div className="absolute right-2 md:right-10 top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-20 -translate-y-24 md:translate-y-0">
+          <div className="absolute right-2 md:right-10 top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
@@ -181,14 +184,27 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Center Logo */}
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-            <div className="text-center translate-y-[80px] md:translate-y-[100px]">
+          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+            <div className="text-center translate-y-[200px] md:translate-y-[220px]">
               <img 
                 src="/assets/Asset 5@4x (1).png" 
                 alt="Muks & G Studios Logo" 
                 className="max-w-xs md:max-w-xl lg:max-w-2xl h-auto mx-auto"
               />
             </div>
+          </div>
+
+          {/* Dynamic Center Header */}
+          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+            <h2 
+              className="text-2xl md:text-4xl font-bold text-white transition-opacity duration-700"
+              style={{ 
+                fontFamily: 'Bebas Neue, sans-serif',
+                opacity: isTransitioning ? 0 : 1
+              }}
+            >
+              {slides[currentIndex].header}
+            </h2>
           </div>
 
           {/* Progress Bar */}
