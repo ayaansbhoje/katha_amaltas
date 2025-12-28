@@ -11,8 +11,7 @@ const services = [
     description:
       " Intimate film portraits that document an artist's practice, process, and thinking. These films are built through listening, observation, and time — allowing the work to speak without performance or simplification.",
     category: "01",
-    image:
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=80",
+    image: "assets/artist_docu.jpg",
   },
   {
     id: 2,
@@ -20,8 +19,7 @@ const services = [
     description:
       "Short-form and long-form documentaries focused on culture as it is lived — across people, spaces, traditions, and contemporary practice.",
     category: "02",
-    image:
-      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80",
+    image: "assets/cultural_docu.jpg",
   },
   {
     id: 3,
@@ -29,8 +27,7 @@ const services = [
     description:
       "Films created to accompany exhibitions — including walkthroughs, installation documentation, and contextual films that support how a body of work is experienced in space.",
     category: "03",
-    image:
-      "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&q=80",
+    image: "assets/exhibiton_galler.jpg",
   },
   {
     id: 4,
@@ -38,8 +35,7 @@ const services = [
     description:
       "Digital-first films designed for smaller frames and shorter durations — adapting storytelling to contemporary platforms without losing emotional depth, authorship, or intent.",
     category: "04",
-    image:
-      "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=600&q=80",
+    image: "assets/short_form.jpg",
   },
   {
     id: 5,
@@ -47,8 +43,7 @@ const services = [
     description:
       "Meticulous color grading, editing, and visual effects that transform raw footage into cinematic art.",
     category: "05",
-    image:
-      "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80",
+    image: "assets/branded_narrative.jpg",
   },
   {
     id: 6,
@@ -56,8 +51,7 @@ const services = [
     description:
       "Narrative and visual treatments developed for commissioned films, including advertising work. These outline tone, structure, and cinematic approach — serving as a bridge between intention and execution.",
     category: "06",
-    image:
-      "https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&q=80",
+    image: "assets/decks.jpg",
   },
 ];
 
