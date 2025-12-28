@@ -15,14 +15,14 @@ const SimpleCinematicCarousel = () => {
   const rafRef = useRef(null);
   const lastRef = useRef(null);
 
-  // Images
+  // Images - replace the paths with your local GIF paths
   const mediaItems = [
-    { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", title: "Mountain" },
-    { src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80", title: "Forest" },
-    { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80", title: "Desert" },
-    { src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80", title: "Ocean" },
-    { src: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=1200&q=80", title: "Autumn" },
-    { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80", title: "Night" }
+    { src: "assets/client_1.gif", title: "Mountain" },
+    { src: "assets/client_2.gif", title: "Forest" },
+    { src: "assets/gifs/client_3.gif", title: "Desert" },
+    { src: "assets/gifs/client_4.gif", title: "Ocean" },
+    { src: "assets/gifs/client_5.gif", title: "Autumn" },
+    { src: "assets/gifs/client_6.gif", title: "Night" }
   ];
 
   const radius = 500;
@@ -167,10 +167,10 @@ const SimpleCinematicCarousel = () => {
                   const opacity = 0.35 + depth * 0.65;
                   const scale = 0.85 + depth * 0.18;
 
-                  // Mobile-specific dimensions
+                  // Reduced card dimensions (15% smaller)
                   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                  const cardWidth = isMobile ? 120 : 210;
-                  const cardHeight = isMobile ? 160 : 280;
+                  const cardWidth = isMobile ? 102 : 178;
+                  const cardHeight = isMobile ? 136 : 238;
                   const mobileRadius = isMobile ? 250 : radius;
 
                   return (
