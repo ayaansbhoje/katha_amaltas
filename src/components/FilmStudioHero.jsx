@@ -178,7 +178,7 @@ const FilmStudioHero = () => {
 
           {/* Center Logo */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-            <div className="text-center" style={{ transform: 'translateY(200px)' }}>
+            <div className="text-center" style={{ transform: 'translateY(150px)' }}>
               <img 
                 src="/assets/Asset 5@4x (1).png" 
                 alt="Muks & G Studios Logo" 
