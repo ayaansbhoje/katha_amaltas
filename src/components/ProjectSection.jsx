@@ -191,10 +191,10 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
           />
         )}
         <motion.div className="absolute bottom-6 left-0 right-0 text-center" animate={{ opacity: isActive ? 1 : 0.4 }}>
-          <p className="text-amber-600/80 text-xs tracking-[0.25em] uppercase mb-2 font-sans">
+          <p className="text-amber-600/80 text-xs tracking-[0.25em] uppercase mb-2" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
             {project.year}
           </p>
-          <h4 className="text-lg md:text-xl italic text-zinc-100" style={{ fontFamily: 'Avenir, sans-serif' }}>
+          <h4 className="text-lg md:text-xl italic text-zinc-100" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
             {project.title}
           </h4>
         </motion.div>
@@ -329,7 +329,7 @@ const CinematicGallery = () => {
               Extended 
             </h2>
             <h3 className="text-xl md:text-4xl lg:text-5xl text-amber-600 mt-1 uppercase" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>Narratives</h3>
-            <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase mb-2" style={{ fontFamily: 'Avenir, sans-serif' }}>Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
+            <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase mb-2" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
           </motion.div>
 
           {/* Flying posters */}
@@ -350,9 +350,9 @@ const CinematicGallery = () => {
           {/* Project info */}
           <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-60 md:w-72 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ pointerEvents: 'none' }}>
             <motion.div key={activeProject} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-right">
-              <p className="text-amber-600 text-xs tracking-[0.2em] uppercase mb-2 font-sans font-medium">{projects[activeProject]?.year}</p>
-              <h4 className="text-lg md:text-xl text-zinc-100 mb-2" style={{ fontFamily: 'Avenir, sans-serif' }}>{projects[activeProject]?.title}</h4>
-              <p className="text-zinc-400 text-xs md:text-sm leading-relaxed font-work-sans">{projects[activeProject]?.description}</p>
+              <p className="text-amber-600 text-xs tracking-[0.2em] uppercase mb-2 font-medium" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.year}</p>
+              <h4 className="text-lg md:text-xl text-zinc-100 mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>{projects[activeProject]?.title}</h4>
+              <p className="text-zinc-400 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.description}</p>
 
               <div className="flex justify-end gap-1.5 mt-6">
                 {projects.map((_, idx) => (
@@ -368,8 +368,8 @@ const CinematicGallery = () => {
                 ))}
               </div>
 
-              <div className="mt-4 text-zinc-400 text-xs font-sans">
-                <span className="text-amber-600 text-base font-serif">{String(activeProject + 1).padStart(2, '0')}</span>
+              <div className="mt-4 text-zinc-400 text-xs" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
+                <span className="text-amber-600 text-base" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{String(activeProject + 1).padStart(2, '0')}</span>
                 <span className="mx-1.5 opacity-40">/</span>
                 <span className="opacity-60">{String(projects.length).padStart(2, '0')}</span>
               </div>
@@ -468,14 +468,14 @@ const ProjectSection = () => {
             transition={{ duration: 1, delay: 1.8 }}
             className="-mt-2 text-center"
           >
-            <p className="text-stone-300/90 text-sm md:text-base tracking-[0.4em] uppercase font-sans font-semibold">
+            <p className="text-stone-300/90 text-sm md:text-base tracking-[0.4em] uppercase font-semibold" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
               PORTFOLIO<br />SHOWCASE
             </p>
           </motion.div>
         </div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 2 }} className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-          <span className="text-stone-300/60 text-xs tracking-widest uppercase mb-4 font-sans">Scroll to explore</span>
+          <span className="text-stone-300/60 text-xs tracking-widest uppercase mb-4" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Scroll to explore</span>
           <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-px h-16 bg-gradient-to-b from-stone-400 to-transparent" />
         </motion.div>
       </section>

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const CARD_HEIGHT = 320;
+const CARD_HEIGHT = 380;
 const CARD_GAP = 24;
 
 const services = [
@@ -60,7 +60,7 @@ const services = [
 const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
   const distance = index - activeIndex;
   const isActive = Math.abs(distance) < 0.5;
-  const cardHeight = isMobile ? 280 : CARD_HEIGHT;
+  const cardHeight = isMobile ? 320 : CARD_HEIGHT;
   const cardGap = isMobile ? 16 : CARD_GAP;
 
   return (
@@ -84,11 +84,11 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
             <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
           </div>
           <div className={`flex-1 ${isMobile ? 'p-4' : 'p-5'} flex flex-col justify-center`}>
-            <span className={`${isMobile ? 'text-xs' : 'text-xs'} tracking-widest mb-2`} style={{ color: '#650B0F' }}>
+            <span className={`${isMobile ? 'text-xs' : 'text-xs'} tracking-widest mb-2`} style={{ color: '#650B0F', fontFamily: 'Avenir, sans-serif' }}>
               {service.category}
             </span>
-            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2 font-arapey italic`} style={{ color: '#650B0F' }}>{service.title}</h3>
-            <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-work-sans`} style={{ color: '#f8e6d2' }}>{service.description}</p>
+            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2`} style={{ color: '#650B0F', fontFamily: 'Bebas Neue, sans-serif' }}>{service.title}</h3>
+            <p className={`${isMobile ? 'text-xs' : 'text-sm'}`} style={{ color: '#f8e6d2', fontFamily: 'Avenir, sans-serif' }}>{service.description}</p>
           </div>
         </div>
       </div>
@@ -190,21 +190,21 @@ const ServiceSection = () => {
         <div className={`h-full flex relative z-10 ${isMobile ? 'flex-col' : ''}`}>
           {/* LEFT */}
           <div className={`${isMobile ? 'w-full h-auto pt-12 pb-8' : 'w-1/2 h-full'} flex flex-col justify-center ${isMobile ? 'px-6 text-center items-center' : 'px-20'}`}>
-            <span className="text-blue-500 text-xs tracking-widest mb-6">
+            <span className="text-xs tracking-widest mb-6" style={{ color: '#d3a345', fontFamily: 'Avenir, sans-serif' }}>
               Services
             </span>
-            <h2 className={`${isMobile ? 'text-4xl' : 'text-6xl'} mb-6 font-aboreto`} style={{ color: '#f8e6d2' }}>
-              What we <br />
-              <span className="italic">Do</span>
+            <h2 className={`${isMobile ? 'text-4xl' : 'text-6xl'} mb-6`} style={{ color: '#d3a345', fontFamily: 'Bebas Neue, sans-serif' }}>
+              WHAT <br />
+              WE DO
             </h2>
-            <p className={`text-gray-400 max-w-sm font-work-sans ${isMobile ? 'text-center' : ''}`}>
+            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: 'Avenir, sans-serif' }}>
               We work across film, documentation, and cultural storytelling — creating work that is research-led, visually grounded, and shaped from inside the worlds it documents.
             </p>
           </div>
 
           {/* RIGHT */}
           <div className={`${isMobile ? 'w-full flex-1' : 'w-1/2 h-full'} flex items-center justify-center relative`}>
-            <div className="relative w-full" style={{ height: isMobile ? 280 : CARD_HEIGHT }}>
+            <div className="relative w-full" style={{ height: isMobile ? 320 : CARD_HEIGHT }}>
               {services.map((service, index) => (
                 <ServiceCard
                   key={service.id}

@@ -219,14 +219,14 @@ const FilmStudioHero = () => {
 
           {/* Progress Bar */}
           <div className="hero-progress absolute left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4">
-            <span className="text-white font-semibold text-lg">1</span>
+            <span className="text-white font-semibold text-lg" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>1</span>
             <div className="flex-1 h-1 bg-gray-600 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-white transition-all duration-700 ease-out"
                 style={{ width: `${((currentIndex) / (slides.length - 1)) * 100}%` }}
               />
             </div>
-            <span className="text-white font-semibold text-lg">{slides.length}</span>
+            <span className="text-white font-semibold text-lg" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{slides.length}</span>
           </div>
         </div>
 
@@ -303,7 +303,7 @@ const FilmStudioHero = () => {
                     <p 
                       className="mt-6 md:mt-8 text-sm md:text-base max-w-3xl mx-auto leading-relaxed px-4"
                       style={{
-                        fontFamily: 'Avenir, sans-serif',
+                        fontFamily: 'Avenir-Regular, Avenir, sans-serif',
                         color: '#8B0000',
                         opacity: isVisible ? 1 : 0,
                         transform: isVisible ? 'translateY(0px)' : 'translateY(12px)',
