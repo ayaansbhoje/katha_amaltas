@@ -122,6 +122,47 @@ const FilmStudioHero = () => {
           .story-image-glow {
             background: radial-gradient(ellipse at center, rgba(245,158,11,0.18) 0%, transparent 70%);
           }
+
+          .hero-logo {
+            width: 200px;
+            height: auto;
+          }
+
+          @media (min-width: 768px) {
+            .hero-logo {
+              width: 35vw;
+              max-width: 600px;
+              min-width: 400px;
+            }
+          }
+
+          .hero-nav-left {
+            left: 2vw;
+          }
+
+          .hero-nav-right {
+            right: 2vw;
+          }
+
+          .hero-progress {
+            bottom: 8vh;
+            width: 25vw;
+            min-width: 300px;
+            max-width: 400px;
+          }
+
+          @media (max-width: 767px) {
+            .hero-nav-left {
+              left: 0.5rem;
+            }
+            .hero-nav-right {
+              right: 0.5rem;
+            }
+            .hero-progress {
+              bottom: 6.5rem;
+              width: 24rem;
+            }
+          }
         `}
       </style>
 
@@ -145,7 +186,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Left Navigation */}
-          <div className="absolute left-2 md:left-10 top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
+          <div className="hero-nav-left absolute top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
@@ -161,7 +202,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Right Categories */}
-          <div className="absolute right-2 md:right-10 top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
+          <div className="hero-nav-right absolute top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
@@ -177,15 +218,21 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Center Logo */}
-          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-            <div className="text-center" style={{ transform: 'translateY(150px)' }}>
-              <img 
-                src="/assets/Asset 5@4x (1).png" 
-                alt="Muks & G Studios Logo" 
-                style={{ width: '280px', height: 'auto' }}
-                className="mx-auto"
-              />
-            </div>
+          <div 
+            className="absolute pointer-events-none"
+            style={{
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              marginTop: '25vh',
+              zIndex: 30
+            }}
+          >
+            <img 
+              src="/assets/Asset 5@4x (1).png" 
+              alt="Muks & G Studios Logo" 
+              className="hero-logo"
+            />
           </div>
 
           {/* Dynamic Center Header */}
@@ -202,7 +249,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Progress Bar */}
-          <div className="absolute bottom-26 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4 w-96">
+          <div className="hero-progress absolute left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4">
             <span className="text-white font-semibold text-lg">1</span>
             <div className="flex-1 h-1 bg-gray-600 rounded-full overflow-hidden">
               <div 
