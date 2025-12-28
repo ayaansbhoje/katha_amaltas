@@ -28,7 +28,6 @@ const FilmStudioHero = () => {
     }
   ];
 
-  // NOTE: The last section ("The Final Chapter") images are removed per your request.
   const storySections = [
     {
       title: "THE JOURNEY BEGINS",
@@ -48,9 +47,7 @@ const FilmStudioHero = () => {
     {
       title: "The Final Chapter",
       paragraph: "As we reach the culmination of our story, we reflect on the path taken and the memories created along the way.",
-      images: [
-        // Removed the two images here as requested (keeps section, but no images)
-      ]
+      images: []
     }
   ];
 
@@ -68,27 +65,23 @@ const FilmStudioHero = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // maintain visibleSections exactly as original logic
   useEffect(() => {
     const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 900;
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-    const sectionMultiplier = isMobile ? 1.0 : 1.5; // Reduced multiplier for mobile
+    const sectionMultiplier = isMobile ? 1.0 : 1.5;
     const newVisible = new Set(visibleSections);
 
     storySections.forEach((_, index) => {
       const sectionStart = windowHeight + index * windowHeight * sectionMultiplier;
       if (scrollY > sectionStart - windowHeight * 0.5) {
         newVisible.add(index);
-      } else {
-        // do not remove previously visible sections to preserve original behavior
       }
     });
 
     if (newVisible.size !== visibleSections.size) {
       setVisibleSections(newVisible);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollY]);
+  }, [scrollY, visibleSections, storySections]);
 
   const handleSlideChange = (index) => {
     if (index === currentIndex || isTransitioning) return;
@@ -185,11 +178,12 @@ const FilmStudioHero = () => {
 
           {/* Center Logo */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-            <div className="text-center translate-y-[200px] md:translate-y-[220px]">
+            <div className="text-center" style={{ transform: 'translateY(200px)' }}>
               <img 
                 src="/assets/Asset 5@4x (1).png" 
                 alt="Muks & G Studios Logo" 
-                className="max-w-xs md:max-w-xl lg:max-w-2xl h-auto mx-auto"
+                style={{ width: '280px', height: 'auto' }}
+                className="mx-auto"
               />
             </div>
           </div>
@@ -233,26 +227,23 @@ const FilmStudioHero = () => {
           {storySections.map((section, sectionIndex) => {
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 1000;
             const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-            const sectionMultiplier = isMobile ? 1.0 : 1.5; // Reduced multiplier for mobile
+            const sectionMultiplier = isMobile ? 1.0 : 1.5;
             const sectionHeight = typeof window !== 'undefined' ? window.innerHeight * sectionMultiplier : (isMobile ? 1000 : 1500);
             const heroHeight = typeof window !== 'undefined' ? (isMobile ? window.innerHeight * 0.8 : window.innerHeight) : 1000;
             const sectionStart = heroHeight + sectionIndex * sectionHeight;
             const localScroll = Math.max(0, scrollY - sectionStart);
             const progress = Math.min(1, localScroll / (sectionHeight * 0.8));
             
-            // Keep original header parallax/blur/opacity calculations
             let headerParallax = progress * 0.8;
             let blurAmount = Math.min(progress * 12, 12);
             let headerOpacity = Math.max(0, 1 - progress * 1.2);
 
-            // isVisible uses original visibleSections set (unchanged behavior)
             const isVisible = visibleSections.has(sectionIndex);
             const isSingleImage = section.images.length === 1;
 
-            // Only change: for section 0, start images slightly higher (so they pass the title after reveal)
-            let imageStartOffset = isMobile ? 10 : 80; // original baseline, reduced for mobile
+            let imageStartOffset = isMobile ? 10 : 80;
             if (sectionIndex === 0) {
-              imageStartOffset = isMobile ? 5 : 65; // slightly higher start for first section images, reduced for mobile
+              imageStartOffset = isMobile ? 5 : 65;
             }
 
             return (
@@ -274,7 +265,6 @@ const FilmStudioHero = () => {
                   <div className="max-w-5xl text-center">
                     <h1 className="story-title">
                       {section.title.split(" ").map((word, wordIndex, arr) => {
-                        // Word-by-word fade for all sections, including "The Journey Begins"
                         const wordDelayMs = wordIndex * 120;
                         return (
                           <span
@@ -310,12 +300,11 @@ const FilmStudioHero = () => {
                   </div>
                 </div>
 
-                {/* IMAGE LAYER — removed images for the FINAL section only */}
-                {sectionIndex !== (storySections.length - 1) && (
+                {/* IMAGE LAYER */}
+                {section.images.length > 0 && (
                   <div
                     className="sticky top-0 flex h-screen items-center justify-center pointer-events-none"
                     style={{
-                      // use imageStartOffset variable (65 for section 0, 80 otherwise) — this only changes initial offset
                       transform: `translateY(${(1 - progress * 1.1) * imageStartOffset + (isMobile ? -40 : 0)}vh)`,
                       opacity: Math.min(1, progress * 2),
                       zIndex: 20,
