@@ -54,14 +54,12 @@ const FilmProcessCycle = () => {
       {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
-        src="assets/projector_background.mp4"
+        src="assets/PROJECTOR SECTION.mov"
         autoPlay
         muted
         loop
         playsInline
       />
-      {/* Dark overlay to keep content readable */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
 
       <div className="relative z-10 w-full max-w-7xl flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-16">
         
@@ -151,8 +149,8 @@ const FilmProcessCycle = () => {
 
         {/* Projection Screen Section */}
         <div className="flex-1 relative min-h-[300px] lg:min-h-[400px] w-full lg:w-auto flex items-center justify-center mt-24 lg:mt-0">
-          {/* Screen frame */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl border-8 border-gray-700"></div>
+          {/* Screen frame with glassmorphism */}
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20"></div>
           
           {/* Screen content area */}
           <div className="relative z-10 w-full h-full p-6 lg:p-12 flex flex-col items-center justify-center">
@@ -167,7 +165,7 @@ const FilmProcessCycle = () => {
               {/* Step indicator */}
               <div className="mb-4 lg:mb-6 flex items-center justify-center gap-2">
                 <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
-                <span className="text-gray-400 text-xs lg:text-sm font-mono">
+                <span className="text-white text-xs lg:text-sm font-mono">
                   {String(currentStep + 1).padStart(2, '0')} / {String(processes.length).padStart(2, '0')}
                 </span>
                 <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
@@ -179,7 +177,7 @@ const FilmProcessCycle = () => {
               </h2>
 
               {/* Subtitle */}
-              <p className="text-base lg:text-2xl text-gray-300 font-arapey italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
+              <p className="text-base lg:text-2xl text-white font-arapey italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
                 {processes[currentStep].subtitle}
               </p>
 
@@ -191,7 +189,7 @@ const FilmProcessCycle = () => {
                     className={`h-1 rounded-full transition-all duration-500 ${
                       index === currentStep 
                         ? `w-8 lg:w-12 bg-gradient-to-r ${processes[currentStep].color}` 
-                        : 'w-4 lg:w-6 bg-gray-600'
+                        : 'w-4 lg:w-6 bg-white/40'
                     }`}
                   ></div>
                 ))}
@@ -199,7 +197,7 @@ const FilmProcessCycle = () => {
             </div>
 
             {/* Vignette effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/40 rounded-2xl pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/20 rounded-2xl pointer-events-none"></div>
           </div>
         </div>
       </div>
