@@ -130,9 +130,9 @@ const FilmStudioHero = () => {
 
           @media (min-width: 768px) {
             .hero-logo {
-              width: 35vw;
-              max-width: 600px;
-              min-width: 400px;
+              width: 30vw;
+              max-width: 500px;
+              min-width: 350px;
             }
           }
 
@@ -224,7 +224,7 @@ const FilmStudioHero = () => {
               left: '50%',
               top: '50%',
               transform: 'translate(-50%, -50%)',
-              marginTop: '25vh',
+              marginTop: '20vh',
               zIndex: 30
             }}
           >
