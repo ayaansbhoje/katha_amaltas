@@ -30,9 +30,21 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo on the left */}
-        <Link to="/" className="flex-shrink-0">
+      <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
+        {/* Home button on the left */}
+        <Link 
+          to="/" 
+          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
+            location.pathname === '/' 
+              ? 'text-yellow-400' 
+              : 'text-white hover:text-yellow-400'
+          }`}
+        >
+          Home
+        </Link>
+
+        {/* Logo in the center */}
+        <Link to="/" className="absolute left-1/2 transform -translate-x-1/2">
           <img 
             src="/assets/Asset 5@4x (1).png" 
             alt="Logo" 
@@ -40,32 +52,17 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Navigation buttons in the center */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-8">
-          <Link 
-            to="/" 
-            className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
-              location.pathname === '/' 
-                ? 'text-yellow-400' 
-                : 'text-white hover:text-yellow-400'
-            }`}
-          >
-            Home
-          </Link>
-          <Link 
-            to="/film" 
-            className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
-              location.pathname === '/film' 
-                ? 'text-yellow-400' 
-                : 'text-white hover:text-yellow-400'
-            }`}
-          >
-            Film
-          </Link>
-        </div>
-
-        {/* Spacer to balance the layout */}
-        <div className="flex-shrink-0 w-32 md:w-40"></div>
+        {/* Film button on the right */}
+        <Link 
+          to="/film" 
+          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
+            location.pathname === '/film' 
+              ? 'text-yellow-400' 
+              : 'text-white hover:text-yellow-400'
+          }`}
+        >
+          Film
+        </Link>
       </div>
     </nav>
   );
