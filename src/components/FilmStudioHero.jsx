@@ -108,7 +108,6 @@ const FilmStudioHero = () => {
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
           
           .story-container {
-            background: linear-gradient(180deg, hsl(220, 20%, 4%) 0%, hsl(240, 25%, 8%) 100%);
             min-height: 100vh;
           }
           
@@ -117,7 +116,7 @@ const FilmStudioHero = () => {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 600;
             line-height: 1.1;
-            color: hsl(60, 10%, 95%);
+            color: #8B0000;
           }
           
           .story-word {
@@ -206,7 +205,15 @@ const FilmStudioHero = () => {
         </div>
 
         {/* Story Section */}
-        <div className="story-container">
+        <div className="story-container relative">
+          {/* Background GIF for story section only */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="assets/DISCOVERY_SECTION.gif" 
+              alt="Story background" 
+              className="w-full h-full object-contain"
+            />
+          </div>
           {storySections.map((section, sectionIndex) => {
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 1000;
             const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
@@ -272,9 +279,10 @@ const FilmStudioHero = () => {
                       })}
                     </h1>
                     <p 
-                      className="mt-6 md:mt-8 text-sm md:text-base text-gray-300 max-w-3xl mx-auto leading-relaxed px-4"
+                      className="mt-6 md:mt-8 text-sm md:text-base max-w-3xl mx-auto leading-relaxed px-4"
                       style={{
                         fontFamily: 'Avenir, sans-serif',
+                        color: '#8B0000',
                         opacity: isVisible ? 1 : 0,
                         transform: isVisible ? 'translateY(0px)' : 'translateY(12px)',
                         transition: 'opacity 700ms cubic-bezier(0.22,0.61,0.36,1), transform 700ms cubic-bezier(0.22,0.61,0.36,1)',
