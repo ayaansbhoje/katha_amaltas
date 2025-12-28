@@ -4,25 +4,25 @@ const FilmStudioHero = () => {
   const slides = [
     {
       name: 'LISTENING',
-      image: '/assets/hero_sec1.jpg',
+      image: '/assets/hero_img1.png',
       category: 'BEFORE FILMING',
       header: 'OUR WORK BEGINS WITH RELATIONSHIPS'
     },
     {
       name: 'TRUTH',
-      image: '/assets/hero_sec2.jpg',
+      image: '/assets/hero_img.jpg',
       category: 'BEFORE NARRATIVES',
       header: 'AUTHENTIC STORIES'
     },
     {
       name: 'PROCESS',
-      image: '/assets/hero_sec3.jpg',
+      image: '/assets/hero_img3.png',
       category: 'BEFORE POLISH',
       header: 'CREATIVE JOURNEY'
     },
     {
       name: 'RESEARCH',
-      image: '/assets/hero_sec4.jpg',
+      image: '/assets/hero_img4.png',
       category: 'BEFORE FORM',
       header: 'DEEP DIVE'
     }
@@ -123,19 +123,6 @@ const FilmStudioHero = () => {
             background: radial-gradient(ellipse at center, rgba(245,158,11,0.18) 0%, transparent 70%);
           }
 
-          .hero-logo {
-            width: 200px;
-            height: auto;
-          }
-
-          @media (min-width: 768px) {
-            .hero-logo {
-              width: 30vw;
-              max-width: 500px;
-              min-width: 350px;
-            }
-          }
-
           .hero-nav-left {
             left: 2vw;
           }
@@ -217,31 +204,13 @@ const FilmStudioHero = () => {
             ))}
           </div>
 
-          {/* Center Logo */}
-          <div 
-            className="absolute pointer-events-none"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              marginTop: '20vh',
-              zIndex: 30
-            }}
-          >
-            <img 
-              src="/assets/Asset 5@4x (1).png" 
-              alt="Muks & G Studios Logo" 
-              className="hero-logo"
-            />
-          </div>
-
           {/* Dynamic Center Header */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
             <h2 
               className="text-2xl md:text-3xl font-bold text-white transition-opacity duration-700"
               style={{ 
                 fontFamily: 'Bebas Neue, sans-serif',
-                opacity: isTransitioning ? 0 : 1
+                opacity: isTransitioning ? 0 : 0.5
               }}
             >
               {slides[currentIndex].header}

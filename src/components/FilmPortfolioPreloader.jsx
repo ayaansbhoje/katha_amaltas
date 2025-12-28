@@ -31,7 +31,7 @@ export default function FilmPortfolioPreloader({ onComplete }) {
         }`}
       >
         <video 
-          src="assets/AMALTAS_LOGO_ANIMATION - Trim.mp4" 
+          src="/assets/AMALTAS LOGO ANIMATION YELLOW (1).webm" 
           autoPlay
           muted
           playsInline
