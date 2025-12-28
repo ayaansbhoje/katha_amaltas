@@ -9,51 +9,57 @@ const LayeredGallery = () => {
   const items = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop',
+      video: 'assets/V1.MP4',
       title: 'techno is dumb',
       description: 'Exploring contemporary design'
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop',
+      video: 'assets/V2.MP4',
       title: 'Urban Landscapes',
       description: 'City life in motion'
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+      video: 'assets/V4.mp4',
       title: 'Abstract Forms',
       description: 'Geometric patterns and shapes'
     },
     {
       id: 4,
-      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&h=600&fit=crop',
+      video: 'assets/V8.MOV',
       title: 'Natural Beauty',
       description: 'Organic textures and colors'
     },
     {
       id: 5,
-      image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&h=600&fit=crop',
+      video: 'assets/V9.mp4',
       title: 'Creative Space',
       description: 'Innovation and imagination'
     },
     {
       id: 6,
-      image: 'https://images.unsplash.com/photo-1552083974-186346191183?w=800&h=600&fit=crop',
+      video: 'assets/V11.mp4',
       title: 'Minimalist Design',
       description: 'Simplicity and elegance'
     },
     {
       id: 7,
-      image: 'https://images.unsplash.com/photo-1571488345061-6d7c09f7c0f8?w=800&h=600&fit=crop',
+      video: 'assets/V13.mp4',
       title: 'Digital Art',
       description: 'Technology meets creativity'
     },
     {
       id: 8,
-      image: 'https://images.unsplash.com/photo-1534670007418-fbb7f6cf32c3?w=800&h=600&fit=crop',
+      video: 'assets/V14.mp4',
       title: 'Architectural Beauty',
       description: 'Structure and design harmony'
+    },
+    {
+      id: 9,
+      video: 'assets/V15.mp4',
+      title: 'Cinematic Vision',
+      description: 'Motion and storytelling'
     }
   ];
 
@@ -130,16 +136,19 @@ const LayeredGallery = () => {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                {/* Image Card */}
+                {/* Video Card */}
                 <div className="relative w-40 h-28 sm:w-56 sm:h-40 md:w-72 md:h-52 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                  {/* Image */}
-                  <img
-                    src={item.image}
-                    alt={item.title}
+                  {/* Video */}
+                  <video
+                    src={item.video}
                     className="w-full h-full object-cover transition-transform duration-700"
                     style={{
                       transform: isHovered ? 'scale(1.1)' : 'scale(1)'
                     }}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                   />
                   
                   {/* Gradient Overlay */}
