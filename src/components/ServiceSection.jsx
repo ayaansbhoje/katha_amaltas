@@ -179,12 +179,12 @@ const ServiceSection = () => {
             src={services[activeIndex]?.image}
             alt={services[activeIndex]?.title || 'Backdrop'}
             className="w-full h-full object-cover scale-110"
-            style={{ filter: 'blur(25px)', opacity: 0.2 }}
+            style={{ filter: 'blur(6px)', opacity: 0.5 }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.2 }}
+            animate={{ opacity: 0.5 }}
             transition={{ duration: 0.3 }}
           />
-          <div className="absolute inset-0" style={{ backgroundColor: 'rgba(101, 11, 15, 0.1)' }} />
+
         </div>
         
         <div className={`h-full flex relative z-10 ${isMobile ? 'flex-col' : ''}`}>
@@ -205,7 +205,7 @@ const ServiceSection = () => {
               WHAT <br />
               WE DO
             </h2>
-            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
+            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: "'Work Sans', sans-serif", fontWeight: 400 }}>
               We work across film, documentation, and cultural storytelling — creating work that is research-led, visually grounded, and shaped from inside the worlds it documents.
             </p>
           </div>
