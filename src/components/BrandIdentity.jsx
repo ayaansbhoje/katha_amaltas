@@ -155,7 +155,7 @@ const BrandIdentity = () => {
         />
         
         {/* Dark Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/20 z-[1]" />
+        
         
         {/* Content Overlay */}
         <div className="relative z-10 h-full flex flex-col justify-center items-center p-8 md:p-12 lg:p-16">

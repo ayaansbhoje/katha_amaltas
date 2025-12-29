@@ -133,13 +133,6 @@ const FilmGallery = () => {
         ))}
       </div>
 
-      {/* Top Right Header */}
-      <div className="absolute top-46 right-32 z-40 pointer-events-none max-w-md">
-        <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
-          HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
-        </h3>
-      </div>
-
       {/* Gallery Section */}
       <section
         ref={containerRef}
@@ -147,39 +140,91 @@ const FilmGallery = () => {
         className="relative flex items-center justify-center cursor-none"
         style={{ height: '85vh' }}
       >
-        {/* Left Header Text */}
-        <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
-          <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
-            STORIES
-          </h2>
-          <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
-            THAT ARE
-          </h2>
-          <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
-            LIVED,
-          </h2>
+        {/* Desktop Layout */}
+        <div className="hidden lg:block w-full h-full">
+          {/* Left Header Text */}
+          <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
+            <h2 className="text-8xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              STORIES
+            </h2>
+            <h2 className="text-3xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              THAT ARE
+            </h2>
+            <h2 className="text-9xl font-bold mt-6" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              LIVED,
+            </h2>
+          </div>
+
+          {/* Center Image */}
+          <div className="z-30 pointer-events-none absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ marginTop: '8vh' }}>
+            <img 
+              src="/assets/StudioVirtualBackground.png" 
+              alt="Stories that are lived, then filmed" 
+              className="w-[110rem] h-auto object-contain"
+            />
+          </div>
+
+          {/* Right Bottom Text */}
+          <div className="absolute right-8 bottom-1/4 z-40 pointer-events-none">
+            <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              THEN
+            </h2>
+            <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
+              FILMED.
+            </h2>
+          </div>
+
+          {/* Top Right Header */}
+          <div className="absolute top-46 right-32 z-40 pointer-events-none max-w-md">
+            <h3 className="text-2xl font-bold text-right" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+              HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
+            </h3>
+          </div>
         </div>
 
-        {/* Center Image */}
-        <div className="z-30 pointer-events-none" style={{ marginTop: '8vh' }}>
-          <img 
-            src="/assets/StudioVirtualBackground.png" 
-            alt="Stories that are lived, then filmed" 
-            className="w-[110rem] h-auto object-contain"
-          />
+        {/* Mobile Layout */}
+        <div className="lg:hidden flex flex-col items-center justify-center w-full h-full px-6 py-8">
+          {/* Top - Left Headers */}
+          <div className="z-40 pointer-events-none text-center mb-6">
+            <h2 className="text-5xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              STORIES
+            </h2>
+            <h2 className="text-xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              THAT ARE
+            </h2>
+            <h2 className="text-6xl font-bold mt-2" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              LIVED,
+            </h2>
+          </div>
+
+          {/* Center - Center Image */}
+          <div className="z-30 pointer-events-none my-4">
+            <img 
+              src="/assets/StudioVirtualBackground.png" 
+              alt="Stories that are lived, then filmed" 
+              className="w-full max-w-sm h-auto object-contain"
+            />
+          </div>
+
+          {/* Below Center - Right Bottom Text */}
+          <div className="z-40 pointer-events-none text-center my-6">
+            <h2 className="text-6xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              THEN
+            </h2>
+            <h2 className="text-6xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+              FILMED.
+            </h2>
+          </div>
+
+          {/* Bottom - Top Right Header */}
+          <div className="z-40 pointer-events-none max-w-sm">
+            <h3 className="text-lg font-bold text-center" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+              HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
+            </h3>
+          </div>
         </div>
 
-        {/* Right Bottom Text */}
-        <div className="absolute right-8 bottom-1/4 z-40 pointer-events-none">
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
-            THEN
-          </h2>
-          <h2 className="text-9xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', marginLeft: '3rem' }}>
-            FILMED.
-          </h2>
-        </div>
-
-        {/* Image Trail */}
+        {/* Image Trail - Works on both desktop and mobile */}
         <div className="absolute inset-0 pointer-events-none">
           {images.map((img) => (
             <div
