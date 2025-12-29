@@ -15,7 +15,7 @@ const projects = [
     title: "River's Whisper",
     year: "2023",
     description: "Aerial cinematography of the serpentine rivers cutting through ancient forests, where fog dances with the morning light.",
-    video: 'assets/V1.MP4',
+    video: '/assets/ANKURAN_TRAILER.mov',
   },
   {
     id: 3,
