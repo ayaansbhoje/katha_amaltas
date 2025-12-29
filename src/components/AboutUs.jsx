@@ -253,14 +253,14 @@ const AboutUs = () => {
   const founders = [
     {
       name: "Gurman Kaur",
-      role: "Designer",
+      role: "Writer & Filmmaker",
       bio: "Gurman Kaur is a multidisciplinary writer and filmmaker working across artist documentaries, research, and scripting. Her practice centres on shaping ideas into structured, compelling visual narratives. She focuses on culturally rooted stories that are emotionally precise and thoughtfully made.",
       quote: "Never let the truth get in the way of a good story.",
       imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=face",
     },
     {
       name: "Mukul Kapoor",
-      role: "Designer",
+      role: "Writer & Filmmaker",
       bio: "Mukul Kapoor is an award-winning independent film director and writer working across documentary, art spaces and narrative cinema. His work is grounded in research and long-term, on-ground engagement, often involving extended documentation across locations. He focuses predominantly on art, culture, and contemporary practices through observational filmmaking and clear storytelling.",
       quote: "Design is not just what it looks like, design is how it works.",
       imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",

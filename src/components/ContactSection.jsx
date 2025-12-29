@@ -152,10 +152,23 @@ const ContactSection = () => {
               Have a film, exhibition, or cultural project in mind?
             </span>
 
-            <div className="flex gap-3">
+            <a
+              href="mailto:gurmankaurwork@gmail.com"
+              className="flex gap-3 items-center px-4 py-2 rounded-lg border transition-all hover:bg-white/10"
+              style={{ borderColor: "#FFF6D0", width: "fit-content" }}
+            >
               <Mail className="w-5 h-5" style={{ color: "#FFF6D0" }} />
-              <span style={{ color: "#FFF6D0" }}>hello@portfolio.com</span>
-            </div>
+              <span style={{ color: "#FFF6D0" }}>gurmankaurwork@gmail.com</span>
+            </a>
+
+            <a
+              href="mailto:mukulkapoorwork@gmail.com"
+              className="flex gap-3 items-center px-4 py-2 rounded-lg border transition-all hover:bg-white/10"
+              style={{ borderColor: "#FFF6D0", width: "fit-content" }}
+            >
+              <Mail className="w-5 h-5" style={{ color: "#FFF6D0" }} />
+              <span style={{ color: "#FFF6D0" }}>mukulkapoorwork@gmail.com</span>
+            </a>
 
             <div className="flex gap-3">
               <MapPin className="w-5 h-5" style={{ color: "#FFF6D0" }} />
