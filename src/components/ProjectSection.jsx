@@ -36,7 +36,7 @@ const projects = [
     title: "Desert Solitude",
     year: "2022",
     description: "The shifting sands of the Sahara at twilight, where shadows tell stories older than civilization itself.",
-    video: 'assets/V8.MOV',
+    video: '/assets/JANGARH_FINAL_TESER.mov',
   },
   {
     id: 6,
