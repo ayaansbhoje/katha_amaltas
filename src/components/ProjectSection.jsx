@@ -46,73 +46,6 @@ const projects = [
   
 ];
 
-// Wind Chime Component
-const WindChime = () => {
-  // Sample images for wind chime - you can replace these with your own image paths
-  const chimeImages = [
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop'
-  ];
-  const swayAnimations = [
-    { rotate: [0, 4, 0, -3, 0], duration: 3 },
-    { rotate: [0, -3, 0, 4, 0], duration: 3.5 },
-    { rotate: [0, 5, 0, -4, 0], duration: 4 }
-  ];
-  return (
-    <div className="relative flex items-start scale-75 md:scale-125">
-      <div className="relative">
-        <div
-          className="w-96 h-4 bg-gradient-to-r from-transparent to-transparent rounded-full"
-          style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(225,211,182,0.8) 50%, transparent 100%)' }}
-        />
-        <div className="flex justify-between px-8 mt-0">
-          {chimeImages.map((img, index) => (
-            <div key={index} className="flex flex-col items-center" style={{ transformOrigin: 'top center' }}>
-              <div
-                className="bg-gradient-to-b"
-                style={{
-                  width: '2px',
-                  height: `${160 + index * 60}px`,
-                  backgroundImage: 'linear-gradient(180deg, rgba(225,211,182,0.9), rgba(225,211,182,0.3))'
-                }}
-              />
-              <motion.div
-                initial={{ opacity: 0, rotate: 0 }}
-                animate={{ opacity: 1, rotate: swayAnimations[index].rotate }}
-                transition={{
-                  opacity: { delay: 0.5 + index * 0.2, duration: 0.8 },
-                  rotate: { delay: 1.3 + index * 0.3, duration: swayAnimations[index].duration, repeat: Infinity, ease: "easeInOut" }
-                }}
-                style={{ transformOrigin: 'top center' }}
-              >
-                <motion.div
-                  className="relative overflow-hidden rounded-sm shadow-2xl"
-                  style={{ width: `${120 + index * 20}px`, height: `${160 + index * 30}px` }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <img 
-                    src={img} 
-                    alt={`Chime image ${index + 1}`} 
-                    className="w-full h-full object-cover" 
-                    loading={index === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
-                </motion.div>
-                <div
-                  className="w-2 h-6 mt-1 rounded-full mx-auto"
-                  style={{ backgroundColor: 'rgba(225,211,182,0.5)' }}
-                />
-              </motion.div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Flying Poster Component
 const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, activeProject }) => {
   const videoRef = useRef(null);
@@ -506,50 +439,8 @@ const CinematicGallery = () => {
 const ProjectSection = () => {
   return (
     <>
-      <section
-        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: "url('assets/project_newbg.png')",
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        {/* REMOVED: Light black vignette overlay */}
-
-        {/* Center Wind Chime */}
-        <div className="relative z-10 flex flex-col items-center justify-center mt-4 md:mt-6">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ duration: 1.5, delay: 1 }}
-          >
-            <WindChime />
-          </motion.div>
-          
-          {/* Portfolio Showcase text below chime */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.8 }}
-            className="-mt-2 text-center"
-          >
-            <p className="text-stone-300/90 text-sm md:text-base tracking-[0.4em] uppercase font-semibold" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
-              PORTFOLIO<br />SHOWCASE
-            </p>
-          </motion.div>
-        </div>
-
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 2 }} className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-          <span className="text-stone-300/60 text-xs tracking-widest uppercase mb-4" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Scroll to explore</span>
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-px h-16 bg-gradient-to-b from-stone-400 to-transparent" />
-        </motion.div>
-      </section>
-
-      {/* Cinematic Gallery Section — pulled up slightly to sit closer to WindChime */}
-      <div className="-mt-32">
-        <CinematicGallery />
-      </div>
+      {/* Cinematic Gallery Section */}
+      <CinematicGallery />
     </>
   );
 };
