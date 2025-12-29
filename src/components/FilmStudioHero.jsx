@@ -6,25 +6,25 @@ const FilmStudioHero = () => {
       name: 'LISTENING',
       image: '/assets/hero_img1.png',
       category: 'BEFORE FILMING',
-      header: 'OUR WORK BEGINS WITH RELATIONSHIPS'
+      header: 'OUR STARTING POINT'
     },
     {
       name: 'TRUTH',
       image: '/assets/hero_img.jpg',
       category: 'BEFORE NARRATIVES',
-      header: 'AUTHENTIC STORIES'
+      header: 'OUR APPROACH'
     },
     {
       name: 'PROCESS',
       image: '/assets/hero_img3.png',
       category: 'BEFORE POLISH',
-      header: 'CREATIVE JOURNEY'
+      header: 'HOW WE WORK'
     },
     {
       name: 'RESEARCH',
       image: '/assets/hero_img4.png',
       category: 'BEFORE FORM',
-      header: 'DEEP DIVE'
+      header: 'GROUNDING THE WORK'
     }
   ];
 
