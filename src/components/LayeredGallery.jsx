@@ -100,9 +100,9 @@ const LayeredGallery = () => {
     const currentAngle = (index * angleStep) + (rotation * Math.PI / 180);
     
     const radiusX = 35; // Horizontal radius
-    const radiusY = 25; // Vertical radius for elliptical path
+    const radiusY = 30; // Vertical radius for elliptical path
     const centerX = 50;
-    const centerY = 55;
+    const centerY = 48; // Adjusted center position
     
     const x = centerX + Math.cos(currentAngle) * radiusX;
     const y = centerY + Math.sin(currentAngle) * radiusY;
@@ -113,7 +113,14 @@ const LayeredGallery = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
+    <div className="relative w-full min-h-screen h-[140vh] overflow-hidden">
+      {/* Background Image */}
+      <img 
+        src="/assets/filmgallery_bg.jpg" 
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
       {/* 3D Container */}
       <div className="absolute inset-0" style={{ perspective: '1500px' }}>
         <div 
@@ -156,14 +163,6 @@ const LayeredGallery = () => {
                     muted
                     playsInline
                   />
-                  
-                  {/* Gradient Overlay */}
-                  <div 
-                    className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"
-                    style={{
-                      opacity: 0.5
-                    }}
-                  />
                 </div>
               </div>
             );
@@ -171,26 +170,13 @@ const LayeredGallery = () => {
         </div>
       </div>
 
-      {/* UI Overlay */}
-      <div className="absolute top-16 left-4 sm:top-20 sm:left-6 md:top-24 md:left-8 z-50">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-5 tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400 }}>Stories in Short Form</h1>
-        <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest" style={{ fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
+      {/* UI Overlay - Centered */}
+      <div className="absolute top-8 left-0 right-0 sm:top-12 md:top-14 z-50 text-center px-4">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-1 sm:mb-2 md:mb-2 tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, color: '#91222C' }}>Stories in Short Form</h1>
+        <p className="text-white text-[10px] sm:text-xs md:text-sm  tracking-widest" style={{ fontFamily: "'Avenir', sans-serif", fontWeight: 400,color: '#91222C' }}>
           Narratives adapted for the digital present,<br />
           brief in duration, complete in feeling.
         </p>
-      </div>
-
-      {/* Navigation Menu */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-50 flex gap-3 sm:gap-4 md:gap-6">
-        <button className="text-white/60 hover:text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider transition-colors">
-          Studio
-        </button>
-        <button className="text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">
-          Portfolio
-        </button>
-        <button className="text-white/60 hover:text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-wider transition-colors">
-          Exhibition
-        </button>
       </div>
 
     </div>
