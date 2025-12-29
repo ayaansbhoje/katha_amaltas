@@ -116,6 +116,7 @@ const WindChime = () => {
 
 // Flying Poster Component
 const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, activeProject }) => {
+  const videoRef = useRef(null);
   const posterSpacing = 55; // vw
   const totalWidth = projects.length * posterSpacing; // vw
   const startPosition = 25; // vw
@@ -139,6 +140,19 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
 
   const scale = isActive ? 1 : 0.8;
   const opacity = isActive ? 1 : Math.max(0.25, 1 - distanceFromCenter * 0.012);
+
+  // Control video playback based on isActive
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isActive) {
+        videoRef.current.play().catch(err => {
+          console.warn('Video play failed:', err);
+        });
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isActive]);
 
   return (
     <motion.div
@@ -174,21 +188,23 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
             : '0 20px 60px -15px rgba(0,0,0,0.7)',
         }}
       >
-        <motion.video
-          src={project.video}
-          className="w-full h-full object-cover"
-          autoPlay={isActive}
-          loop
-          muted
-          playsInline
-          preload={isActive ? "auto" : "none"}
-          loading="lazy"
+        <motion.div
           animate={{
             scale: 1 + Math.abs(rotateY) * 0.008,
             filter: isActive ? 'brightness(1) saturate(1.1)' : 'brightness(0.55) saturate(0.7)',
           }}
           transition={{ duration: 0.4 }}
-        />
+        >
+          <video
+            ref={videoRef}
+            src={project.video}
+            className="w-full h-full object-cover"
+            loop
+            muted
+            playsInline
+            preload="auto"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/20" />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/25 via-transparent to-zinc-900/25" />
         {isActive && (
@@ -219,17 +235,7 @@ const CinematicGallery = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [containerHeight, setContainerHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1000);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
-  const [loadedVideos, setLoadedVideos] = useState(new Set([0])); // Track loaded videos
-
-  // Preload first video
-  useEffect(() => {
-    if (projects[0]?.video) {
-      const video = document.createElement('video');
-      video.src = projects[0].video;
-      video.preload = 'metadata';
-      video.muted = true;
-    }
-  }, []);
+  const videoPreloadRefs = useRef({}); // Store video elements for preloading
 
   // Keep these in sync with FlyingPoster if you edit spacing
   const posterSpacing = 55; // vw per poster
@@ -290,25 +296,54 @@ const CinematicGallery = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [containerHeight, isMobile]);
 
-  // Preload adjacent videos when project changes
+  // Preload videos in background - doesn't affect visibility
   useEffect(() => {
-    const preloadAdjacent = (index) => {
-      const prevIndex = index > 0 ? index - 1 : projects.length - 1;
-      const nextIndex = index < projects.length - 1 ? index + 1 : 0;
+    const preloadVideo = (index) => {
+      if (!projects[index]?.video || videoPreloadRefs.current[index]) return;
       
-      [prevIndex, index, nextIndex].forEach((idx) => {
-        if (!loadedVideos.has(idx) && projects[idx]?.video) {
-          const video = document.createElement('video');
-          video.src = projects[idx].video;
-          video.preload = 'metadata';
-          video.muted = true;
-          setLoadedVideos(prev => new Set([...prev, idx]));
+      // Check if video was preloaded in preloader
+      const preloadedVideo = window.__preloadedVideos?.[projects[index].video];
+      
+      if (preloadedVideo) {
+        // Use the preloaded video element
+        videoPreloadRefs.current[index] = preloadedVideo;
+        // Ensure it's ready to play
+        if (preloadedVideo.readyState < 3) {
+          preloadedVideo.load();
         }
-      });
+      } else {
+        // Create new video element if not preloaded
+        const video = document.createElement('video');
+        video.src = projects[index].video;
+        video.preload = 'auto';
+        video.muted = true;
+        video.playsInline = true;
+        video.load();
+        
+        // Try to play to force loading
+        video.play().catch(() => {
+          // Ignore play errors
+        });
+        
+        videoPreloadRefs.current[index] = video;
+      }
     };
+
+    // Preload all videos immediately on mount (they should already be cached from preloader)
+    projects.forEach((_, index) => {
+      preloadVideo(index);
+    });
     
-    preloadAdjacent(activeProject);
-  }, [activeProject, loadedVideos]);
+    // Also preload adjacent videos when active project changes
+    const prevIndex = activeProject > 0 ? activeProject - 1 : projects.length - 1;
+    const nextIndex = activeProject < projects.length - 1 ? activeProject + 1 : 0;
+    const nextNextIndex = nextIndex < projects.length - 1 ? nextIndex + 1 : 0;
+    
+    preloadVideo(activeProject);
+    preloadVideo(prevIndex);
+    preloadVideo(nextIndex);
+    preloadVideo(nextNextIndex);
+  }, [activeProject]);
 
   // show the fixed viewport when scrollProgress is between 0 and 1
   const showFixedViewport = scrollProgress > 0 && scrollProgress < 1;
