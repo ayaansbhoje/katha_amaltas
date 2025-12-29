@@ -267,7 +267,7 @@ const AboutUs = () => {
       ref={sectionRef}
       className="py-12 md:py-16 relative overflow-hidden w-screen"
       style={{
-        backgroundImage: "url('/assets/aboutus_bg.jpg')",
+        backgroundImage: "url('/assets/ab_bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center top",
         backgroundRepeat: "no-repeat",

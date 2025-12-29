@@ -281,11 +281,11 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           src="/assets/Asset 5@4x (1).png" 
           alt="Logo"
           onLoad={handleImageLoad}
-          className="h-36 md:h-46 w-auto object-contain"
+          className="h-24 sm:h-28 md:h-36 lg:h-46 w-auto object-contain"
         />
         
         {/* Loading Bar */}
-        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 w-64 md:w-80">
+        <div className="absolute bottom-32 sm:bottom-36 md:bottom-20 lg:bottom-16 left-1/2 transform -translate-x-1/2 w-64 md:w-80">
           <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
             <div 
               className="h-full bg-white transition-all duration-300 ease-out rounded-full"
