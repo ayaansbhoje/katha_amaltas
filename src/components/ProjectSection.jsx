@@ -5,38 +5,43 @@ import { motion } from 'framer-motion';
 const projects = [
   {
     id: 1,
-    title: "French Embassy in India",
-    year: "Villa Swagatam",
-    description: "Shot across multiple states in India, this documentary traces Villa Swagatam, a cultural residency initiative by the French Embassy in India.The programme brings French artists into sustained dialogue with India’s cultural and craft ecosystems—writers, musicians, designers, and visual artists working alongside local practitioners.Our approach focused on capturing exchange rather than spectacle: moments of listening, collaboration, and the quiet formation of shared artistic language.",
+    title: "French Embassy in India|Villa Swagatam",
+    year: "Promotional documentary",
+    description: "A multi-location documentary tracing artistic exchange between French residents and India's cultural ecosystems.",
     video: 'assets/French_Embassy_Teaser.mov',
+    youtubeUrl: 'https://youtu.be/IVeaqCk0IE8?si=0TnQmwnpQZMAPo9T',
   },
   {
     id: 2,
     title: "Ankuran",
-    year: "",
-    description: "Ankuran is an intimate documentary on the art of idol-making, centred on the hands that sculpt divinity.The film asks quiet but unsettling questions: What does it mean to create the embodiment of a god? How do artisans reconcile devotion with the inevitability of immersion—of watching their work dissolve back into water?Through observation and reflection, Ankuran examines faith not as spectacle, but as labour, repetition, and emotional inheritance.",
+    year: "Award-winning independent documentary",
+    description: "An intimate film on idol-making and devotion. We follow the hands that create gods, and what it means to let them go.",
     video: '/assets/ANKURAN_TRAILER.mov',
+    youtubeUrl: '',
   },
   {
     id: 3,
-    title: "Chemould Prescott Road",
-    year: "60 Years of Chemould",
-    description: "To mark six decades of Chemould’s legacy, we created a three-part documentary series reflecting on the gallery’s role in shaping modern and contemporary Indian art.The films move between archival memory and present-day practice, situating the gallery as both witness and participant in India’s evolving art history.Rather than a retrospective alone, the series functions as a living document—of relationships, risks taken, and conversations sustained across generations.",
+    title: "Chemould Prescott Road|60 Years of Chemould",
+    year: "Three-part documentary series",
+    description: "A documentary series reflecting on six decades of Chemould's role in shaping Indian contemporary art. We sat with the archive, moving between past and present, memory and practice.",
     video: '/assets/CHEMOULD_PRESCOTT_ROAD_TEASER.mov',
+    youtubeUrl: '',
   },
   {
     id: 4,
-    title: "Anant Joshi",
-    year: "Raised Eyebrow",
-    description: "e directed, conceptualised, and documented Raised Eyebrow, a pivotal exhibition by Anant Joshi at Gallery Chemould.Drawing from the image of the blind King Dhritarashtra’s raised eyebrow, the body of work gestures toward inner turbulence—quiet resistance held within darkness.Our film sought to move with the exhibition’s emotional register, translating its layered inquiry into identity, power, and dissent through a restrained, observational lens.",
+    title: "Anant Joshi|Raised Eyebrow",
+    year: "Exhibition film & documentation | Gallery Chemould",
+    description: "An exhibition film shaped by the metaphor of the Blind King Dhritarashtra's raised eyebrow, inner unrest and silent resistance. Our goal was to capture scale & detail simultaneously, allowing questions of power and identity to unfold.",
     video: '/assets/ANANT_FINAL_TESER.mov',
+    youtubeUrl: '',
   },
   {
     id: 5,
-    title: "Jangarh Singh Shyam",
-    year: "Exhibition Documentation",
-    description: "Our documentation of the Jangarh Singh Shyam exhibition focused on preserving the cosmology of his visual language. The film attends to line, pattern, and movement—honouring systems where myth, nature, and memory coexist without hierarchy.",
+    title: "Jangarh Singh Shyam|Exhibition Documentation",
+    year: "Jangarh Singh Shyam| Exhibition Documentation",
+    description: "A film shaped by Jangarh Singh Shyam's visual language. Where myth, nature, and memory come together.",
     video: '/assets/JANGARH_FINAL_TESER.mov',
+    youtubeUrl: '',
   },
   
 ];
@@ -150,7 +155,7 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
 
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2 pointer-events-none"
+      className="absolute top-1/2 left-1/2 pointer-events-auto cursor-pointer"
       animate={{
         x: `calc(-50% + ${xPosition}vw)`,
         y: '-50%',
@@ -168,15 +173,17 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
         mass: 0.9,
       }}
       style={{ transformStyle: 'preserve-3d' }}
+      onClick={() => {
+        if (project.youtubeUrl) {
+          window.open(project.youtubeUrl, '_blank', 'noopener,noreferrer');
+        }
+      }}
     >
       <div
-        className="relative overflow-hidden aspect-[16/9]"
+        className="relative overflow-hidden aspect-[16/9] rounded-sm transition-transform hover:scale-105"
         style={{
           width: isMobile ? 'clamp(280px, 70vw, 500px)' : 'clamp(400px, 80vw, 700px)',
-          clipPath: isActive
-            ? "polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%)"
-            : "polygon(18% 0%, 82% 0%, 96% 100%, 4% 100%)",
-          transition: 'clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
           boxShadow: isActive
             ? '0 30px 100px -25px rgba(0,0,0,0.9), 0 0 80px rgba(182, 155, 100, 0.15)'
             : '0 20px 60px -15px rgba(0,0,0,0.7)',
@@ -209,14 +216,6 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
             transition={{ duration: 0.4 }}
           />
         )}
-        <motion.div className="absolute bottom-6 left-0 right-0 text-center" animate={{ opacity: isActive ? 1 : 0.4 }}>
-          <p className="text-amber-600/80 text-xs tracking-[0.25em] uppercase mb-2" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
-            {project.year}
-          </p>
-          <h4 className="text-lg md:text-xl italic text-zinc-100" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-            {project.title}
-          </h4>
-        </motion.div>
       </div>
     </motion.div>
   );
@@ -375,7 +374,7 @@ const CinematicGallery = () => {
       >
         {/* 3D stage */}
         <div className="absolute inset-0">
-          {/* Blurred backdrop matching active poster */}
+          {/* Blurred backdrop matching active poster - BLUR REDUCED FROM 8px to 4px */}
           <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
             <video
               src={projects[activeProject]?.video}
@@ -385,7 +384,7 @@ const CinematicGallery = () => {
               muted
               playsInline
               preload="auto"
-              style={{ filter: 'blur(25px)', opacity: 0.4 }}
+              style={{ filter: 'blur(4px)', opacity: 0.4 }}
             />
             <div className="absolute inset-0 bg-black/55" />
           </div>
@@ -398,11 +397,11 @@ const CinematicGallery = () => {
             style={{ pointerEvents: 'none' }}
           >
             
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase" style={{ fontFamily: 'Bebas Neue, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
-              Extended 
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase inline-block mr-3" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
+              Extended
             </h2>
-            <h3 className="text-xl md:text-4xl lg:text-5xl text-amber-600 mt-1 uppercase" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>Narratives</h3>
-            <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase mb-2" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
+            <h3 className="text-2xl md:text-4xl lg:text-5xl uppercase inline-block" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif', color: '#d3a345' }}>Narratives</h3>
+            <p className="text-zinc-100 text-xs tracking-[0.3em]  mt-2" style={{ fontFamily: 'Avenir, sans-serif' }}>Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
           </motion.div>
 
           {/* Flying posters */}
@@ -421,11 +420,11 @@ const CinematicGallery = () => {
           </div>
 
           {/* Project info */}
-          <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-60 md:w-72 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ pointerEvents: 'none' }}>
+          <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-96 md:w-[500px] z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ pointerEvents: 'none' }}>
             <motion.div key={activeProject} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-right">
-              <p className="text-amber-600 text-xs tracking-[0.2em] uppercase mb-2 font-medium" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.year}</p>
-              <h4 className="text-lg md:text-xl text-zinc-100 mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>{projects[activeProject]?.title}</h4>
-              <p className="text-zinc-400 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.description}</p>
+              <h4 className="text-lg md:text-xl mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#D3A345' }}>{projects[activeProject]?.title}</h4>
+              <p className="text-zinc-100 text-xs tracking-[0.2em] uppercase mb-2 font-medium" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.year}</p>
+              <p className="text-zinc-100 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{projects[activeProject]?.description}</p>
 
               <div className="flex justify-end gap-1.5 mt-6">
                 {projects.map((_, idx) => (
@@ -434,15 +433,15 @@ const CinematicGallery = () => {
                     className="rounded-full h-0.5"
                     animate={{
                       width: idx === activeProject ? 20 : 6,
-                      backgroundColor: idx === activeProject ? 'rgb(217, 119, 6)' : 'rgb(63, 63, 70)',
+                      backgroundColor: idx === activeProject ? '#D3A345' : 'rgb(255, 255, 255)',
                     }}
                     transition={{ duration: 0.25 }}
                   />
                 ))}
               </div>
 
-              <div className="mt-4 text-zinc-400 text-xs" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
-                <span className="text-amber-600 text-base" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{String(activeProject + 1).padStart(2, '0')}</span>
+              <div className="mt-4 text-zinc-100 text-xs" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>
+                <span className="text-base" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif', color: '#D3A345' }}>{String(activeProject + 1).padStart(2, '0')}</span>
                 <span className="mx-1.5 opacity-40">/</span>
                 <span className="opacity-60">{String(projects.length).padStart(2, '0')}</span>
               </div>
@@ -516,13 +515,7 @@ const ProjectSection = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Light black vignette overlay */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%)'
-          }}
-        />
+        {/* REMOVED: Light black vignette overlay */}
 
         {/* Center Wind Chime */}
         <div className="relative z-10 flex flex-col items-center justify-center mt-4 md:mt-6">
