@@ -56,154 +56,159 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
 
   // Envelope / letter element
   const envelopeBlock = (
-    <div 
-      className="relative w-64 md:w-80 h-48 md:h-56 cursor-pointer group"
-      onClick={() => setIsOpen(!isOpen)}
-      style={{ perspective: '1200px' }}
-    >
-      {/* Envelope base */}
-      <div
-        className="absolute inset-0 rounded-lg overflow-visible transition-all duration-300 group-hover:scale-[1.02]"
-        style={{ 
-          transformStyle: "preserve-3d",
-          background: "linear-gradient(145deg, #faf6f0 0%, #f0e8dc 50%, #e8dcc8 100%)",
-          boxShadow: `
-            0 4px 6px -1px rgba(26, 54, 93, 0.1),
-            0 2px 4px -1px rgba(26, 54, 93, 0.06),
-            inset 0 1px 2px rgba(255, 255, 255, 0.5),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.05)
-          `
-        }}
+    <div className="flex flex-col items-center">
+      <div 
+        className="relative w-64 md:w-80 h-48 md:h-56 cursor-pointer group"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{ perspective: '1200px' }}
       >
-        {/* Paper texture overlay */}
-        <div 
-          className="absolute inset-0 opacity-30 pointer-events-none"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26, 54, 93, 0.03) 2px, rgba(26, 54, 93, 0.03) 3px),
-              repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(26, 54, 93, 0.03) 2px, rgba(26, 54, 93, 0.03) 3px)
-            `
-          }}
-        />
-        
-        {/* Aged paper stains */}
-        <div className="absolute top-4 right-6 w-12 h-12 rounded-full bg-amber-900/5 blur-md" />
-        <div className="absolute bottom-8 left-8 w-16 h-10 rounded-full bg-amber-900/5 blur-lg" />
-        
-        {/* Decorative corner elements */}
-        <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-amber-700/20 rounded-tl" />
-        <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-amber-700/20 rounded-tr" />
-        <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-amber-700/20 rounded-bl" />
-        <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-amber-700/20 rounded-br" />
-        
-        {/* Wax seal replaced with branded image */}
+        {/* Envelope base */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-          style={{ top: '55%' }}
-        >
-          <div className="relative w-12 h-12 md:w-16 md:h-16 transition-transform duration-300 group-hover:rotate-6 drop-shadow-md">
-            <img
-              src="/assets/waxed_stamp.png"
-              alt="Wax seal"
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </div>
-
-        {/* Envelope flap with better shading */}
-        <div
-          className="absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-700 ease-out"
+          className="absolute inset-0 rounded-lg overflow-visible transition-all duration-300 group-hover:scale-[1.02]"
           style={{ 
             transformStyle: "preserve-3d",
-            background: "linear-gradient(180deg, #e8dcc8 0%, #f0e8dc 50%, #faf6f0 100%)",
-            clipPath: "polygon(0 0, 50% 100%, 100% 0)",
-            transform: flapOpen ? 'rotateX(-180deg) translateZ(10px)' : 'rotateX(0deg)',
-            boxShadow: flapOpen ? '0 -4px 12px rgba(0,0,0,0.15)' : '0 2px 8px rgba(0,0,0,0.1)',
-            filter: flapOpen ? 'brightness(1.05)' : 'brightness(1)',
-            zIndex: flapOpen ? 15 : 5
+            background: "linear-gradient(145deg, #faf6f0 0%, #f0e8dc 50%, #e8dcc8 100%)",
+            boxShadow: `
+              0 4px 6px -1px rgba(26, 54, 93, 0.1),
+              0 2px 4px -1px rgba(26, 54, 93, 0.06),
+              inset 0 1px 2px rgba(255, 255, 255, 0.5),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.05)
+            `
           }}
         >
-          {/* Flap fold line */}
+          {/* Paper texture overlay */}
           <div 
-            className="absolute bottom-0 left-0 right-0 h-px"
+            className="absolute inset-0 opacity-30 pointer-events-none"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(26, 54, 93, 0.15) 50%, transparent 100%)'
+              backgroundImage: `
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26, 54, 93, 0.03) 2px, rgba(26, 54, 93, 0.03) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(26, 54, 93, 0.03) 2px, rgba(26, 54, 93, 0.03) 3px)
+              `
             }}
           />
-        </div>
+          
+          {/* Aged paper stains */}
+          <div className="absolute top-4 right-6 w-12 h-12 rounded-full bg-amber-900/5 blur-md" />
+          <div className="absolute bottom-8 left-8 w-16 h-10 rounded-full bg-amber-900/5 blur-lg" />
+          
+          {/* Decorative corner elements */}
+          <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-amber-700/20 rounded-tl" />
+          <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-amber-700/20 rounded-tr" />
+          <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-amber-700/20 rounded-bl" />
+          <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-amber-700/20 rounded-br" />
+          
+          {/* Wax seal replaced with branded image */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+            style={{ top: '55%' }}
+          >
+            <div className="relative w-12 h-12 md:w-16 md:h-16 transition-transform duration-300 group-hover:rotate-6 drop-shadow-md">
+              <img
+                src="/assets/waxed_stamp.png"
+                alt="Wax seal"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
 
-        {/* Address lines */}
-        <div className="absolute bottom-8 left-8 right-8 space-y-2 opacity-30">
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent" />
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-4/5 ml-4" />
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-3/5 ml-8" />
-        </div>
-
-        {/* Stamp in corner */}
-        {!isOpen && (
-          <div 
-            className="absolute top-4 right-4 w-12 h-10 border-2 border-amber-700/30 rounded-sm"
-            style={{
-              background: 'linear-gradient(135deg, #e8dcc8 0%, #d4a574 100%)',
-              boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5)'
+          {/* Envelope flap with better shading */}
+          <div
+            className="absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-700 ease-out"
+            style={{ 
+              transformStyle: "preserve-3d",
+              background: "linear-gradient(180deg, #e8dcc8 0%, #f0e8dc 50%, #faf6f0 100%)",
+              clipPath: "polygon(0 0, 50% 100%, 100% 0)",
+              transform: flapOpen ? 'rotateX(-180deg) translateZ(10px)' : 'rotateX(0deg)',
+              boxShadow: flapOpen ? '0 -4px 12px rgba(0,0,0,0.15)' : '0 2px 8px rgba(0,0,0,0.1)',
+              filter: flapOpen ? 'brightness(1.05)' : 'brightness(1)',
+              zIndex: flapOpen ? 15 : 5
             }}
           >
-            <div className="absolute inset-1 border border-dashed border-amber-700/20" />
+            {/* Flap fold line */}
+            <div 
+              className="absolute bottom-0 left-0 right-0 h-px"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(26, 54, 93, 0.15) 50%, transparent 100%)'
+              }}
+            />
           </div>
-        )}
 
-        {/* Click instruction */}
-        {!isOpen && (
-          <div className="absolute bottom-2 md:bottom-3 left-0 right-0 flex justify-center">
-            <p
-              className="text-[10px] md:text-xs font-serif italic tracking-wide"
-              style={{ color: "#704d3b", opacity: 0.75 }}
+          {/* Address lines */}
+          <div className="absolute bottom-8 left-8 right-8 space-y-2 opacity-30">
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent" />
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-4/5 ml-4" />
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-3/5 ml-8" />
+          </div>
+
+          {/* Stamp in corner */}
+          {!isOpen && (
+            <div 
+              className="absolute top-4 right-4 w-12 h-10 border-2 border-amber-700/30 rounded-sm"
+              style={{
+                background: 'linear-gradient(135deg, #e8dcc8 0%, #d4a574 100%)',
+                boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5)'
+              }}
             >
-              tap to open
-            </p>
-          </div>
-        )}
-      </div>
+              <div className="absolute inset-1 border border-dashed border-amber-700/20" />
+            </div>
+          )}
 
-      {/* Letter content - hidden initially, appears after flap opens */}
-      <div
-        className="absolute inset-0 rounded-2xl shadow-2xl p-5 overflow-hidden pointer-events-none"
-        style={{ 
-          background: "linear-gradient(180deg, #f5f0e8 0%, #faf7f2 100%)",
-          transform: letterSlideUp ? 'translateY(-120px)' : 'translateY(0)',
-          transition: 'transform 0.7s ease-out, opacity 0.7s ease-out',
-          opacity: letterSlideUp ? 1 : 0,
-          zIndex: 10
-        }}
-      >
-        {/* Letter header */}
-        <div 
-          className="flex items-center justify-center gap-2 mb-3 transition-opacity duration-500"
-          style={{ 
-            opacity: showContent ? 1 : 0,
-            transitionDelay: showContent ? '0ms' : '0ms'
-          }}
-        >
-          <div className="w-8 h-px bg-amber-700/50" />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L14.09 8.26L21 9.27L16.18 13.14L17.18 20.02L12 16.77L6.82 20.02L7.82 13.14L3 9.27L9.91 8.26L12 2Z" fill="#c4704f" opacity="0.5"/>
-          </svg>
-          <div className="w-8 h-px bg-amber-700/50" />
+          {/* Click instruction */}
+          {!isOpen && (
+            <div className="absolute bottom-2 md:bottom-3 left-0 right-0 flex justify-center">
+              <p
+                className="text-[10px] md:text-xs font-serif italic tracking-wide"
+                style={{ color: "#704d3b", opacity: 0.75 }}
+              >
+                tap to open
+              </p>
+            </div>
+          )}
         </div>
-        
-        {/* Letter content */}
-        <div 
-          className="h-full overflow-y-auto pr-1 transition-opacity duration-700 font-work-sans"
+
+        {/* Letter content - hidden initially, appears after flap opens */}
+        <div
+          className="absolute inset-0 rounded-2xl shadow-2xl p-5 overflow-hidden pointer-events-none"
           style={{ 
-            opacity: showContent ? 1 : 0,
-            transitionDelay: showContent ? '200ms' : '0ms'
+            background: "linear-gradient(180deg, #f5f0e8 0%, #faf7f2 100%)",
+            transform: letterSlideUp ? 'translateY(-120px)' : 'translateY(0)',
+            transition: 'transform 0.7s ease-out, opacity 0.7s ease-out',
+            opacity: letterSlideUp ? 1 : 0,
+            zIndex: 10
           }}
         >
-          <p className="text-xs md:text-sm text-[#704d3b] leading-relaxed mb-3">{bio}</p>
-          <div className="border-l-2 border-amber-700/30 pl-3 py-1 bg-amber-700/5 rounded-r">
-            <p className="text-sm md:text-base text-[#704d3b] italic font-serif">"{quote}"</p>
+          {/* Letter header */}
+          <div 
+            className="flex items-center justify-center gap-2 mb-3 transition-opacity duration-500"
+            style={{ 
+              opacity: showContent ? 1 : 0,
+              transitionDelay: showContent ? '0ms' : '0ms'
+            }}
+          >
+            <div className="w-8 h-px bg-amber-700/50" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14.09 8.26L21 9.27L16.18 13.14L17.18 20.02L12 16.77L6.82 20.02L7.82 13.14L3 9.27L9.91 8.26L12 2Z" fill="#c4704f" opacity="0.5"/>
+            </svg>
+            <div className="w-8 h-px bg-amber-700/50" />
+          </div>
+          
+          {/* Letter content */}
+          <div 
+            className="h-full overflow-y-auto pr-1 transition-opacity duration-700 font-work-sans"
+            style={{ 
+              opacity: showContent ? 1 : 0,
+              transitionDelay: showContent ? '200ms' : '0ms'
+            }}
+          >
+            <p className="text-xs md:text-sm text-[#704d3b] leading-relaxed">{bio}</p>
           </div>
         </div>
+      </div>
+      
+      {/* Name and Role below envelope */}
+      <div className="text-center mt-4">
+        <h3 className="text-2xl md:text-4xl text-white" style={{ fontFamily: 'Avenir, sans-serif' }}>{name}</h3>
+        <p className="text-lg md:text-xl text-white" style={{ fontFamily: 'Avenir, sans-serif' }}>{role}</p>
       </div>
     </div>
   );
@@ -249,14 +254,14 @@ const AboutUs = () => {
     {
       name: "Gurman Kaur",
       role: "Designer",
-      bio: "Gurman is a passionate designer with an eye for detail and a love for creating beautiful, functional designs. With over 5 years of experience in UI/UX design, she brings creativity and innovation to every project.",
+      bio: "Gurman Kaur is a multidisciplinary writer and filmmaker working across artist documentaries, research, and scripting. Her practice centres on shaping ideas into structured, compelling visual narratives. She focuses on culturally rooted stories that are emotionally precise and thoughtfully made.",
       quote: "Never let the truth get in the way of a good story.",
       imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=face",
     },
     {
       name: "Mukul Kapoor",
       role: "Designer",
-      bio: "Mukul is a creative force with a unique perspective on design. His background in fine arts combined with digital expertise allows him to craft experiences that are both visually stunning and deeply meaningful.",
+      bio: "Mukul Kapoor is an award-winning independent film director and writer working across documentary, art spaces and narrative cinema. His work is grounded in research and long-term, on-ground engagement, often involving extended documentation across locations. He focuses predominantly on art, culture, and contemporary practices through observational filmmaking and clear storytelling.",
       quote: "Design is not just what it looks like, design is how it works.",
       imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",
     },
@@ -309,7 +314,7 @@ const AboutUs = () => {
         </div>
 
         {/* Founders section */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 lg:gap-16">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-12 lg:gap-16">
           {/* Left Envelope */}
           <FounderLetter
             key={founders[0].name}
@@ -318,7 +323,7 @@ const AboutUs = () => {
           />
           
           {/* Center Image */}
-          <div className="relative group">
+          <div className="relative group mt-8 md:mt-0">
             <div className="w-48 h-60 md:w-64 md:h-80 overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
               <img
                 src="/assets/g&k.jpg"
@@ -339,9 +344,9 @@ const AboutUs = () => {
         {/* Footer decoration */}
         <div className="mt-12 md:mt-16 text-center">
           <div className="inline-flex items-center gap-3 md:gap-4">
-            <div className="w-8 md:w-12 h-px bg-blue-900/30" />
-            <span className="text-lg md:text-2xl text-[#704d3b] font-serif italic">together, we create magic</span>
-            <div className="w-8 md:w-12 h-px bg-blue-900/30" />
+            <div className="w-8 md:w-12 h-px bg-white" />
+            <span className="text-lg md:text-2xl text-[#ffff] font-serif italic">together, we create magic</span>
+            <div className="w-8 md:w-12 h-px bg-white" />
           </div>
         </div>
       </div>
