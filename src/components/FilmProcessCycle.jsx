@@ -7,33 +7,27 @@ const FilmProcessCycle = () => {
   const processes = [
     {
       title: "LISTENING",
-      subtitle: "We begin by listening — to people, practices, spaces, and intentions. This may happen through conversation, observation, or time spent with the work before anything is defined.",
-      color: "from-purple-600 to-pink-600"
+      subtitle: "We begin by listening — to people, practices, spaces, and intentions. This may happen through conversation, observation, or time spent with the work before anything is defined."
     },
     {
       title: "CONTEXT",
-      subtitle: "Understanding the cultural, historical, and practical worlds the project belongs to. This may involve research, archives, references, or learning how the work already lives.",
-      color: "from-blue-600 to-cyan-600"
+      subtitle: "Understanding the cultural, historical, and practical worlds the project belongs to. This may involve research, archives, references, or learning how the work already lives."
     },
     {
       title: "FRAMING",
-      subtitle: "Deciding how the project should take shape. Together, we determine what form the work needs — a single film, a series, exhibition documentation, or a longer-term collaboration — and what level of presence it requires.",
-      color: "from-green-600 to-emerald-600"
+      subtitle: "Deciding how the project should take shape. Together, we determine what form the work needs — a single film, a series, exhibition documentation, or a longer-term collaboration — and what level of presence it requires."
     },
     {
       title: "DIRECTION",
-      subtitle: "Clarifying the film's point of view and approach. This may be expressed through written notes, conversations, or treatment material — always shaped by the context established earlier.",
-      color: "from-orange-600 to-red-600"
+      subtitle: "Clarifying the film's point of view and approach. This may be expressed through written notes, conversations, or treatment material — always shaped by the context established earlier."
     },
     {
       title: "MAKING",
-      subtitle: "Filming or documenting. We let the space set the terms. Production remains flexible — present without intrusion & structured without excess.",
-      color: "from-indigo-600 to-purple-600"
+      subtitle: "Filming or documenting. We let the space set the terms. Production remains flexible — present without intrusion & structured without excess."
     },
     {
       title: "FINAL FORM",
-      subtitle: "Post-production focuses on how the work comes together — editing, sound design, colour, pacing, and length — ensuring the film is coherent and context-ready, while final placement remains a shared decision.",
-      color: "from-pink-600 to-rose-600"
+      subtitle: "Post-production focuses on how the work comes together — editing, sound design, colour, pacing, and length — ensuring the film is coherent and context-ready, while final placement remains a shared decision."
     }
   ];
 
@@ -51,17 +45,14 @@ const FilmProcessCycle = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 lg:p-8 overflow-hidden">
-      {/* Background video */}
-      <video
+      {/* Background image */}
+      <img
         className="absolute inset-0 w-full h-full object-cover"
-        src="assets/PROJECTOR SECTION.mov"
-        autoPlay
-        muted
-        loop
-        playsInline
+        src="/assets/proj_bg.png"
+        alt="Background"
       />
 
-      <div className="relative z-10 w-full max-w-7xl flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-16">
+      <div className="relative z-10 w-full max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-24">
         
         {/* Film Projector Section */}
         <div className="flex-shrink-0 relative lg:rotate-0 rotate-90">
@@ -148,9 +139,9 @@ const FilmProcessCycle = () => {
         </div>
 
         {/* Projection Screen Section */}
-        <div className="flex-1 relative min-h-[300px] lg:min-h-[400px] w-full lg:w-auto flex items-center justify-center mt-24 lg:mt-0">
-          {/* Screen frame with glassmorphism - changed to beige */}
-          <div className="absolute inset-0 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20" style={{ backgroundColor: 'rgba(245, 235, 220, 0.4)' }}></div>
+        <div className="flex-1 relative min-h-[300px] lg:min-h-[350px] lg:max-w-3xl w-full lg:w-auto flex items-center justify-center mt-24 lg:mt-0">
+          {/* Screen frame - solid color */}
+          <div className="absolute inset-0 rounded-2xl shadow-2xl border border-white/20" style={{ backgroundColor: '#f8e6d2' }}></div>
           
           {/* Screen content area */}
           <div className="relative z-10 w-full h-full p-6 lg:p-12 flex flex-col items-center justify-center">
@@ -158,20 +149,20 @@ const FilmProcessCycle = () => {
             <div className={`text-center transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
               {/* Step indicator */}
               <div className="mb-4 lg:mb-6 flex items-center justify-center gap-2">
-                <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
-                <span className="text-white text-xs lg:text-sm font-mono">
+                <div className="w-12 lg:w-16 h-1 rounded-full" style={{ backgroundColor: '#91222c' }}></div>
+                <span className="text-gray-800 text-xs lg:text-sm font-mono">
                   {String(currentStep + 1).padStart(2, '0')} / {String(processes.length).padStart(2, '0')}
                 </span>
-                <div className={`w-12 lg:w-16 h-1 bg-gradient-to-r ${processes[currentStep].color} rounded-full`}></div>
+                <div className="w-12 lg:w-16 h-1 rounded-full" style={{ backgroundColor: '#91222c' }}></div>
               </div>
 
               {/* Title */}
-              <h2 className={`text-4xl lg:text-7xl font-bold mb-4 lg:mb-6 bg-gradient-to-r ${processes[currentStep].color} bg-clip-text text-transparent tracking-tight`}>
+              <h2 className="text-4xl lg:text-7xl font-bold mb-4 lg:mb-6 bg-clip-text text-transparent tracking-tight" style={{ fontFamily: 'Bebas Neue', color: '#91222c' }}>
                 {processes[currentStep].title}
               </h2>
 
               {/* Subtitle */}
-              <p className="text-base lg:text-2xl text-white italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
+              <p className="text-base lg:text-2xl italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4" style={{ fontFamily: 'Avenir', color: '#91222c' }}>
                 {processes[currentStep].subtitle}
               </p>
 
@@ -182,16 +173,16 @@ const FilmProcessCycle = () => {
                     key={index}
                     className={`h-1 rounded-full transition-all duration-500 ${
                       index === currentStep 
-                        ? `w-8 lg:w-12 bg-gradient-to-r ${processes[currentStep].color}` 
-                        : 'w-4 lg:w-6 bg-white/40'
+                        ? 'w-8 lg:w-12' 
+                        : 'w-4 lg:w-6 bg-gray-400'
                     }`}
+                    style={index === currentStep ? { backgroundColor: '#91222c' } : {}}
                   ></div>
                 ))}
               </div>
             </div>
 
-            {/* Vignette effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/20 rounded-2xl pointer-events-none"></div>
+
           </div>
         </div>
       </div>
