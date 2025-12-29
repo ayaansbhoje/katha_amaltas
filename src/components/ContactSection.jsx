@@ -106,7 +106,7 @@ const ContactSection = () => {
               <defs>
                 <path id="wavePath" d={generateWavePath(wavePhase)} fill="none" />
               </defs>
-              <text fill="#FFF6D0" fontSize="120" fontWeight="400" fontFamily="Aboreto, serif" letterSpacing="-0.03em">
+              <text fill="#FFF6D0" fontSize="120" fontWeight="400" fontFamily="Bebas Neue, sans-serif" letterSpacing="-0.03em">
                 <textPath href="#wavePath" startOffset="50%" textAnchor="middle"> Let's Connect </textPath>
               </text>
             </svg>
@@ -184,7 +184,7 @@ const ContactSection = () => {
             }}>
             
             <div className="relative z-10">
-              <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Aboreto, serif', color: '#FFF6D0' }}>
+              <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#FFF6D0' }}>
                 fill the form. We'll get back within 24 hours.
               </h2>
               
@@ -306,7 +306,7 @@ const ContactSection = () => {
         }
         
         body {
-          font-family: 'Syne', sans-serif;
+          font-family: 'Avenir', 'Syne', sans-serif;
         }
       `}</style>
     </section>
