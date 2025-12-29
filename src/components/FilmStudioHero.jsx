@@ -55,27 +55,66 @@ const FilmStudioHero = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [visibleSections, setVisibleSections] = useState(new Set([0]));
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  // Preload first slide image and next slide
+  // Check if images are preloaded and use them, otherwise preload
   useEffect(() => {
-    if (slides[0]?.image) {
-      const img = new Image();
-      img.src = slides[0].image;
-    }
-    if (slides[1]?.image) {
-      const img = new Image();
-      img.src = slides[1].image;
-    }
+    const loadImages = async () => {
+      // Check if preloader already loaded the images
+      const preloadedImages = window.__preloadedImages || {};
+      const allHeroImages = slides.map(s => s.image);
+      const discoveryGif = 'assets/DISCOVERY_SECTION.gif';
+      
+      // Check if all images are already preloaded
+      const allPreloaded = allHeroImages.every(img => preloadedImages[img]) && preloadedImages[discoveryGif];
+      
+      if (allPreloaded) {
+        // All images already preloaded by preloader
+        setImagesLoaded(true);
+      } else {
+        // Fallback: preload images if not already done
+        const imagePromises = [...allHeroImages, discoveryGif].map(src => {
+          return new Promise((resolve) => {
+            if (preloadedImages[src]) {
+              resolve();
+              return;
+            }
+            
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = () => resolve(); // Continue even if image fails
+            img.src = src;
+          });
+        });
+        
+        await Promise.all(imagePromises);
+        setImagesLoaded(true);
+      }
+    };
+    
+    loadImages();
   }, []);
-  
-  // Preload next slide when currentIndex changes
+
+  // Preload next slide image when currentIndex changes
   useEffect(() => {
     const nextIndex = (currentIndex + 1) % slides.length;
     if (slides[nextIndex]?.image) {
-      const img = new Image();
-      img.src = slides[nextIndex].image;
+      const preloadedImages = window.__preloadedImages || {};
+      if (!preloadedImages[slides[nextIndex].image]) {
+        const img = new Image();
+        img.src = slides[nextIndex].image;
+      }
     }
   }, [currentIndex]);
+
+  // Preload Unsplash images for story sections
+  useEffect(() => {
+    const allStoryImages = storySections.flatMap(section => section.images.map(img => img.src));
+    allStoryImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -113,6 +152,18 @@ const FilmStudioHero = () => {
       setTimeout(() => setIsTransitioning(false), 50);
     }, 300);
   };
+
+  // Show a loading state if images aren't ready yet
+  if (!imagesLoaded) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center bg-black">
+        <div className="text-white text-center">
+          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
