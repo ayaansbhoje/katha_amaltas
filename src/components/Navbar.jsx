@@ -24,17 +24,17 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 border-b border-gray-800 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-white/20 transition-all duration-300 ${
         isScrolled 
           ? 'bg-black/20 backdrop-blur-md' 
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
-        {/* Home button on the left */}
+        {/* Home button on the left - moved more towards right */}
         <Link 
           to="/" 
-          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
+          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ml-12 md:ml-24 ${
             location.pathname === '/' 
               ? 'text-yellow-400' 
               : 'text-white hover:text-yellow-400'
@@ -52,10 +52,10 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Film button on the right */}
+        {/* Film button on the right - moved more towards left */}
         <Link 
           to="/film" 
-          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
+          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 mr-12 md:mr-24 ${
             location.pathname === '/film' 
               ? 'text-yellow-400' 
               : 'text-white hover:text-yellow-400'
