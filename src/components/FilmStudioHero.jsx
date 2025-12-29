@@ -56,6 +56,27 @@ const FilmStudioHero = () => {
   const [scrollY, setScrollY] = useState(0);
   const [visibleSections, setVisibleSections] = useState(new Set([0]));
 
+  // Preload first slide image and next slide
+  useEffect(() => {
+    if (slides[0]?.image) {
+      const img = new Image();
+      img.src = slides[0].image;
+    }
+    if (slides[1]?.image) {
+      const img = new Image();
+      img.src = slides[1].image;
+    }
+  }, []);
+  
+  // Preload next slide when currentIndex changes
+  useEffect(() => {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    if (slides[nextIndex]?.image) {
+      const img = new Image();
+      img.src = slides[nextIndex].image;
+    }
+  }, [currentIndex]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -238,6 +259,8 @@ const FilmStudioHero = () => {
               src="assets/DISCOVERY_SECTION.gif" 
               alt="Story background" 
               className="w-full h-full object-contain"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           {storySections.map((section, sectionIndex) => {
@@ -345,6 +368,8 @@ const FilmStudioHero = () => {
                               src={image.src}
                               alt={image.alt || "Story image"}
                               className="story-image relative w-full rounded-xl md:rounded-2xl object-cover shadow-2xl aspect-[4/3]"
+                              loading="lazy"
+                              decoding="async"
                               style={{
                                 transform: `scale(${0.85 + progress * 0.15})`,
                               }}

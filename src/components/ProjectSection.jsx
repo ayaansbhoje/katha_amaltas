@@ -92,7 +92,13 @@ const WindChime = () => {
                   style={{ width: `${120 + index * 20}px`, height: `${160 + index * 30}px` }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <img src={img} alt={`Chime image ${index + 1}`} className="w-full h-full object-cover" />
+                  <img 
+                    src={img} 
+                    alt={`Chime image ${index + 1}`} 
+                    className="w-full h-full object-cover" 
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
                 </motion.div>
                 <div
@@ -171,10 +177,12 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
         <motion.video
           src={project.video}
           className="w-full h-full object-cover"
-          autoPlay
+          autoPlay={isActive}
           loop
           muted
           playsInline
+          preload={isActive ? "auto" : "none"}
+          loading="lazy"
           animate={{
             scale: 1 + Math.abs(rotateY) * 0.008,
             filter: isActive ? 'brightness(1) saturate(1.1)' : 'brightness(0.55) saturate(0.7)',
@@ -211,6 +219,17 @@ const CinematicGallery = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [containerHeight, setContainerHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1000);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+  const [loadedVideos, setLoadedVideos] = useState(new Set([0])); // Track loaded videos
+
+  // Preload first video
+  useEffect(() => {
+    if (projects[0]?.video) {
+      const video = document.createElement('video');
+      video.src = projects[0].video;
+      video.preload = 'metadata';
+      video.muted = true;
+    }
+  }, []);
 
   // Keep these in sync with FlyingPoster if you edit spacing
   const posterSpacing = 55; // vw per poster
@@ -271,6 +290,26 @@ const CinematicGallery = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [containerHeight, isMobile]);
 
+  // Preload adjacent videos when project changes
+  useEffect(() => {
+    const preloadAdjacent = (index) => {
+      const prevIndex = index > 0 ? index - 1 : projects.length - 1;
+      const nextIndex = index < projects.length - 1 ? index + 1 : 0;
+      
+      [prevIndex, index, nextIndex].forEach((idx) => {
+        if (!loadedVideos.has(idx) && projects[idx]?.video) {
+          const video = document.createElement('video');
+          video.src = projects[idx].video;
+          video.preload = 'metadata';
+          video.muted = true;
+          setLoadedVideos(prev => new Set([...prev, idx]));
+        }
+      });
+    };
+    
+    preloadAdjacent(activeProject);
+  }, [activeProject, loadedVideos]);
+
   // show the fixed viewport when scrollProgress is between 0 and 1
   const showFixedViewport = scrollProgress > 0 && scrollProgress < 1;
 
@@ -316,6 +355,7 @@ const CinematicGallery = () => {
               loop
               muted
               playsInline
+              preload="auto"
               style={{ filter: 'blur(25px)', opacity: 0.4 }}
             />
             <div className="absolute inset-0 bg-black/55" />
