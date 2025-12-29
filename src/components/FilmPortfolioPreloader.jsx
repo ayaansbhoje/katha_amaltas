@@ -293,7 +293,7 @@ export default function FilmPortfolioPreloader({ onComplete }) {
             />
           </div>
           <p className="text-white text-xs mt-2 text-center" style={{ fontFamily: 'Avenir, sans-serif' }}>
-            curating our gallery just for you
+            Curating our gallery just for you
           </p>
         </div>
       </div>
