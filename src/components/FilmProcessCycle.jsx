@@ -149,17 +149,11 @@ const FilmProcessCycle = () => {
 
         {/* Projection Screen Section */}
         <div className="flex-1 relative min-h-[300px] lg:min-h-[400px] w-full lg:w-auto flex items-center justify-center mt-24 lg:mt-0">
-          {/* Screen frame with glassmorphism */}
-          <div className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20"></div>
+          {/* Screen frame with glassmorphism - changed to beige */}
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20" style={{ backgroundColor: 'rgba(245, 235, 220, 0.4)' }}></div>
           
           {/* Screen content area */}
           <div className="relative z-10 w-full h-full p-6 lg:p-12 flex flex-col items-center justify-center">
-            {/* Film grain overlay */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-              animation: 'grain 0.2s steps(10) infinite'
-            }}></div>
-
             {/* Content */}
             <div className={`text-center transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
               {/* Step indicator */}
@@ -172,12 +166,12 @@ const FilmProcessCycle = () => {
               </div>
 
               {/* Title */}
-              <h2 className={`text-4xl lg:text-7xl font-aboreto mb-4 lg:mb-6 bg-gradient-to-r ${processes[currentStep].color} bg-clip-text text-transparent tracking-tight`}>
+              <h2 className={`text-4xl lg:text-7xl font-bold mb-4 lg:mb-6 bg-gradient-to-r ${processes[currentStep].color} bg-clip-text text-transparent tracking-tight`}>
                 {processes[currentStep].title}
               </h2>
 
               {/* Subtitle */}
-              <p className="text-base lg:text-2xl text-white font-arapey italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
+              <p className="text-base lg:text-2xl text-white italic tracking-wide max-w-sm lg:max-w-lg mx-auto px-4">
                 {processes[currentStep].subtitle}
               </p>
 
@@ -201,21 +195,6 @@ const FilmProcessCycle = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-5%, -5%); }
-          20% { transform: translate(-10%, 5%); }
-          30% { transform: translate(5%, -10%); }
-          40% { transform: translate(-5%, 15%); }
-          50% { transform: translate(-10%, 5%); }
-          60% { transform: translate(15%, 0); }
-          70% { transform: translate(0, 10%); }
-          80% { transform: translate(-15%, 0); }
-          90% { transform: translate(10%, 5%); }
-        }
-      `}</style>
     </div>
   );
 };

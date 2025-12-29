@@ -6,10 +6,8 @@ const SimpleCinematicCarousel = () => {
   const fullHeader = "SPACES WE'VE WORKED IN";
   
   // States
-  const [typed, setTyped] = useState("");
-  const [startTyping, setStartTyping] = useState(false);
-  const [typingDone, setTypingDone] = useState(false);
   const [inView, setInView] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   const [rotation, setRotation] = useState(0);
   const rafRef = useRef(null);
@@ -33,7 +31,16 @@ const SimpleCinematicCarousel = () => {
   const radius = 500;
   const theta = 360 / mediaItems.length;
 
-  // OBSERVE SECTION — start + reset animations on enter/leave
+  // Mouse move handler for dynamic gradient
+  const handleMouseMove = (e) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  };
+
+  // OBSERVE SECTION — start rotation on enter/leave
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -41,15 +48,9 @@ const SimpleCinematicCarousel = () => {
 
         if (visible) {
           setInView(true);
-          setTyped("");
-          setStartTyping(true);
-          setTypingDone(false);
         } else {
           // Reset everything when leaving
           setInView(false);
-          setStartTyping(false);
-          setTyped("");
-          setTypingDone(false);
           setRotation(0);
           cancelAnimationFrame(rafRef.current);
         }
@@ -61,27 +62,9 @@ const SimpleCinematicCarousel = () => {
     return () => observer.disconnect();
   }, []);
 
-  // TYPING EFFECT
+  // ROTATION — while in view
   useEffect(() => {
-    if (!startTyping || !inView) return;
-
-    let i = 0;
-    const interval = setInterval(() => {
-      i++;
-      setTyped(fullHeader.slice(0, i));
-
-      if (i >= fullHeader.length) {
-        clearInterval(interval);
-        setTimeout(() => setTypingDone(true), 300);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [startTyping, inView]);
-
-  // ROTATION — ONLY while in view AND after typing
-  useEffect(() => {
-    if (!typingDone || !inView) return;
+    if (!inView) return;
 
     const speedPerMs = 0.0015 * 3;
     lastRef.current = performance.now();
@@ -99,54 +82,51 @@ const SimpleCinematicCarousel = () => {
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [typingDone, inView]);
+  }, [inView]);
 
   return (
     <div
       ref={sectionRef}
-      className="relative min-h-[75vh] md:min-h-[90vh] flex flex-col items-center overflow-hidden animated-carousel-bg"
+      onMouseMove={handleMouseMove}
+      className="relative min-h-[75vh] md:min-h-[90vh] flex flex-col items-center overflow-hidden"
       style={{ color: '#d3a345' }}
     >
-      <style>{`
-        @keyframes figureEightCarousel {
-          0% { background-position: 0% 0%, 100% 100%, 50% 50%, 50% 50%; }
-          25% { background-position: 50% 25%, 50% 75%, 75% 50%, 60% 40%; }
-          50% { background-position: 100% 100%, 0% 0%, 50% 50%, 40% 60%; }
-          75% { background-position: 50% 75%, 50% 25%, 25% 50%, 55% 45%; }
-          100% { background-position: 0% 0%, 100% 100%, 50% 50%, 50% 50%; }
-        }
-        .animated-carousel-bg {
-          background:
-            radial-gradient(ellipse 2000px 2000px at 20% 30%, rgba(248, 230, 210, 0.75) 0%, rgba(248, 230, 210, 0.45) 30%, transparent 60%),
-            radial-gradient(ellipse 2000px 2000px at 80% 70%, rgba(112, 77, 59, 0.55) 0%, rgba(112, 77, 59, 0.3) 30%, transparent 60%),
-            radial-gradient(ellipse 1800px 1800px at 50% 50%, rgba(211, 163, 69, 0.5) 0%, rgba(211, 163, 69, 0.25) 35%, transparent 65%),
-            linear-gradient(135deg, #f8e6d2 0%, #704d3b 50%, #d3a345 100%);
-          background-size: 300% 300%, 300% 300%, 300% 300%, 100% 100%;
-          animation: figureEightCarousel 18s ease-in-out infinite;
-        }
-      `}</style>
-      {/* Subtle vignette overlay (behind content) */}
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/assets/client_bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      
+      {/* Dynamic gradient overlay that follows mouse */}
+      <div 
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 1200px 1200px at ${mousePos.x}% ${mousePos.y}%, rgba(248, 230, 210, 0.4) 0%, rgba(248, 230, 210, 0.2) 30%, transparent 60%),
+            radial-gradient(ellipse 1200px 1200px at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(112, 77, 59, 0.3) 0%, rgba(112, 77, 59, 0.15) 30%, transparent 60%)
+          `,
+          transition: 'background 0.3s ease-out'
+        }}
+      />
+      
+      {/* Subtle vignette overlay */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/55 z-0" />
 
       <div className="relative z-10 w-full flex flex-col items-center">
-        {/* HEADER */}
+        {/* HEADER - Centered */}
         <header className="w-full px-6 pt-16 pb-6">
-          <h1 className="text-lg sm:text-xl md:text-2xl tracking-tight text-center md:text-left ml-0 md:ml-8" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-            <span style={{ color: '#F8E6D2' }}>{typed}</span>
-            {startTyping && inView && (
-              <span className="inline-block ml-1 h-4 md:h-5 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
-            )}
+          <h1 className="text-lg sm:text-xl md:text-4xl tracking-tight text-center" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#F8E6D2' }}>
+            {fullHeader}
           </h1>
         </header>
 
-        {/* CAROUSEL FADE + SLIDE IN */}
-        <main
-          className={`
-            w-full max-w-6xl px-6 mb-16 md:-mt-8
-            transition-all duration-[1100ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]
-            ${typingDone && inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-          `}
-        >
+        {/* CAROUSEL - No fade animation */}
+        <main className="w-full max-w-6xl px-6 mb-16 md:-mt-8">
           <div className="relative w-full h-[40vh] sm:h-[45vh] md:h-[60vh] flex items-center justify-center">
             <div
               className="relative w-full h-full"
@@ -169,8 +149,8 @@ const SimpleCinematicCarousel = () => {
                   const diff = Math.abs(((angle - current + 540) % 360) - 180);
                   const depth = 1 - Math.min(1, diff / 180);
 
-                  const opacity = 0.35 + depth * 0.65;
-                  const scale = 0.85 + depth * 0.18;
+                  const opacity = 1;
+                  const scale = 1;
 
                   // Reduced card dimensions (15% smaller)
                   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -197,9 +177,6 @@ const SimpleCinematicCarousel = () => {
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3" style={{ color: '#d3a345', textShadow: '0 1px 6px rgba(0,0,0,0.4)', fontFamily: 'Avenir, sans-serif' }}>
-                        <h3 className="text-xs md:text-sm">{item.title}</h3>
-                      </div>
                     </div>
                   );
                 })}
@@ -215,16 +192,6 @@ const SimpleCinematicCarousel = () => {
           </div>
         </main>
       </div>
-
-
-      <style>{`
-        .animate-blink {
-          animation: blink 1s steps(2, start) infinite;
-        }
-        @keyframes blink {
-          to { opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 };
