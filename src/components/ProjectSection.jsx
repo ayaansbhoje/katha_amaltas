@@ -22,14 +22,14 @@ const projects = [
     title: "Coastal Dreams",
     year: "2023",
     description: "The eternal dialogue between ocean and shore, captured in dramatic slow-motion as waves embrace volcanic rocks.",
-    video: 'assets/V2.MP4',
+    video: '/assets/CHEMOULD_PRESCOTT_ROAD_TEASER.mov',
   },
   {
     id: 4,
     title: "Lost Temples",
     year: "2022",
     description: "Documenting forgotten sanctuaries in the Southeast Asian jungles, where nature reclaims sacred architecture.",
-    video: 'assets/V4.mp4',
+    video: '/assets/ANANT_FINAL_TESER.mov',
   },
   {
     id: 5,
