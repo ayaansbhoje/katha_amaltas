@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const LayeredGallery = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [rotation, setRotation] = useState(0);
-  const animationRef = useRef(null);
+  const rafRef = useRef(null);
+  const lastRef = useRef(null);
 
   // Sample gallery items
   const items = [
@@ -63,23 +63,36 @@ const LayeredGallery = () => {
     }
   ];
 
-  // Circular motion animation
+  // ROTATION — continuous rotation (same logic as CinematicCarousel)
   useEffect(() => {
-    const animate = () => {
-      if (hoveredIndex === null) {
-        setRotation(prev => (prev + 0.2) % 360);
-      }
-      animationRef.current = requestAnimationFrame(animate);
+    let isRunning = true;
+    const speedPerMs = 0.0015 * 3;
+    lastRef.current = performance.now();
+
+    const loop = (now) => {
+      if (!isRunning) return;
+      
+      const last = lastRef.current || now;
+      const dt = Math.max(0, now - last);
+      lastRef.current = now;
+
+      setRotation((r) => {
+        const newRotation = (r + speedPerMs * dt) % 360;
+        return newRotation;
+      });
+      
+      rafRef.current = requestAnimationFrame(loop);
     };
 
-    animationRef.current = requestAnimationFrame(animate);
-
+    rafRef.current = requestAnimationFrame(loop);
+    
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      isRunning = false;
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [hoveredIndex]);
+  }, []);
 
   // Calculate position for each item in circular arrangement
   const getItemPosition = (index, totalItems) => {
@@ -89,7 +102,7 @@ const LayeredGallery = () => {
     const radiusX = 35; // Horizontal radius
     const radiusY = 25; // Vertical radius for elliptical path
     const centerX = 50;
-    const centerY = 50;
+    const centerY = 55;
     
     const x = centerX + Math.cos(currentAngle) * radiusX;
     const y = centerY + Math.sin(currentAngle) * radiusY;
@@ -112,39 +125,32 @@ const LayeredGallery = () => {
         >
           {items.map((item, index) => {
             const pos = getItemPosition(index, items.length);
-            const isHovered = hoveredIndex === index;
-            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
 
             return (
               <div
                 key={item.id}
-                className="absolute transition-all duration-700 ease-out cursor-pointer"
+                className="absolute"
                 style={{
                   left: `${pos.x}%`,
                   top: `${pos.y}%`,
                   transform: `
                     translate(-50%, -50%)
-                    translateZ(${isHovered ? pos.z + 300 : pos.z}px)
-                    scale(${isHovered ? 1.3 : 1})
+                    translateZ(${pos.z}px)
+                    scale(1)
                   `,
                   transformStyle: 'preserve-3d',
-                  zIndex: isHovered ? 100 : Math.round(50 + pos.z / 10),
-                  filter: isOtherHovered ? 'blur(25px) brightness(0.2)' : 'blur(0px) brightness(1)',
-                  opacity: isOtherHovered ? 0.2 : 1,
-                  pointerEvents: isOtherHovered ? 'none' : 'auto'
+                  zIndex: Math.round(50 + pos.z / 10),
+                  filter: 'blur(0px) brightness(1)',
+                  opacity: 1,
+                  willChange: 'transform'
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Video Card */}
-                <div className="relative w-40 h-[227px] sm:w-56 sm:h-[318px] md:w-72 md:h-[408px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <div className="relative w-40 h-[200px] sm:w-56 sm:h-[280px] md:w-72 md:h-[360px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                   {/* Video */}
                   <video
                     src={item.video}
-                    className="w-full h-full object-cover transition-transform duration-700"
-                    style={{
-                      transform: isHovered ? 'scale(1.1)' : 'scale(1)'
-                    }}
+                    className="w-full h-full object-cover"
                     autoPlay
                     loop
                     muted
@@ -153,40 +159,11 @@ const LayeredGallery = () => {
                   
                   {/* Gradient Overlay */}
                   <div 
-                    className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500"
+                    className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"
                     style={{
-                      opacity: isHovered ? 1 : 0.5
+                      opacity: 0.5
                     }}
                   />
-
-                  {/* Content */}
-                  <div 
-                    className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-5 transform transition-all duration-500"
-                    style={{
-                      transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
-                      opacity: isHovered ? 1 : 0
-                    }}
-                  >
-                    <h3 className="text-sm sm:text-base md:text-xl font-bold text-white mb-0.5 sm:mb-1 md:mb-1.5 tracking-wide">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-300 text-[10px] sm:text-xs leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Hover Ring Indicator */}
-                  <div 
-                    className="absolute top-2 right-2 md:top-3 md:right-3 transition-all duration-300"
-                    style={{
-                      opacity: isHovered ? 1 : 0.3
-                    }}
-                  >
-                    <div className="relative w-2 h-2 md:w-3 md:h-3">
-                      <div className={`absolute inset-0 bg-white rounded-full transition-all duration-300 ${isHovered ? 'animate-ping' : ''}`} />
-                      <div className="absolute inset-0 bg-white rounded-full" />
-                    </div>
-                  </div>
                 </div>
               </div>
             );
@@ -195,12 +172,12 @@ const LayeredGallery = () => {
       </div>
 
       {/* UI Overlay */}
-      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-50">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 sm:mb-2 tracking-tight">Stories in Short Form</h1>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="h-px w-8 sm:w-10 md:w-12 bg-white/30" />
-          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest">arratives adapted for the digital present,  brief in duration, complete in feeling.</p>
-        </div>
+      <div className="absolute top-16 left-4 sm:top-20 sm:left-6 md:top-24 md:left-8 z-50">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-5 tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400 }}>Stories in Short Form</h1>
+        <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm uppercase tracking-widest" style={{ fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
+          Narratives adapted for the digital present,<br />
+          brief in duration, complete in feeling.
+        </p>
       </div>
 
       {/* Navigation Menu */}
@@ -216,27 +193,6 @@ const LayeredGallery = () => {
         </button>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-3 z-50">
-        {items.map((_, index) => (
-          <button
-            key={index}
-            className={`transition-all duration-300 ${
-              hoveredIndex === index 
-                ? 'w-8 sm:w-10 h-1 bg-white' 
-                : 'w-1 h-1 bg-gray-600 hover:bg-gray-400 rounded-full'
-            }`}
-            onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
-          />
-        ))}
-      </div>
-
-      {/* Instruction Text */}
-      <div className="absolute bottom-6 left-4 sm:bottom-8 sm:left-8 z-50">
-        <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-widest">
-          Hover to explore · Click to focus
-        </p>
-      </div>
     </div>
   );
 };

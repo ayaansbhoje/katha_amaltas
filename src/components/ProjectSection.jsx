@@ -1,62 +1,60 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// Sample project images - replace with your actual image URLs
-const project1 = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop';
-const project2 = 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop';
-const project3 = 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop';
-const project4 = 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=1000&fit=crop';
-const project5 = 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&h=1000&fit=crop';
-const project6 = 'https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=800&h=1000&fit=crop';
-
+// Project videos - replace with your actual video paths from assets
 const projects = [
   {
     id: 1,
     title: "Mountain Echoes",
     year: "2024",
     description: "A visual journey through the misty peaks of the Himalayas, capturing the golden hour silence and the raw majesty of untouched nature.",
-    image: project1,
+    video: 'assets/French_Embassy_Teaser.mov',
   },
   {
     id: 2,
     title: "River's Whisper",
     year: "2023",
     description: "Aerial cinematography of the serpentine rivers cutting through ancient forests, where fog dances with the morning light.",
-    image: project2,
+    video: 'assets/V1.MP4',
   },
   {
     id: 3,
     title: "Coastal Dreams",
     year: "2023",
     description: "The eternal dialogue between ocean and shore, captured in dramatic slow-motion as waves embrace volcanic rocks.",
-    image: project3,
+    video: 'assets/V2.MP4',
   },
   {
     id: 4,
     title: "Lost Temples",
     year: "2022",
     description: "Documenting forgotten sanctuaries in the Southeast Asian jungles, where nature reclaims sacred architecture.",
-    image: project4,
+    video: 'assets/V4.mp4',
   },
   {
     id: 5,
     title: "Desert Solitude",
     year: "2022",
     description: "The shifting sands of the Sahara at twilight, where shadows tell stories older than civilization itself.",
-    image: project5,
+    video: 'assets/V8.MOV',
   },
   {
     id: 6,
     title: "Aurora Visions",
     year: "2021",
     description: "Chasing the northern lights across Arctic landscapes, capturing the celestial dance in its full glory.",
-    image: project6,
+    video: 'assets/V9.mp4',
   },
 ];
 
 // Wind Chime Component
 const WindChime = () => {
-  const chimeImages = [project1, project2, project3];
+  // Sample images for wind chime - you can replace these with your own image paths
+  const chimeImages = [
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop',
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop'
+  ];
   const swayAnimations = [
     { rotate: [0, 4, 0, -3, 0], duration: 3 },
     { rotate: [0, -3, 0, 4, 0], duration: 3.5 },
@@ -170,10 +168,13 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
             : '0 20px 60px -15px rgba(0,0,0,0.7)',
         }}
       >
-        <motion.img
-          src={project.image}
-          alt={project.title}
+        <motion.video
+          src={project.video}
           className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
           animate={{
             scale: 1 + Math.abs(rotateY) * 0.008,
             filter: isActive ? 'brightness(1) saturate(1.1)' : 'brightness(0.55) saturate(0.7)',
@@ -308,10 +309,13 @@ const CinematicGallery = () => {
         <div className="absolute inset-0">
           {/* Blurred backdrop matching active poster */}
           <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
-            <img
-              src={projects[activeProject]?.image}
-              alt={projects[activeProject]?.title || 'Backdrop'}
+            <video
+              src={projects[activeProject]?.video}
               className="w-full h-full object-cover scale-110"
+              autoPlay
+              loop
+              muted
+              playsInline
               style={{ filter: 'blur(25px)', opacity: 0.4 }}
             />
             <div className="absolute inset-0 bg-black/55" />
