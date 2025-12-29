@@ -78,7 +78,7 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
       }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="w-full max-w-lg mx-auto h-full rounded-lg overflow-hidden backdrop-blur-sm" style={{ backgroundColor: '#D3A345', border: '2px solid #650B0F' }}>
+      <div className="w-full max-w-lg mx-auto h-full rounded-lg overflow-hidden backdrop-blur-sm" style={{ backgroundColor: '#D3A345' }}>
         <div className={`flex h-full ${isMobile ? 'flex-col' : ''}`}>
           <div className={`${isMobile ? 'w-full h-32' : 'w-2/5 h-full'}`}>
             <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
@@ -179,7 +179,7 @@ const ServiceSection = () => {
             src={services[activeIndex]?.image}
             alt={services[activeIndex]?.title || 'Backdrop'}
             className="w-full h-full object-cover scale-110"
-            style={{ filter: 'blur(6px)', opacity: 0.5 }}
+            style={{ filter: 'blur(12px)', opacity: 0.5 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
             transition={{ duration: 0.3 }}
