@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ExternalLink, Play } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
 const FilmPortfolio = () => {
   const [activeProject, setActiveProject] = useState(0);
   const [selectedStill, setSelectedStill] = useState(null);
-  const [isPlaying, setIsPlaying] = useState({});
   const containerRef = useRef(null);
   const isScrolling = useRef(false);
   const touchStart = useRef(0);
@@ -15,56 +14,52 @@ const FilmPortfolio = () => {
       id: 1,
       title: "Ethereal Dreams",
       description: "A surreal journey through the subconscious mind, exploring the boundaries between reality and imagination. This experimental short film uses practical effects and innovative cinematography to create a dreamlike atmosphere.",
-      mainImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&h=1080&fit=crop",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      mainImage: "/assets/first_cover.jpg", // Add your image path here
       externalUrl: "https://example.com/ethereal-dreams",
       stills: [
-        { src: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop", alt: "Still 1" },
-        { src: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=600&fit=crop", alt: "Still 2" },
-        { src: "https://images.unsplash.com/photo-1574267432644-f74e7d95c3b8?w=800&h=600&fit=crop", alt: "Still 3" },
-        { src: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&h=600&fit=crop", alt: "Still 4" }
+        { src: "/assets/first_1.jpg", alt: "Still 1" }, // Add your image path here
+        { src: "/assets/first_2.jpg", alt: "Still 2" }, // Add your image path here
+        { src: "/assets/first_3.jpg", alt: "Still 3" }, // Add your image path here
+        { src: "/assets/first_4.jpg", alt: "Still 4" }  // Add your image path here
       ]
     },
     {
       id: 2,
       title: "Urban Pulse",
       description: "A documentary-style exploration of city life at night, capturing the rhythm and energy of metropolitan existence. Shot over six months in various urban landscapes, this film reveals the hidden beauty in everyday moments.",
-      mainImage: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      mainImage: "/assets/first_cover.jpg", // Add your image path here
       externalUrl: "https://example.com/urban-pulse",
       stills: [
-        { src: "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?w=800&h=600&fit=crop", alt: "Still 1" },
-        { src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop", alt: "Still 2" },
-        { src: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=600&fit=crop", alt: "Still 3" },
-        { src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop", alt: "Still 4" }
+        { src: "", alt: "Still 1" }, // Add your image path here
+        { src: "", alt: "Still 2" }, // Add your image path here
+        { src: "", alt: "Still 3" }, // Add your image path here
+        { src: "", alt: "Still 4" }  // Add your image path here
       ]
     },
     {
       id: 3,
       title: "Silent Horizons",
       description: "An intimate portrayal of solitude and self-discovery set against vast natural landscapes. This meditative piece explores the relationship between human emotion and the environment through minimal dialogue and powerful imagery.",
-      mainImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      mainImage: "", // Add your image path here
       externalUrl: "https://example.com/silent-horizons",
       stills: [
-        { src: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=800&h=600&fit=crop", alt: "Still 1" },
-        { src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop", alt: "Still 2" },
-        { src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop", alt: "Still 3" },
-        { src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop", alt: "Still 4" }
+        { src: "", alt: "Still 1" }, // Add your image path here
+        { src: "", alt: "Still 2" }, // Add your image path here
+        { src: "", alt: "Still 3" }, // Add your image path here
+        { src: "", alt: "Still 4" }  // Add your image path here
       ]
     },
     {
       id: 4,
       title: "Neon Noir",
       description: "A neo-noir thriller that blends classic crime aesthetics with modern visual storytelling. Set in a rain-soaked cityscape, this film examines morality through a lens of vibrant colors and deep shadows.",
-      mainImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      mainImage: "", // Add your image path here
       externalUrl: "https://example.com/neon-noir",
       stills: [
-        { src: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop", alt: "Still 1" },
-        { src: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&h=600&fit=crop", alt: "Still 2" },
-        { src: "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=800&h=600&fit=crop", alt: "Still 3" },
-        { src: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=800&h=600&fit=crop", alt: "Still 4" }
+        { src: "", alt: "Still 1" }, // Add your image path here
+        { src: "", alt: "Still 2" }, // Add your image path here
+        { src: "", alt: "Still 3" }, // Add your image path here
+        { src: "", alt: "Still 4" }  // Add your image path here
       ]
     }
   ];
@@ -83,10 +78,8 @@ const FilmPortfolio = () => {
         
         if (delta > 0 && activeProject < projects.length - 1) {
           setActiveProject(prev => prev + 1);
-          setIsPlaying({});
         } else if (delta < 0 && activeProject > 0) {
           setActiveProject(prev => prev - 1);
-          setIsPlaying({});
         }
         
         setTimeout(() => {
@@ -111,10 +104,8 @@ const FilmPortfolio = () => {
         
         if (diff > 0 && activeProject < projects.length - 1) {
           setActiveProject(prev => prev + 1);
-          setIsPlaying({});
         } else if (diff < 0 && activeProject > 0) {
           setActiveProject(prev => prev - 1);
-          setIsPlaying({});
         }
         
         setTimeout(() => {
@@ -134,10 +125,6 @@ const FilmPortfolio = () => {
       container.removeEventListener('touchend', handleTouchEnd);
     };
   }, [activeProject, projects.length]);
-
-  const handlePlayVideo = (projectId) => {
-    setIsPlaying({ [projectId]: true });
-  };
 
   return (
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black">
@@ -162,32 +149,14 @@ const FilmPortfolio = () => {
             }}
           >
             <div className="flex flex-col lg:flex-row h-full">
-              {/* Video/Image Section - Left */}
+              {/* Image Section - Left */}
               <div className="relative w-full lg:w-3/5 h-1/2 lg:h-full overflow-hidden group">
-                {isPlaying[project.id] ? (
-                  <iframe
-                    src={project.videoUrl}
-                    className="w-full h-full"
-                    allow="autoplay; fullscreen"
-                    allowFullScreen
-                  />
-                ) : (
-                  <>
-                    <img
-                      src={project.mainImage}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/30 flex items-center justify-center">
-                      <button
-                        onClick={() => handlePlayVideo(project.id)}
-                        className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-white/20 group/play"
-                      >
-                        <Play className="w-8 h-8 text-white fill-white/50 ml-1 transition-transform group-hover/play:scale-110" />
-                      </button>
-                    </div>
-                  </>
-                )}
+                <img
+                  src={project.mainImage}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/30" />
                 
                 {/* Film number overlay */}
                 <div className="absolute bottom-8 left-8 text-white/10 text-9xl font-bold leading-none select-none">
@@ -279,10 +248,7 @@ const FilmPortfolio = () => {
         {projects.map((_, index) => (
           <button
             key={index}
-            onClick={() => {
-              setActiveProject(index);
-              setIsPlaying({});
-            }}
+            onClick={() => setActiveProject(index)}
             className={`w-2 rounded-full transition-all duration-300 ${
               index === activeProject
                 ? 'bg-white h-8'
