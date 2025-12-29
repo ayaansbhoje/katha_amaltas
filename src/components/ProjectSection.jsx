@@ -38,13 +38,7 @@ const projects = [
     description: "Our documentation of the Jangarh Singh Shyam exhibition focused on preserving the cosmology of his visual language. The film attends to line, pattern, and movement—honouring systems where myth, nature, and memory coexist without hierarchy.",
     video: '/assets/JANGARH_FINAL_TESER.mov',
   },
-  {
-    id: 6,
-    title: "Aurora Visions",
-    year: "2021",
-    description: "Chasing the northern lights across Arctic landscapes, capturing the celestial dance in its full glory.",
-    video: 'assets/V9.mp4',
-  },
+  
 ];
 
 // Wind Chime Component
