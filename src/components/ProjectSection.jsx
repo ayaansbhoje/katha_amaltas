@@ -9,7 +9,6 @@ const projects = [
     year: "Promotional documentary",
     description: "A multi-location documentary tracing artistic exchange between French residents and India's cultural ecosystems.",
     video: 'assets/French_Embassy_Teaser.mov',
-    youtubeUrl: 'https://youtu.be/IVeaqCk0IE8?si=0TnQmwnpQZMAPo9T',
   },
   {
     id: 2,
@@ -17,7 +16,6 @@ const projects = [
     year: "Award-winning independent documentary",
     description: "An intimate film on idol-making and devotion. We follow the hands that create gods, and what it means to let them go.",
     video: '/assets/ANKURAN_TRAILER.mov',
-    youtubeUrl: '',
   },
   {
     id: 3,
@@ -25,7 +23,6 @@ const projects = [
     year: "Three-part documentary series",
     description: "A documentary series reflecting on six decades of Chemould's role in shaping Indian contemporary art. We sat with the archive, moving between past and present, memory and practice.",
     video: '/assets/CHEMOULD_PRESCOTT_ROAD_TEASER.mov',
-    youtubeUrl: '',
   },
   {
     id: 4,
@@ -33,7 +30,6 @@ const projects = [
     year: "Exhibition film & documentation | Gallery Chemould",
     description: "An exhibition film shaped by the metaphor of the Blind King Dhritarashtra's raised eyebrow, inner unrest and silent resistance. Our goal was to capture scale & detail simultaneously, allowing questions of power and identity to unfold.",
     video: '/assets/ANANT_FINAL_TESER.mov',
-    youtubeUrl: '',
   },
   {
     id: 5,
@@ -41,7 +37,6 @@ const projects = [
     year: "Jangarh Singh Shyam| Exhibition Documentation",
     description: "A film shaped by Jangarh Singh Shyam's visual language. Where myth, nature, and memory come together.",
     video: '/assets/JANGARH_FINAL_TESER.mov',
-    youtubeUrl: '',
   },
   
 ];
@@ -88,7 +83,7 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
 
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2 pointer-events-auto cursor-pointer"
+      className="absolute top-1/2 left-1/2 pointer-events-auto"
       animate={{
         x: `calc(-50% + ${xPosition}vw)`,
         y: '-50%',
@@ -106,11 +101,6 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
         mass: 0.9,
       }}
       style={{ transformStyle: 'preserve-3d' }}
-      onClick={() => {
-        if (project.youtubeUrl) {
-          window.open(project.youtubeUrl, '_blank', 'noopener,noreferrer');
-        }
-      }}
     >
       <div
         className="relative overflow-hidden aspect-[16/9] rounded-sm transition-transform hover:scale-105"
