@@ -131,10 +131,10 @@ const SimpleCinematicCarousel = () => {
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* HEADER */}
         <header className="w-full px-6 pt-16 pb-6">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl tracking-tight text-center md:text-left ml-0 md:ml-8" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+          <h1 className="text-lg sm:text-xl md:text-2xl tracking-tight text-center md:text-left ml-0 md:ml-8" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
             <span style={{ color: '#F8E6D2' }}>{typed}</span>
             {startTyping && inView && (
-              <span className="inline-block ml-1 h-5 md:h-8 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
+              <span className="inline-block ml-1 h-4 md:h-5 w-1 animate-blink" style={{ backgroundColor: '#d3a345' }}></span>
             )}
           </h1>
         </header>
@@ -216,12 +216,6 @@ const SimpleCinematicCarousel = () => {
         </main>
       </div>
 
-      {/* BOTTOM RIGHT HEADER */}
-      <div className="absolute bottom-8 md:bottom-22 left-6 right-6 md:left-auto md:right-6 z-10">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl tracking-tight text-center md:text-right leading-tight" style={{ color: '#F8E6D2', fontFamily: 'Bebas Neue, sans-serif' }}>
-          WHERE VISION MEETS<br />CINEMATIC PRECISION
-        </h2>
-      </div>
 
       <style>{`
         .animate-blink {
