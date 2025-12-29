@@ -24,7 +24,7 @@ const FilmStudioHero = () => {
       name: 'RESEARCH',
       image: '/assets/hero_img4.png',
       category: 'BEFORE FORM',
-      header: 'GROUNDING '
+      header: 'GROUNDING'
     }
   ];
 
@@ -141,7 +141,7 @@ const FilmStudioHero = () => {
 
       <div>
         {/* Hero Section */}
-        <div className="relative w-screen h-[80vh] md:h-screen overflow-hidden" style={{ zIndex: 100 }}>
+        <div className="relative w-screen h-[80vh] md:h-screen overflow-hidden">
           {/* Background Image with Fade Transition */}
           <div
             className="absolute inset-0 transition-opacity duration-700"
@@ -159,7 +159,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Left Navigation */}
-          <div className="hero-nav-left absolute top-0 h-full flex flex-col justify-center items-start p-4 md:p-8 space-y-4 md:space-y-6 z-30">
+          <div className="hero-nav-left absolute top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
@@ -175,7 +175,7 @@ const FilmStudioHero = () => {
           </div>
 
           {/* Right Categories */}
-          <div className="hero-nav-right absolute top-0 h-full flex flex-col justify-center items-end p-4 md:p-8 space-y-4 md:space-y-6 z-30">
+          <div className="hero-nav-right absolute top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
             {slides.map((slide, index) => (
               <button
                 key={index}
