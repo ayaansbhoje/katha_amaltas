@@ -192,9 +192,9 @@ const preloadImage = (src) => {
 };
 
 export default function FilmPortfolioPreloader({ onComplete }) {
-  const [splitScreen, setSplitScreen] = useState(false);
+  const [slideUp, setSlideUp] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [logoVideoEnded, setLogoVideoEnded] = useState(false);
+  const [logoImageLoaded, setLogoImageLoaded] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(0);
   const totalAssets = projectVideos.length + heroImages.length;
 
@@ -242,21 +242,21 @@ export default function FilmPortfolioPreloader({ onComplete }) {
     preloadAllAssets();
   }, []);
 
-  const handleVideoEnd = () => {
-    setLogoVideoEnded(true);
+  const handleImageLoad = () => {
+    setLogoImageLoaded(true);
   };
 
-  // Wait for both logo video to end AND all assets to be loaded
+  // Wait for both logo image to load AND all assets to be loaded
   useEffect(() => {
-    if (logoVideoEnded && assetsLoaded >= totalAssets) {
+    if (logoImageLoaded && assetsLoaded >= totalAssets) {
       setTimeout(() => {
-        setSplitScreen(true);
+        setSlideUp(true);
       }, 300);
     }
-  }, [logoVideoEnded, assetsLoaded, totalAssets]);
+  }, [logoImageLoaded, assetsLoaded, totalAssets]);
 
   useEffect(() => {
-    if (splitScreen) {
+    if (slideUp) {
       const timer = setTimeout(() => {
         if (onComplete) {
           onComplete();
@@ -265,28 +265,26 @@ export default function FilmPortfolioPreloader({ onComplete }) {
 
       return () => clearTimeout(timer);
     }
-  }, [splitScreen, onComplete]);
+  }, [slideUp, onComplete]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
-      {/* Top Half with Video */}
+      {/* Single Slider */}
       <div
         style={{ backgroundColor: '#770e11' }}
-        className={`absolute top-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-end justify-center pb-2 ${
-          splitScreen ? '-translate-y-full' : 'translate-y-0'
+        className={`absolute inset-0 w-full h-full transition-transform duration-1000 ease-in-out flex flex-col items-center justify-center ${
+          slideUp ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
-        <video 
-          src="/assets/AMALTAS LOGO ANIMATION YELLOW (1).webm" 
-          autoPlay
-          muted
-          playsInline
-          onEnded={handleVideoEnd}
+        <img 
+          src="/assets/Asset 5@4x (1).png" 
+          alt="Logo"
+          onLoad={handleImageLoad}
           className="h-36 md:h-46 w-auto object-contain"
         />
         
         {/* Loading Bar */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-64 md:w-80">
+        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 w-64 md:w-80">
           <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
             <div 
               className="h-full bg-white transition-all duration-300 ease-out rounded-full"
@@ -294,19 +292,9 @@ export default function FilmPortfolioPreloader({ onComplete }) {
             />
           </div>
           <p className="text-white text-xs mt-2 text-center" style={{ fontFamily: 'Avenir, sans-serif' }}>
-            Loading assets... {Math.round(loadingProgress)}%
+            curating our gallery just for you
           </p>
         </div>
-      </div>
-      
-      {/* Bottom Half with Line */}
-      <div
-        style={{ backgroundColor: '#770e11' }}
-        className={`absolute bottom-0 left-0 w-full h-1/2 transition-transform duration-1000 ease-in-out flex items-start justify-center pt-2 ${
-          splitScreen ? 'translate-y-full' : 'translate-y-0'
-        }`}
-      >
-        <div className="w-32 h-px bg-white"></div>
       </div>
     </div>
   );
