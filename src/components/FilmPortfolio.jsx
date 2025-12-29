@@ -14,52 +14,52 @@ const FilmPortfolio = () => {
       id: 1,
       title: "Ethereal Dreams",
       description: "A surreal journey through the subconscious mind, exploring the boundaries between reality and imagination. This experimental short film uses practical effects and innovative cinematography to create a dreamlike atmosphere.",
-      mainImage: "/assets/first_cover.jpg", // Add your image path here
+      mainImage: "/assets/first_cover.jpg",
       externalUrl: "https://example.com/ethereal-dreams",
       stills: [
-        { src: "/assets/first_1.jpg", alt: "Still 1" }, // Add your image path here
-        { src: "/assets/first_2.jpg", alt: "Still 2" }, // Add your image path here
-        { src: "/assets/first_3.jpg", alt: "Still 3" }, // Add your image path here
-        { src: "/assets/first_4.jpg", alt: "Still 4" }  // Add your image path here
+        { src: "/assets/first_1.jpg", alt: "Still 1" },
+        { src: "/assets/first_2.jpg", alt: "Still 2" },
+        { src: "/assets/first_3.jpg", alt: "Still 3" },
+        { src: "/assets/first_4.jpg", alt: "Still 4" }
       ]
     },
     {
       id: 2,
       title: "Urban Pulse",
       description: "A documentary-style exploration of city life at night, capturing the rhythm and energy of metropolitan existence. Shot over six months in various urban landscapes, this film reveals the hidden beauty in everyday moments.",
-      mainImage: "/assets/first_cover.jpg", // Add your image path here
+      mainImage: "/assets/second_cover.jpg",
       externalUrl: "https://example.com/urban-pulse",
       stills: [
-        { src: "", alt: "Still 1" }, // Add your image path here
-        { src: "", alt: "Still 2" }, // Add your image path here
-        { src: "", alt: "Still 3" }, // Add your image path here
-        { src: "", alt: "Still 4" }  // Add your image path here
+        { src: "/assets/second_1.png", alt: "Still 1" },
+        { src: "/assets/second_2.jpg", alt: "Still 2" },
+        { src: "/assets/second_3.jpg", alt: "Still 3" },
+        { src: "/assets/second_4.jpg", alt: "Still 4" }
       ]
     },
     {
       id: 3,
       title: "Silent Horizons",
       description: "An intimate portrayal of solitude and self-discovery set against vast natural landscapes. This meditative piece explores the relationship between human emotion and the environment through minimal dialogue and powerful imagery.",
-      mainImage: "", // Add your image path here
+      mainImage: "",
       externalUrl: "https://example.com/silent-horizons",
       stills: [
-        { src: "", alt: "Still 1" }, // Add your image path here
-        { src: "", alt: "Still 2" }, // Add your image path here
-        { src: "", alt: "Still 3" }, // Add your image path here
-        { src: "", alt: "Still 4" }  // Add your image path here
+        { src: "", alt: "Still 1" },
+        { src: "", alt: "Still 2" },
+        { src: "", alt: "Still 3" },
+        { src: "", alt: "Still 4" }
       ]
     },
     {
       id: 4,
       title: "Neon Noir",
       description: "A neo-noir thriller that blends classic crime aesthetics with modern visual storytelling. Set in a rain-soaked cityscape, this film examines morality through a lens of vibrant colors and deep shadows.",
-      mainImage: "", // Add your image path here
+      mainImage: "",
       externalUrl: "https://example.com/neon-noir",
       stills: [
-        { src: "", alt: "Still 1" }, // Add your image path here
-        { src: "", alt: "Still 2" }, // Add your image path here
-        { src: "", alt: "Still 3" }, // Add your image path here
-        { src: "", alt: "Still 4" }  // Add your image path here
+        { src: "", alt: "Still 1" },
+        { src: "", alt: "Still 2" },
+        { src: "", alt: "Still 3" },
+        { src: "", alt: "Still 4" }
       ]
     }
   ];
@@ -159,7 +159,7 @@ const FilmPortfolio = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/30" />
                 
                 {/* Film number overlay */}
-                <div className="absolute bottom-8 left-8 text-white/10 text-9xl font-bold leading-none select-none">
+                <div className="absolute bottom-8 left-8 text-white/10 text-9xl font-bold leading-none select-none" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                   {String(index + 1).padStart(2, "0")}
                 </div>
               </div>
@@ -168,13 +168,13 @@ const FilmPortfolio = () => {
               <div className="w-full lg:w-2/5 h-1/2 lg:h-full bg-zinc-900 flex flex-col p-6 lg:p-12 overflow-y-auto">
                 {/* Header */}
                 <div className="mb-8">
-                  <span className="text-gray-500 text-sm tracking-widest uppercase mb-4 block font-mono">
+                  <span className="text-gray-500 text-sm tracking-widest uppercase mb-4 block" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                     Project {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                  <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                     {project.title}
                   </h2>
-                  <p className="text-gray-400 text-base lg:text-lg leading-relaxed mb-6">
+                  <p className="text-gray-400 text-base lg:text-lg leading-relaxed mb-6" style={{ fontFamily: 'Avenir, sans-serif' }}>
                     {project.description}
                   </p>
                   <a
@@ -182,6 +182,7 @@ const FilmPortfolio = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors duration-300 font-medium group"
+                    style={{ fontFamily: 'Avenir, sans-serif' }}
                   >
                     <span className="relative">
                       Watch Full Film
@@ -193,7 +194,7 @@ const FilmPortfolio = () => {
 
                 {/* Stills Gallery */}
                 <div className="mt-auto">
-                  <h3 className="text-gray-500 text-xs tracking-widest uppercase mb-4 font-mono">
+                  <h3 className="text-gray-500 text-xs tracking-widest uppercase mb-4" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                     Film Stills
                   </h3>
                   <div className="grid grid-cols-4 gap-2">
@@ -238,7 +239,7 @@ const FilmPortfolio = () => {
             onClick={(e) => e.stopPropagation()}
           />
           <div className="absolute bottom-8 left-8 text-white">
-            <p className="text-sm text-gray-400">From {selectedStill.projectTitle}</p>
+            <p className="text-sm text-gray-400" style={{ fontFamily: 'Avenir, sans-serif' }}>From {selectedStill.projectTitle}</p>
           </div>
         </div>
       )}
@@ -259,7 +260,7 @@ const FilmPortfolio = () => {
       </div>
 
       {/* Project Counter */}
-      <div className="fixed bottom-8 left-8 text-white z-20">
+      <div className="fixed bottom-8 left-8 text-white z-20" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
         <span className="text-4xl font-bold">{String(activeProject + 1).padStart(2, '0')}</span>
         <span className="text-gray-400 text-xl"> / {String(projects.length).padStart(2, '0')}</span>
       </div>
