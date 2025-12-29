@@ -7,7 +7,8 @@ const projectVideos = [
   '/assets/CHEMOULD_PRESCOTT_ROAD_TEASER.mov',
   '/assets/ANANT_FINAL_TESER.mov',
   '/assets/JANGARH_FINAL_TESER.mov',
-  'assets/V9.mp4'
+  'assets/V9.mp4',
+  '/assets/brand_identity2.mov'
 ];
 
 // Hero section images from FilmStudioHero

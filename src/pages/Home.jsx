@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FilmPortfolioPreloader from '../components/FilmPortfolioPreloader';
 import Navbar from '../components/Navbar';
 import FilmStudioHero from '../components/FilmStudioHero';
+import BrandIdentity from '../components/BrandIdentity';
 import AboutUs from '../components/AboutUs';
 import ProjectSection from '../components/ProjectSection';
 import CinematicCarousel from '../components/CinematicCarousel';
@@ -26,6 +27,7 @@ const Home = () => {
         <>
           <Navbar />
           <FilmStudioHero />
+          <BrandIdentity />
           <AboutUs />
           <ServiceSection />
           <CinematicCarousel />
