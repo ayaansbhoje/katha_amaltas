@@ -397,11 +397,11 @@ const CinematicGallery = () => {
             style={{ pointerEvents: 'none' }}
           >
             
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase inline-block mr-3" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase inline-block mr-3" style={{ fontFamily: 'Bebas neue, Avenir, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
               Extended
             </h2>
-            <h3 className="text-2xl md:text-4xl lg:text-5xl uppercase inline-block" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif', color: '#d3a345' }}>Narratives</h3>
-            <p className="text-zinc-100 text-xs tracking-[0.3em]  mt-2" style={{ fontFamily: 'Avenir, sans-serif' }}>Films made for horizontal space,<br />where duration and composition <br />carry the story.</p>
+            <h3 className="text-2xl md:text-4xl lg:text-5xl uppercase inline-block" style={{ fontFamily: 'Bebas neue, sans-serif', color: '#d3a345' }}>Narratives</h3>
+            <p className="text-zinc-100 text-xs tracking-[0.3em]  mt-2" style={{ fontFamily: 'Avenir, sans-serif' }}>Films made for horizontal spaces,<br />where duration and composition <br />carry the story.</p>
           </motion.div>
 
           {/* Flying posters */}
