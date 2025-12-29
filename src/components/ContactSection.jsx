@@ -1,23 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { Mail, Instagram, Facebook, Youtube, MapPin } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { Mail, Instagram, Facebook, Youtube, MapPin } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [wavePhase, setWavePhase] = useState(0);
   const [iconsVisible, setIconsVisible] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    query: ''
+    from_name: "",
+    from_email: "",
+    message: "",
   });
+
   const containerRef = useRef(null);
   const iconsRef = useRef(null);
-  const formRef = useRef(null);
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-    { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-    { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
+    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
+    { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
   ];
 
   // Wavy text animation
@@ -43,7 +46,9 @@ const ContactSection = () => {
   // Icons animation
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIconsVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setIconsVisible(true);
+      },
       { threshold: 0.3 }
     );
     if (iconsRef.current) observer.observe(iconsRef.current);
@@ -53,14 +58,39 @@ const ContactSection = () => {
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    if (isSending) return;
+
+    setIsSending(true);
+
+    emailjs
+      .send(
+        "service_s7aweyq",
+        "template_syyidau",
+        formData,
+        "VjQrxIZAjakV8U8-j"
+      )
+      .then(
+        () => {
+          alert("Message sent successfully!");
+          setFormData({
+            from_name: "",
+            from_email: "",
+            message: "",
+          });
+          setIsSending(false);
+        },
+        (error) => {
+          console.error("EmailJS Error:", error);
+          alert("Failed to send message. Please try again.");
+          setIsSending(false);
+        }
+      );
   };
 
   const generateWavePath = (phase) => {
@@ -70,245 +100,137 @@ const ContactSection = () => {
     let path = `M 0 ${centerY}`;
     for (let x = 0; x <= width; x += 2) {
       const normalizedX = x / width;
-      const waveY = centerY - Math.cos(normalizedX * Math.PI * 2 + phase) * amplitude;
+      const waveY =
+        centerY - Math.cos(normalizedX * Math.PI * 2 + phase) * amplitude;
       path += ` L ${x} ${waveY}`;
     }
     return path;
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-12 text-white font-sans relative overflow-hidden">
-      {/* Background Video with Red Tint */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
+    <section className="min-h-screen flex items-center justify-center px-6 py-12 text-white relative overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ zIndex: 0 }}
       >
         <source src="assets/CONTACT_SECTION.mov" type="video/mp4" />
       </video>
-      
-      
 
-      {/* Divider Line - Fixed independently */}
-      <div className="hidden lg:block absolute left-1/2 top-1/4 bottom-1/4 w-[2px] transform -translate-x-1/2" style={{ backgroundColor: '#FFF6D0', zIndex: 1 }}></div>
-      
-      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start relative" style={{ zIndex: 2 }}>
-        
-        {/* Left Side - Header, Subtext, Email, Icons */}
-        <div className="flex flex-col">
-          {/* Wavy Gradient Title - Moved Left */}
-          <div ref={containerRef} className="w-full flex justify-start items-center overflow-visible mb-6 -ml-12 lg:-ml-30" style={{ minHeight: '200px' }}>
-            <svg viewBox="0 0 1000 200" className="w-full" preserveAspectRatio="xMidYMid meet"
-              style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-out', overflow: 'visible' }}>
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+        {/* LEFT */}
+        <div>
+          <div
+            ref={containerRef}
+            className="w-full flex justify-start items-center mb-6 -ml-12"
+          >
+            <svg viewBox="0 0 1000 200" className="w-full">
               <defs>
-                <path id="wavePath" d={generateWavePath(wavePhase)} fill="none" />
+                <path id="wavePath" d={generateWavePath(wavePhase)} />
               </defs>
-              <text fill="#FFF6D0" fontSize="120" fontWeight="400" fontFamily="Bebas Neue, sans-serif" letterSpacing="-0.03em">
-                <textPath href="#wavePath" startOffset="50%" textAnchor="middle"> Let's Connect </textPath>
+              <text
+                fill="#FFF6D0"
+                fontSize="120"
+                fontFamily="Bebas Neue, sans-serif"
+              >
+                <textPath
+                  href="#wavePath"
+                  startOffset="50%"
+                  textAnchor="middle"
+                >
+                  Let's Connect
+                </textPath>
               </text>
             </svg>
           </div>
 
-          {/* Email and Address Section - Aligned Icons */}
           <div className="flex flex-col gap-6 mb-8">
-            <span className="text-lg md:text-xl font-medium" style={{ color: '#FFF6D0' }}>Have a film, exhibition, or cultural project in mind?</span>
-            
-            {/* Email with aligned icon */}
-            <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 mt-0.5" style={{ color: '#FFF6D0', filter: 'drop-shadow(0 0 1px rgba(145, 34, 44, 0.3))', animation: 'float 3s ease-in-out infinite' }} />
-              <a href="mailto:hello@portfolio.com" className="transition-all duration-300 group">
-                <span className="font-medium" style={{ color: '#FFF6D0' }}>hello@portfolio.com</span>
-              </a>
+            <span style={{ color: "#FFF6D0" }}>
+              Have a film, exhibition, or cultural project in mind?
+            </span>
+
+            <div className="flex gap-3">
+              <Mail className="w-5 h-5" style={{ color: "#FFF6D0" }} />
+              <span style={{ color: "#FFF6D0" }}>hello@portfolio.com</span>
             </div>
-            
-            {/* Address with aligned icon */}
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 mt-0.5" style={{ color: '#FFF6D0' }} />
-              <div className="flex flex-col">
-                <span className="text-lg" style={{ color: '#FFF6D0' }}>Based in Mumbai & Chandigarh,</span>
-                <span className="text-lg" style={{ color: '#FFF6D0' }}>working across India & beyond</span>
-              </div>
+
+            <div className="flex gap-3">
+              <MapPin className="w-5 h-5" style={{ color: "#FFF6D0" }} />
+              <span style={{ color: "#FFF6D0" }}>
+                Mumbai & Chandigarh, India
+              </span>
             </div>
           </div>
 
-          {/* Social Icons */}
-          <div ref={iconsRef} className="flex flex-wrap gap-3 md:gap-4">
+          <div ref={iconsRef} className="flex gap-4">
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
               return (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" 
-                  aria-label={social.label}
-                  className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full border transition-all duration-300 hover:scale-110 social-icon-link"
-                  style={{
-                    opacity: iconsVisible ? 1 : 0,
-                    transform: iconsVisible ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.5)',
-                    animation: iconsVisible ? `bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${index * 150}ms forwards` : 'none',
-                    borderColor: '#FFF6D0',
-                    backgroundColor: '#FFF6D0',
-                    transition: 'border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
-                    boxShadow: 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    const icon = e.currentTarget.querySelector('svg');
-                    if (icon) icon.style.color = '#FFF6D0';
-                    e.currentTarget.style.borderColor = '#91222c';
-                    e.currentTarget.style.backgroundColor = '#91222c';
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(145, 34, 44, 0.5), 0 0 20px rgba(145, 34, 44, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    const icon = e.currentTarget.querySelector('svg');
-                    if (icon) icon.style.color = '#91222c';
-                    e.currentTarget.style.borderColor = '#FFF6D0';
-                    e.currentTarget.style.backgroundColor = '#FFF6D0';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}>
-                  <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: '#91222c', transition: 'color 0.3s ease' }} />
+                <a key={index} href={social.href} target="_blank">
+                  <Icon style={{ color: "#FFF6D0" }} />
                 </a>
               );
             })}
           </div>
         </div>
 
-        {/* Right Side - Glassmorphism Form */}
-        <div ref={formRef} className="relative">
-          <div className="relative p-5 md:p-6 rounded-2xl border shadow-2xl"
-            style={{
-              background: 'rgba(255, 246, 208, 0.15)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              borderColor: 'rgba(255, 246, 208, 0.3)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-            }}>
-            
-            <div className="relative z-10">
-              <h2 className="text-xl md:text-2xl font-medium mb-2 mb-5" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#FFF6D0' }}>
-                fill the form. We'll get back within 24 hours.
-              </h2>
-              
-              <div className="space-y-3.5">
-                {/* Name Field */}
-                <div className="relative">
-                  <label htmlFor="name" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
-                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
+        {/* RIGHT – FORM */}
+        <div className="p-6 rounded-2xl backdrop-blur-xl border border-white/30">
+          <h2
+            className="mb-5 text-2xl"
+            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#FFF6D0" }}
+          >
+            Fill the form. We'll get back within 24 hours.
+          </h2>
 
-                {/* Email ID Field */}
-                <div className="relative">
-                  <label htmlFor="email" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
-                    Email ID
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 text-sm"
-                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
-                    placeholder="Your email address"
-                    required
-                  />
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="from_name"
+              value={formData.from_name}
+              onChange={handleInputChange}
+              placeholder="Your name"
+              required
+              className="w-full p-2 rounded bg-transparent border text-white"
+            />
 
-                {/* Query Field */}
-                <div className="relative">
-                  <label htmlFor="query" className="block text-xs font-medium mb-1.5" style={{ color: '#FFF6D0' }}>
-                    Query
-                  </label>
-                  <textarea
-                    id="query"
-                    name="query"
-                    value={formData.query}
-                    onChange={handleInputChange}
-                    rows="3"
-                    className="w-full px-3.5 py-2 border-2 rounded-lg placeholder-gray-300 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all duration-300 resize-none text-sm"
-                    style={{ color: '#FFF6D0', backgroundColor: 'rgba(255, 246, 208, 0.1)', borderColor: 'rgba(255, 246, 208, 0.3)' }}
-                    placeholder="Tell us about your project..."
-                    required
-                  ></textarea>
-                </div>
+            <input
+              type="email"
+              name="from_email"
+              value={formData.from_email}
+              onChange={handleInputChange}
+              placeholder="Your email address"
+              required
+              className="w-full p-2 rounded bg-transparent border text-white"
+            />
 
-                {/* Submit Button */}
-                <button
-                  onClick={handleSubmit}
-                  className="w-full px-5 py-2.5 rounded-lg border-2 font-medium transition-all duration-300 relative overflow-hidden group text-sm"
-                  style={{ 
-                    color: '#FFF6D0', 
-                    backgroundColor: 'rgba(255, 246, 208, 0.1)',
-                    borderColor: 'rgba(255, 246, 208, 0.3)',
-                    boxShadow: 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#91222c';
-                    e.currentTarget.style.color = '#FFF6D0';
-                    e.currentTarget.style.borderColor = '#91222c';
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(145, 34, 44, 0.5), 0 0 20px rgba(145, 34, 44, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 246, 208, 0.1)';
-                    e.currentTarget.style.color = '#FFF6D0';
-                    e.currentTarget.style.borderColor = 'rgba(255, 246, 208, 0.3)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  <span className="relative z-10">Submit</span>
-                </button>
-              </div>
-            </div>
-          </div>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Tell us about your project..."
+              required
+              rows={3}
+              className="w-full p-2 rounded bg-transparent border text-white"
+            />
+
+            <button
+              type="submit"
+              disabled={isSending}
+              className="w-full py-2 rounded border transition-all"
+              style={{
+                backgroundColor: isSending ? "#444" : "#91222c",
+                color: "#FFF6D0",
+              }}
+            >
+              {isSending ? "Sending..." : "Submit"}
+            </button>
+          </form>
         </div>
-        
       </div>
-      
-      {/* Copyright Text - Fixed at bottom */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center" style={{ zIndex: 2 }}>
-        <p className="text-base" style={{ color: '#FFF6D0' }}>©2025kathaamaltas</p>
-      </div>
-      
-      {/* Logo - Bottom Left Corner */}
-      <div className="absolute -bottom-8 left-6" style={{ zIndex: 2 }}>
-        <img src="assets/Asset 5@4x (1).png" alt="Logo" className="w-16 h-16 md:w-40 md:h-40 object-contain" />
-      </div>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
-        
-        @keyframes bounce-in {
-          0% { opacity: 0; transform: translateY(60px) scale(0.5); }
-          60% { opacity: 1; transform: translateY(-15px) scale(1.1); }
-          80% { transform: translateY(8px) scale(0.95); }
-          100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.3; }
-        }
-        
-        body {
-          font-family: 'Avenir', 'Syne', sans-serif;
-        }
-      `}</style>
     </section>
   );
 };
