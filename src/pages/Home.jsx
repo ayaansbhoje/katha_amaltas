@@ -27,9 +27,9 @@ const Home = () => {
           <Navbar />
           <FilmStudioHero />
           <AboutUs />
-          <ProjectSection />
-          <CinematicCarousel />
           <ServiceSection />
+          <CinematicCarousel />
+           <ProjectSection />
           <FilmGallery />
           <LayeredGallery />
           <FilmProcessCycle />
