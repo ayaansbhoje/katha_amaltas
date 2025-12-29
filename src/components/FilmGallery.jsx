@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const FilmGallery = () => {
   const [images, setImages] = useState([]);
-  const [mode, setMode] = useState('drift'); // 'stay', 'drift', or 'physics'
+  const [mode, setMode] = useState('stay'); // 'stay', 'drift', or 'physics'
   const containerRef = useRef(null);
   const imageIdCounter = useRef(0);
   const lastSpawnTime = useRef(0);
@@ -102,8 +102,9 @@ const FilmGallery = () => {
 
   return (
     <div
-      className="relative min-h-screen overflow-hidden"
+      className="relative overflow-hidden"
       style={{
+        height: '85vh',
         color: '#d3a345',
         backgroundImage: 'url(/assets/filmgallery_bg.jpg)',
         backgroundSize: 'cover',
@@ -112,7 +113,7 @@ const FilmGallery = () => {
       }}
     >
       {/* Mode Selector */}
-      <div className="absolute top-26 right-6 z-50 flex gap-2">
+      <div className="absolute bottom-6 left-6 z-50 flex gap-2">
         {['stay', 'drift', 'physics'].map((m) => (
           <button
             key={m}
@@ -143,7 +144,8 @@ const FilmGallery = () => {
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}
-        className="relative min-h-screen flex items-center justify-center cursor-none"
+        className="relative flex items-center justify-center cursor-none"
+        style={{ height: '85vh' }}
       >
         {/* Left Header Text */}
         <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
@@ -159,9 +161,9 @@ const FilmGallery = () => {
         </div>
 
         {/* Center Image */}
-        <div className="z-30 pointer-events-none">
+        <div className="z-30 pointer-events-none" style={{ marginTop: '8vh' }}>
           <img 
-            src="assets/film_gallery_centre.png" 
+            src="/assets/StudioVirtualBackground.png" 
             alt="Stories that are lived, then filmed" 
             className="w-[110rem] h-auto object-contain"
           />
@@ -210,12 +212,6 @@ const FilmGallery = () => {
         </div>
 
       </section>
-
-      {/* Additional Info */}
-      <div className="absolute bottom-6 left-6 z-50 text-sm" style={{ color: '#d3a345', opacity: 0.8 }}>
-        <p>Move your cursor to explore</p>
-        <p className="text-xs mt-1">Mode: {mode}</p>
-      </div>
     </div>
   );
 };
