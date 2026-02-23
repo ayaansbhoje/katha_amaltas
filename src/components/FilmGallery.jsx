@@ -160,7 +160,7 @@ const FilmGallery = () => {
             <img 
               src="/assets/StudioVirtualBackground.png" 
               alt="Stories that are lived, then filmed" 
-              className="w-[110rem] h-auto object-contain"
+              className="w-[140rem] h-auto object-contain"
             />
           </div>
 
@@ -229,7 +229,7 @@ const FilmGallery = () => {
           {images.map((img) => (
             <div
               key={img.id}
-              className="absolute w-48 h-32 rounded-lg overflow-hidden shadow-2xl transition-opacity"
+              className="absolute w-48 h-64 rounded-lg overflow-hidden shadow-2xl transition-opacity"
               style={{
                 left: `${img.x}px`,
                 top: `${img.y}px`,

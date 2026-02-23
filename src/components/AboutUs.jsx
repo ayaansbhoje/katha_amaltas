@@ -91,12 +91,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
           <div className="absolute top-4 right-6 w-12 h-12 rounded-full bg-amber-900/5 blur-md" />
           <div className="absolute bottom-8 left-8 w-16 h-10 rounded-full bg-amber-900/5 blur-lg" />
           
-          {/* Decorative corner elements */}
-          <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-amber-700/20 rounded-tl" />
-          <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-amber-700/20 rounded-tr" />
-          <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-amber-700/20 rounded-bl" />
-          <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-amber-700/20 rounded-br" />
-          
           {/* Wax seal replaced with branded image */}
           <div
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
@@ -140,19 +134,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
             <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-3/5 ml-8" />
           </div>
 
-          {/* Stamp in corner */}
-          {!isOpen && (
-            <div 
-              className="absolute top-4 right-4 w-12 h-10 border-2 border-amber-700/30 rounded-sm"
-              style={{
-                background: 'linear-gradient(135deg, #e8dcc8 0%, #d4a574 100%)',
-                boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5)'
-              }}
-            >
-              <div className="absolute inset-1 border border-dashed border-amber-700/20" />
-            </div>
-          )}
-
           {/* Click instruction */}
           {!isOpen && (
             <div className="absolute bottom-2 md:bottom-3 left-0 right-0 flex justify-center">
@@ -160,7 +141,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
                 className="text-[10px] md:text-xs font-serif italic tracking-wide"
                 style={{ color: "#704d3b", opacity: 0.75 }}
               >
-                tap to open
+                Tap to open
               </p>
             </div>
           )}
@@ -177,21 +158,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
             zIndex: 10
           }}
         >
-          {/* Letter header */}
-          <div 
-            className="flex items-center justify-center gap-2 mb-3 transition-opacity duration-500"
-            style={{ 
-              opacity: showContent ? 1 : 0,
-              transitionDelay: showContent ? '0ms' : '0ms'
-            }}
-          >
-            <div className="w-8 h-px bg-amber-700/50" />
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L14.09 8.26L21 9.27L16.18 13.14L17.18 20.02L12 16.77L6.82 20.02L7.82 13.14L3 9.27L9.91 8.26L12 2Z" fill="#c4704f" opacity="0.5"/>
-            </svg>
-            <div className="w-8 h-px bg-amber-700/50" />
-          </div>
-          
           {/* Letter content */}
           <div 
             className="h-full overflow-y-auto pr-1 transition-opacity duration-700 font-work-sans"
@@ -207,8 +173,8 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
       
       {/* Name and Role below envelope */}
       <div className="text-center mt-4">
-        <h3 className="text-2xl md:text-4xl text-white" style={{ fontFamily: 'Avenir, sans-serif' }}>{name}</h3>
-        <p className="text-lg md:text-xl text-white" style={{ fontFamily: 'Avenir, sans-serif' }}>{role}</p>
+        <h3 className="text-2xl md:text-4xl text-white" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>{name}</h3>
+        <p className="text-sm md:text-base text-white" style={{ fontFamily: 'Avenir, sans-serif' }}>{role}</p>
       </div>
     </div>
   );
@@ -345,7 +311,7 @@ const AboutUs = () => {
         <div className="mt-12 md:mt-16 text-center">
           <div className="inline-flex items-center gap-3 md:gap-4">
             <div className="w-8 md:w-12 h-px bg-white" />
-            <span className="text-lg md:text-2xl text-[#ffff] font-serif italic">together, we create magic</span>
+            <span className="text-lg md:text-2xl text-[#ffff] font-serif italic">Together, we create magic</span>
             <div className="w-8 md:w-12 h-px bg-white" />
           </div>
         </div>

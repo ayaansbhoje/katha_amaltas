@@ -174,8 +174,7 @@ const LayeredGallery = () => {
       <div className="absolute top-8 left-0 right-0 sm:top-12 md:top-14 z-50 text-center px-4">
         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-1 sm:mb-2 md:mb-2 tracking-tight" style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, color: '#91222C' }}>Stories in Short Form</h1>
         <p className="text-white text-[10px] sm:text-xs md:text-sm  tracking-widest" style={{ fontFamily: "'Avenir', sans-serif", fontWeight: 400,color: '#91222C' }}>
-          Narratives adapted for the digital present,<br />
-          brief in duration, complete in feeling.
+          Narratives adapted for the digital present.
         </p>
       </div>
 

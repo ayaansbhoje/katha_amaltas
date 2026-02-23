@@ -61,7 +61,7 @@ const Navbar = () => {
               : 'text-white hover:text-yellow-400'
           }`}
         >
-          Film
+          Films
         </Link>
       </div>
     </nav>

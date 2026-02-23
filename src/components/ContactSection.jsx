@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Mail, Instagram, Facebook, Youtube, MapPin } from "lucide-react";
+import { Mail, Instagram, MapPin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
@@ -19,8 +19,6 @@ const ContactSection = () => {
 
   const socialLinks = [
     { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
   ];
 
   // Wavy text animation
@@ -95,8 +93,8 @@ const ContactSection = () => {
 
   const generateWavePath = (phase) => {
     const width = 1000;
-    const centerY = 120;
-    const amplitude = 60;
+    const centerY = 130;
+    const amplitude = 50;
     let path = `M 0 ${centerY}`;
     for (let x = 0; x <= width; x += 2) {
       const normalizedX = x / width;
@@ -133,7 +131,7 @@ const ContactSection = () => {
               </defs>
               <text
                 fill="#FFF6D0"
-                fontSize="120"
+                fontSize="100"
                 fontFamily="Bebas Neue, sans-serif"
               >
                 <textPath
@@ -170,10 +168,19 @@ const ContactSection = () => {
               <span style={{ color: "#FFF6D0" }}>mukulkapoorwork@gmail.com</span>
             </a>
 
+            <a
+              href="mailto:kathaamaltas@gmail.com"
+              className="flex gap-3 items-center px-4 py-2 rounded-lg border transition-all hover:bg-white/10"
+              style={{ borderColor: "#FFF6D0", width: "fit-content" }}
+            >
+              <Mail className="w-5 h-5" style={{ color: "#FFF6D0" }} />
+              <span style={{ color: "#FFF6D0" }}>kathaamaltas@gmail.com</span>
+            </a>
+
             <div className="flex gap-3">
               <MapPin className="w-5 h-5" style={{ color: "#FFF6D0" }} />
               <span style={{ color: "#FFF6D0" }}>
-                Mumbai & Chandigarh, India
+                Mumbai & Chandigarh, <br /> Across India & Beyond
               </span>
             </div>
           </div>
@@ -196,7 +203,7 @@ const ContactSection = () => {
             className="mb-5 text-2xl"
             style={{ fontFamily: "Bebas Neue, sans-serif", color: "#FFF6D0" }}
           >
-            Fill the form. We'll get back within 24 hours.
+             Fill the form. We'll get back to you.
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">

@@ -30,10 +30,10 @@ const Home = () => {
           <BrandIdentity />
           <AboutUs />
           <ServiceSection />
-          <CinematicCarousel />
-           <ProjectSection />
           <FilmGallery />
           <LayeredGallery />
+          <ProjectSection />
+          <CinematicCarousel />
           <FilmProcessCycle />
           <ContactSection />
         </>

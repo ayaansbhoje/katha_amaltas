@@ -6,25 +6,25 @@ const FilmStudioHero = () => {
       name: 'LISTENING',
       image: '/assets/hero_img1.png',
       category: 'BEFORE FILMING',
-      header: 'OUR STARTING POINT'
+      header: ['We believe', 'stories outlive us.']
     },
     {
       name: 'TRUTH',
       image: '/assets/hero_img.jpg',
       category: 'BEFORE NARRATIVES',
-      header: 'OUR APPROACH'
+      header: ['We believe', 'artist stories deserve documentaries.']
     },
     {
       name: 'PROCESS',
       image: '/assets/hero_img3.png',
       category: 'BEFORE POLISH',
-      header: 'HOW WE WORK'
+      header: ['We believe', 'visual archives are essential to institutions.']
     },
     {
       name: 'RESEARCH',
       image: '/assets/hero_img4.png',
       category: 'BEFORE FORM',
-      header: 'GROUNDING'
+      header: ['We believe', 'in human stories.']
     }
   ];
 
@@ -35,28 +35,23 @@ const FilmStudioHero = () => {
   // Check if images are preloaded and use them, otherwise preload
   useEffect(() => {
     const loadImages = async () => {
-      // Check if preloader already loaded the images
       const preloadedImages = window.__preloadedImages || {};
       const allHeroImages = slides.map(s => s.image);
       
-      // Check if all images are already preloaded
       const allPreloaded = allHeroImages.every(img => preloadedImages[img]);
       
       if (allPreloaded) {
-        // All images already preloaded by preloader
         setImagesLoaded(true);
       } else {
-        // Fallback: preload images if not already done
         const imagePromises = allHeroImages.map(src => {
           return new Promise((resolve) => {
             if (preloadedImages[src]) {
               resolve();
               return;
             }
-            
             const img = new Image();
             img.onload = () => resolve();
-            img.onerror = () => resolve(); // Continue even if image fails
+            img.onerror = () => resolve();
             img.src = src;
           });
         });
@@ -81,9 +76,43 @@ const FilmStudioHero = () => {
     }
   }, [currentIndex]);
 
-  const handleSlideChange = (index) => {
-    if (index === currentIndex || isTransitioning) return;
+  // Auto-advance every 2 seconds in a continuous loop
+  const currentIndexRef = React.useRef(currentIndex);
+  const isTransitioningRef = React.useRef(isTransitioning);
 
+  useEffect(() => { currentIndexRef.current = currentIndex; }, [currentIndex]);
+  useEffect(() => { isTransitioningRef.current = isTransitioning; }, [isTransitioning]);
+
+  useEffect(() => {
+    if (!imagesLoaded) return;
+    const timer = setInterval(() => {
+      if (isTransitioningRef.current) return;
+      const next = (currentIndexRef.current + 1) % slides.length;
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentIndex(next);
+        setTimeout(() => setIsTransitioning(false), 50);
+      }, 300);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [imagesLoaded]);
+
+  const handleSlideChange = (indexOrUpdater) => {
+    const nextIndex = typeof indexOrUpdater === 'function'
+      ? indexOrUpdater(currentIndex)
+      : indexOrUpdater;
+
+    if (nextIndex === currentIndex || isTransitioning) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(nextIndex);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 300);
+  };
+
+  const goToSlide = (index) => {
+    if (index === currentIndex || isTransitioning) return;
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentIndex(index);
@@ -91,7 +120,6 @@ const FilmStudioHero = () => {
     }, 300);
   };
 
-  // Show a loading state if images aren't ready yet
   if (!imagesLoaded) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-black">
@@ -109,31 +137,9 @@ const FilmStudioHero = () => {
         {`
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-          .hero-nav-left {
-            left: 2vw;
-          }
-
-          .hero-nav-right {
-            right: 2vw;
-          }
-
-          .hero-progress {
-            bottom: 8vh;
-            width: 25vw;
-            min-width: 300px;
-            max-width: 400px;
-          }
-
           @media (max-width: 767px) {
-            .hero-nav-left {
-              left: 0.5rem;
-            }
-            .hero-nav-right {
-              right: 0.5rem;
-            }
-            .hero-progress {
-              bottom: 6.5rem;
-              width: 24rem;
+            .hero-dots {
+              bottom: 4rem;
             }
           }
         `}
@@ -158,61 +164,44 @@ const FilmStudioHero = () => {
             <div className="absolute inset-0 bg-black/20"></div>
           </div>
 
-          {/* Left Navigation */}
-          <div className="hero-nav-left absolute top-0 h-full flex flex-col justify-center items-start p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
-            {slides.map((slide, index) => (
-              <button
-                key={index}
-                onClick={() => handleSlideChange(index)}
-                className={`text-white text-left transition-all duration-300 hover:scale-105 ${
-                  index === currentIndex ? 'font-bold text-sm md:text-lg' : 'font-normal text-xs md:text-base opacity-70'
-                }`}
-                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-              >
-                • {slide.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Right Categories */}
-          <div className="hero-nav-right absolute top-0 h-full flex flex-col justify-center items-end p-8 space-y-6 z-30 -translate-y-24 md:translate-y-0">
-            {slides.map((slide, index) => (
-              <button
-                key={index}
-                onClick={() => handleSlideChange(index)}
-                className={`text-white text-right transition-all duration-300 hover:scale-105 ${
-                  index === currentIndex ? 'font-bold text-sm md:text-lg' : 'font-normal text-xs md:text-base opacity-70'
-                }`}
-                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-              >
-                {slide.category} •
-              </button>
-            ))}
-          </div>
-
           {/* Dynamic Center Header */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-            <h2 
-              className="text-2xl md:text-3xl font-bold text-white transition-opacity duration-700"
-              style={{ 
-                fontFamily: 'Bebas Neue, sans-serif',
-                opacity: isTransitioning ? 0 : 0.5
-              }}
+            <div
+              className="text-center transition-opacity duration-700"
+              style={{ opacity: isTransitioning ? 0 : 0.5 }}
             >
-              {slides[currentIndex].header}
-            </h2>
+              <p
+                className="text-2xl md:text-4xl font-bold text-white leading-tight"
+                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
+              >
+                {slides[currentIndex].header[0]}
+              </p>
+              <p
+                className="text-2xl md:text-4xl font-bold text-white leading-tight"
+                style={{ fontFamily: 'Bebas Neue, sans-serif' }}
+              >
+                {slides[currentIndex].header[1]}
+              </p>
+            </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="hero-progress absolute left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-4">
-            <span className="text-white font-semibold text-lg" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>1</span>
-            <div className="flex-1 h-1 bg-gray-600 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-white transition-all duration-700 ease-out"
-                style={{ width: `${((currentIndex) / (slides.length - 1)) * 100}%` }}
+          {/* Dot Navigation */}
+          <div
+            className="hero-dots absolute left-1/2 transform -translate-x-1/2 z-30 flex items-center space-x-3"
+            style={{ bottom: '8vh' }}
+          >
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className="transition-all duration-300 rounded-full"
+                style={{
+                  width: index === currentIndex ? '12px' : '8px',
+                  height: index === currentIndex ? '12px' : '8px',
+                  backgroundColor: index === currentIndex ? 'white' : 'rgba(255,255,255,0.5)',
+                }}
               />
-            </div>
-            <span className="text-white font-semibold text-lg" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>{slides.length}</span>
+            ))}
           </div>
         </div>
       </div>
