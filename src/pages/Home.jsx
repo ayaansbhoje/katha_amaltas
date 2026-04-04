@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FilmPortfolioPreloader from '../components/FilmPortfolioPreloader';
 import Navbar from '../components/Navbar';
+
 import FilmStudioHero from '../components/FilmStudioHero';
 import BrandIdentity from '../components/BrandIdentity';
 import AboutUs from '../components/AboutUs';
@@ -26,16 +27,46 @@ const Home = () => {
       {!loading && (
         <>
           <Navbar />
-          <FilmStudioHero />
-          <BrandIdentity />
-          <AboutUs />
-          <ServiceSection />
-          <FilmGallery />
-          <LayeredGallery />
-          <ProjectSection />
-          <CinematicCarousel />
-          <FilmProcessCycle />
-          <ContactSection />
+
+          <div id="film-studio-hero">
+            <FilmStudioHero />
+          </div>
+
+          <div id="brand-identity">
+            <BrandIdentity />
+          </div>
+
+          <div id="about-us">
+            <AboutUs />
+          </div>
+
+          <div id="service-section">
+            <ServiceSection />
+          </div>
+
+          <div id="film-gallery">
+            <FilmGallery />
+          </div>
+
+          <div id="layered-gallery">
+            <LayeredGallery />
+          </div>
+
+          <div id="project-section">
+            <ProjectSection />
+          </div>
+
+          <div id="cinematic-carousel">
+            <CinematicCarousel />
+          </div>
+
+          <div id="film-process-cycle">
+            <FilmProcessCycle />
+          </div>
+
+          <div id="contact-section">
+            <ContactSection />
+          </div>
         </>
       )}
     </div>
