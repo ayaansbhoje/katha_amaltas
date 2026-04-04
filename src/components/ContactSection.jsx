@@ -2,6 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import { Mail, Instagram, MapPin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
+const WeDirectoryBadge = () => (
+  <a
+    href="https://we.directory/kathaamaltas"
+    target="_blank"
+    rel="noreferrer"
+    aria-label="We Directory"
+    style={{ display: "inline-flex", alignItems: "center", lineHeight: 0 }}
+  >
+    <img
+      src="assets/wedot_art.png"
+      alt="We Directory"
+      style={{ height: "20px", width: "auto", display: "block" }}
+    />
+  </a>
+);
+
 const ContactSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [wavePhase, setWavePhase] = useState(0);
@@ -185,15 +201,21 @@ const ContactSection = () => {
             </div>
           </div>
 
-          <div ref={iconsRef} className="flex gap-4">
+          {/* Social + Image Icons Row */}
+          <div
+            ref={iconsRef}
+            style={{ height: "24px" }}
+            className="flex gap-2 items-center"
+          >
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
               return (
-                <a key={index} href={social.href} target="_blank">
-                  <Icon style={{ color: "#FFF6D0" }} />
+                <a key={index} href={social.href} target="_blank" rel="noreferrer">
+                  <Icon className="w-6 h-6" style={{ color: "#FFF6D0" }} />
                 </a>
               );
             })}
+            <WeDirectoryBadge />
           </div>
         </div>
 
