@@ -236,9 +236,9 @@ const AboutUs = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 relative overflow-hidden w-screen"
+      className="py-12 md:py-14 relative overflow-hidden w-full"
       style={{
-        backgroundImage: "url('/assets/ab_bg.jpg')",
+        backgroundImage: "url('/assets/1-9.png')",
         backgroundSize: "cover",
         backgroundPosition: "center top",
         backgroundRepeat: "no-repeat",
@@ -305,15 +305,6 @@ const AboutUs = () => {
             {...founders[1]}
             layout="envelope-only"
           />
-        </div>
-
-        {/* Footer decoration */}
-        <div className="mt-12 md:mt-16 text-center">
-          <div className="inline-flex items-center gap-3 md:gap-4">
-            <div className="w-8 md:w-12 h-px bg-white" />
-            <span className="text-lg md:text-2xl text-[#ffff] font-serif italic">Together, we create magic</span>
-            <div className="w-8 md:w-12 h-px bg-white" />
-          </div>
         </div>
       </div>
 

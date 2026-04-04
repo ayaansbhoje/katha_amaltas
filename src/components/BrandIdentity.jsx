@@ -25,10 +25,11 @@ const BrandIdentity = () => {
       <div className="relative w-full h-screen overflow-hidden">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-no-repeat"
           style={{
-            backgroundImage: `url('/assets/about_bg1.jpg')`,
-            backgroundColor: '#8B2E1F'
+            backgroundImage: `url('/assets/1-7.png')`,
+            backgroundColor: '#8B2E1F',
+            backgroundPosition: '111111% center'
           }}
         />
         

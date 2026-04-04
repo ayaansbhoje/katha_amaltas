@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SECTIONS = [
-  { id: 'film-studio-hero',   label: 'Hero'            },
-  { id: 'brand-identity',     label: 'Brand Identity'  },
-  { id: 'about-us',           label: 'About Us'        },
-  { id: 'service-section',    label: 'Services'        },
-  { id: 'film-gallery',       label: 'Film Gallery'    },
-  { id: 'layered-gallery',    label: 'Layered Gallery' },
-  { id: 'project-section',    label: 'Projects'        },
-  { id: 'cinematic-carousel', label: 'Cinematic'       },
-  { id: 'film-process-cycle', label: 'Film Process'    },
-  { id: 'contact-section',    label: 'Contact'         },
+  { id: 'film-studio-hero',   label: 'Prologue'            },
+  { id: 'brand-identity',     label: 'The Name'  },
+  { id: 'about-us',           label: 'The Duo '        },
+  { id: 'service-section',    label: 'What We Do'        },
+  { id: 'film-gallery',       label: 'Visual Notes'    },
+  { id: 'layered-gallery',    label: 'Vertical Stories' },
+  { id: 'project-section',    label: 'Selected Works'        },
+  { id: 'cinematic-carousel', label: 'Worked With'       },
+  { id: 'film-process-cycle', label: ' Our Process'    },
+  { id: 'contact-section',    label: 'Get in Touch'         },
 ];
 
 const Navbar = () => {

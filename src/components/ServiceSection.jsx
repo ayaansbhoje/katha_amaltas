@@ -11,7 +11,7 @@ const services = [
     description:
       " Intimate film portraits that document an artist's practice, process, and thinking. These films are built through listening, observation, and time — allowing the work to speak without performance or simplification.",
     category: "01",
-    image: "assets/artist_docu.jpg",
+    image: "/assets/service_1.png",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const services = [
     description:
       "Short-form and long-form documentaries focused on culture as it is lived — across people, spaces, traditions, and contemporary practice.",
     category: "02",
-    image: "assets/cultural_docu.jpg",
+    image: "/assets/service_2.png",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const services = [
     description:
       "Films created to accompany exhibitions — including walkthroughs, installation documentation, and contextual films that support how a body of work is experienced in space.",
     category: "03",
-    image: "assets/exhibiton_galler.jpg",
+    image: "/assets/service_3.png",
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const services = [
     description:
       "Digital-first films designed for smaller frames and shorter durations — adapting storytelling to contemporary platforms without losing emotional depth, authorship, or intent.",
     category: "04",
-    image: "assets/short_form.jpg",
+    image: "/assets/service_4.png",
   },
   {
     id: 5,
@@ -43,7 +43,7 @@ const services = [
     description:
       "Meticulous color grading, editing, and visual effects that transform raw footage into cinematic art.",
     category: "05",
-    image: "assets/branded_narrative.jpg",
+    image: "/assets/service_5.png",
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ const services = [
     description:
       "Narrative and visual treatments developed for commissioned films, including advertising work. These outline tone, structure, and cinematic approach — serving as a bridge between intention and execution.",
     category: "06",
-    image: "assets/decks.jpg",
+    image: "/assets/service_6.png",
   },
 ];
 
@@ -65,7 +65,7 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
 
   return (
     <motion.div
-      className={`absolute left-0 right-0 ${isMobile ? 'px-4' : 'px-6'}`}
+      className={`absolute left-0 right-0 ${isMobile ? "px-4" : "px-6"}`}
       style={{
         height: cardHeight,
         zIndex: 10 - Math.abs(distance),
@@ -78,17 +78,53 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
       }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="w-full max-w-lg mx-auto h-full rounded-lg overflow-hidden backdrop-blur-sm" style={{ backgroundColor: '#D3A345' }}>
-        <div className={`flex h-full ${isMobile ? 'flex-col' : ''}`}>
-          <div className={`${isMobile ? 'w-full h-32' : 'w-2/5 h-full'}`}>
-            <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
+      <div
+        className="w-full max-w-lg mx-auto h-full rounded-lg overflow-hidden backdrop-blur-sm"
+        style={{ backgroundColor: "#D3A345" }}
+      >
+        <div className="flex h-full flex-col ">
+          {/* Image always on top */}
+          <div className={`w-full ${isMobile ? "h-32" : "h-58"}`}>
+            <img
+              src={service.image}
+              className="w-full h-full object-cover rounded-t-lg"
+              alt={service.title}
+            />
           </div>
-          <div className={`flex-1 ${isMobile ? 'p-4' : 'p-5'} flex flex-col justify-center`}>
-            <span className={`${isMobile ? 'text-xs' : 'text-xs'} tracking-widest mb-2`} style={{ color: '#650B0F', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
+          {/* Text below */}
+          <div
+            className={`flex-1 ${isMobile ? "p-4" : "p-5"} flex flex-col justify-center`}
+          >
+            <span
+              className="text-xs tracking-widest mb-2"
+              style={{
+                color: "#650B0F",
+                fontFamily: "'Avenir', sans-serif",
+                fontWeight: 400,
+              }}
+            >
               {service.category}
             </span>
-            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2`} style={{ color: '#650B0F', fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400 }}>{service.title}</h3>
-            <p className={`${isMobile ? 'text-xs' : 'text-sm'}`} style={{ color: '#f8e6d2', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>{service.description}</p>
+            <h3
+              className={`${isMobile ? "text-lg" : "text-xl"} mb-2`}
+              style={{
+                color: "#650B0F",
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              {service.title}
+            </h3>
+            <p
+              className={`${isMobile ? "text-xs" : "text-sm"}`}
+              style={{
+                color: "#f8e6d2",
+                fontFamily: "'Avenir', sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              {service.description}
+            </p>
           </div>
         </div>
       </div>
@@ -137,10 +173,9 @@ const ServiceSection = () => {
       const progress = Math.min(1, scrollStart / scrollEnd);
       setScrollProgress(progress);
 
-      const index = Math.floor(Math.min(
-        services.length - 1,
-        Math.max(0, progress * services.length)
-      ));
+      const index = Math.floor(
+        Math.min(services.length - 1, Math.max(0, progress * services.length))
+      );
       setActiveIndex(index);
     };
 
@@ -177,42 +212,67 @@ const ServiceSection = () => {
           <motion.img
             key={activeIndex}
             src={services[activeIndex]?.image}
-            alt={services[activeIndex]?.title || 'Backdrop'}
+            alt={services[activeIndex]?.title || "Backdrop"}
             className="w-full h-full object-cover scale-110"
-            style={{ filter: 'blur(12px)', opacity: 0.5 }}
+            style={{ filter: "blur(12px)", opacity: 0.5 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
             transition={{ duration: 0.3 }}
           />
-
         </div>
-        
-        <div className={`h-full flex relative z-10 ${isMobile ? 'flex-col' : ''}`}>
+
+        <div className={`h-full flex relative z-10 ${isMobile ? "flex-col" : ""}`}>
           {/* LEFT */}
-          <div className={`${isMobile ? 'w-full h-auto pt-12 pb-8' : 'w-1/2 h-full'} flex flex-col justify-center ${isMobile ? 'px-6 text-center items-center' : 'px-20'}`}>
-            <span className="text-xs tracking-widest mb-6" style={{ color: '#d3a345', fontFamily: "'Avenir', sans-serif", fontWeight: 400 }}>
+          <div
+            className={`${isMobile ? "w-full h-auto pt-12 pb-8" : "w-1/2 h-full"} flex flex-col justify-center ${isMobile ? "px-6 text-center items-center" : "px-20"}`}
+          >
+            <span
+              className="text-xs tracking-widest mb-6"
+              style={{
+                color: "#d3a345",
+                fontFamily: "'Avenir', sans-serif",
+                fontWeight: 400,
+              }}
+            >
               Services
             </span>
-            <h2 className={`${isMobile ? 'text-4xl' : 'text-6xl'} mb-6`} style={{ 
-              color: '#d3a345', 
-              fontFamily: "'Bebas Neue', sans-serif", 
-              fontWeight: 400,
-              fontStyle: 'normal',
-              fontStretch: 'normal',
-              letterSpacing: 'normal',
-              textTransform: 'uppercase'
-            }}>
+            <h2
+              className={`${isMobile ? "text-4xl" : "text-6xl"} mb-6`}
+              style={{
+                color: "#d3a345",
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontWeight: 400,
+                fontStyle: "normal",
+                fontStretch: "normal",
+                letterSpacing: "normal",
+                textTransform: "uppercase",
+              }}
+            >
               WHAT <br />
               WE DO
             </h2>
-            <p className={`max-w-sm ${isMobile ? 'text-center' : ''}`} style={{ color: '#d3a345', fontFamily: "'Work Sans', sans-serif", fontWeight: 400 }}>
-              We work across film, documentation, and cultural storytelling — creating work that is research-led, visually grounded, and shaped from inside the worlds it documents.
+            <p
+              className={`max-w-sm ${isMobile ? "text-center" : ""}`}
+              style={{
+                color: "#d3a345",
+                fontFamily: "'Work Sans', sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              We work across film, documentation, and cultural storytelling —
+              creating work that is research-led, visually grounded, and shaped
+              from inside the worlds it documents.
             </p>
           </div>
 
           {/* RIGHT */}
-          <div className={`${isMobile ? 'w-full flex-1' : 'w-1/2 h-full'} flex items-center justify-center relative`}>
-            <div className="relative w-full" style={{ height: isMobile ? 320 : CARD_HEIGHT }}>
+          <div
+            className={`${isMobile ? "w-full flex-1" : "w-1/2 h-full"} flex items-center justify-center relative`}
+          >
+            <div
+              className="relative w-full"
+              style={{ height: isMobile ? 320 : CARD_HEIGHT }}
+            >
               {services.map((service, index) => (
                 <ServiceCard
                   key={service.id}

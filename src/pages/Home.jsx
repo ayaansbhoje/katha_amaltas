@@ -21,7 +21,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden color-">
       {loading && <FilmPortfolioPreloader onComplete={handlePreloaderComplete} />}
 
       {!loading && (
