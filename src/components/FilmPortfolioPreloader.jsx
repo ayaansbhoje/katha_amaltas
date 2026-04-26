@@ -277,7 +277,7 @@ export default function FilmPortfolioPreloader({ onComplete }) {
         }`}
       >
         <img 
-          src="/assets/Asset 5@4x (1).png" 
+          src="/assets/katha_main_logo.webp" 
           alt="Logo"
           onLoad={handleImageLoad}
           className="h-24 sm:h-28 md:h-36 lg:h-46 w-auto object-contain"
