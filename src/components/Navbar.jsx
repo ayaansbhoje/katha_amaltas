@@ -3,15 +3,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SECTIONS = [
   { id: 'film-studio-hero',   label: 'Prologue'            },
-  { id: 'brand-identity',     label: 'The Name'  },
-  { id: 'about-us',           label: 'The Duo '        },
-  { id: 'service-section',    label: 'What We Do'        },
-  { id: 'film-gallery',       label: 'Visual Notes'    },
-  { id: 'layered-gallery',    label: 'Vertical Stories' },
-  { id: 'project-section',    label: 'Selected Works'        },
-  { id: 'cinematic-carousel', label: 'Worked With'       },
-  { id: 'film-process-cycle', label: ' Our Process'    },
-  { id: 'contact-section',    label: 'Get in Touch'         },
+  { id: 'brand-identity',     label: 'The Name'            },
+  { id: 'about-us',           label: 'The Duo'             },
+  { id: 'service-section',    label: 'What We Do'          },
+  { id: 'film-gallery',       label: 'Visual Notes'        },
+  { id: 'layered-gallery',    label: 'Vertical Stories'    },
+  { id: 'project-section',    label: 'Selected Works'      },
+  { id: 'cinematic-carousel', label: 'Worked With'         },
+  { id: 'film-process-cycle', label: 'Our Process'         },
+  { id: 'contact-section',    label: 'Get in Touch'        },
 ];
 
 const Navbar = () => {
@@ -62,17 +62,17 @@ const Navbar = () => {
         isScrolled ? 'bg-black/20 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4 md:py-8 flex items-center justify-between">
 
         {/* ── Home button with dropdown ── */}
         <div
-          className="relative ml-12 md:ml-24"
+          className="relative ml-4 md:ml-24"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           <Link
             to="/"
-            className={`group relative inline-flex items-center gap-1.5 font-work-sans text-base md:text-lg font-medium transition-colors duration-300 ${
+            className={`group relative inline-flex items-center gap-1.5 font-work-sans text-sm md:text-lg font-medium transition-colors duration-300 ${
               isHome ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
             }`}
           >
@@ -81,15 +81,15 @@ const Navbar = () => {
             {/* Chevron icon — rotates when open */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="3.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`transition-transform duration-300 opacity-60 ${
+              className={`md:w-4 md:h-4 transition-transform duration-300 opacity-60 ${
                 dropdownOpen ? 'rotate-180' : 'rotate-0'
               }`}
             >
@@ -123,7 +123,7 @@ const Navbar = () => {
               absolute top-full left-0 mt-2
               px-2.5 py-1 rounded-md
               bg-black/80 backdrop-blur-sm border border-white/10
-              text-[10px] text-white/60 font-work-sans tracking-widest uppercase whitespace-nowrap
+              text-[9px] md:text-[10px] text-white/60 font-work-sans tracking-widest uppercase whitespace-nowrap
               pointer-events-none
               transition-all duration-300
               ${hinted && !dropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'}
@@ -136,7 +136,7 @@ const Navbar = () => {
           <div
             className={`
               absolute top-full left-0 mt-3
-              w-52 py-2
+              w-44 md:w-52 py-1.5 md:py-2
               backdrop-blur-2xl
               border border-white/10
               rounded-xl shadow-2xl shadow-black/40
@@ -151,7 +151,7 @@ const Navbar = () => {
             {/* Arrow tip */}
             <div className="absolute -top-[6px] left-4 w-3 h-3 bg-black/30 border-l border-t border-white/10 rotate-45 backdrop-blur-2xl" />
 
-            <p className="px-4 pt-1 pb-2 text-[10px] tracking-widest uppercase text-white/30 font-work-sans">
+            <p className="px-3 md:px-4 pt-1 pb-1.5 md:pb-2 text-[9px] md:text-[10px] tracking-widest uppercase text-white/30 font-work-sans">
               Jump to section
             </p>
 
@@ -160,15 +160,15 @@ const Navbar = () => {
                 key={id}
                 onClick={() => scrollToSection(id)}
                 className="
-                  w-full text-left px-4 py-2
-                  text-sm text-white/70 hover:text-yellow-400
+                  w-full text-left px-3 md:px-4 py-1.5 md:py-2
+                  text-xs md:text-sm text-white/70 hover:text-yellow-400
                   hover:bg-white/5
                   font-work-sans tracking-wide
                   transition-colors duration-150
-                  flex items-center gap-2.5
+                  flex items-center gap-2
                 "
               >
-                <span className="text-[10px] text-white/20 font-mono w-4">
+                <span className="text-[9px] md:text-[10px] text-white/20 font-mono w-4">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 {label}
@@ -182,14 +182,14 @@ const Navbar = () => {
           <img
             src="/assets/katha_main_logo.webp"
             alt="Logo"
-            className="h-12 md:h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity duration-300"
+            className="h-8 md:h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity duration-300"
           />
         </Link>
 
         {/* ── Films link ── */}
         <Link
           to="/film"
-          className={`font-work-sans text-base md:text-lg font-medium transition-colors duration-300 mr-12 md:mr-24 ${
+          className={`font-work-sans text-sm md:text-lg font-medium transition-colors duration-300 mr-4 md:mr-24 ${
             location.pathname === '/film'
               ? 'text-yellow-400'
               : 'text-white hover:text-yellow-400'
