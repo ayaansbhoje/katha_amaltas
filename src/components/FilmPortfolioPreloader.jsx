@@ -13,11 +13,10 @@ const projectVideos = [
 
 // Hero section images from FilmStudioHero
 const heroImages = [
-  '/assets/hero_img1.png',
-  '/assets/hero_img.jpg',
-  '/assets/hero_img3.png',
-  '/assets/hero_img4.png',
-  'assets/DISCOVERY_SECTION.gif'
+  '/assets/hero_img1.webp',
+  '/assets/hero_img2.webp',
+  '/assets/hero_img3.webp',
+  '/assets/hero_img4.webp',
 ];
 
 // Preload video function

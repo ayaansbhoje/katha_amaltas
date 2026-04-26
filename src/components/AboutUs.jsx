@@ -230,7 +230,7 @@ const AboutUs = () => {
       ref={sectionRef}
       className="py-12 md:py-14 relative overflow-hidden w-full"
       style={{
-        backgroundImage: "url('/assets/1-4.png')",
+        backgroundImage: "url('/assets/1-4.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center -10px",
         backgroundRepeat: "no-repeat",
