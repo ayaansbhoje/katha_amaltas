@@ -10,15 +10,12 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
 
   useEffect(() => {
     if (isOpen) {
-      // Step 1: Open the flap first
       setFlapOpen(true);
       
-      // Step 2: After flap opens, slide the letter up
       const slideTimer = setTimeout(() => {
         setLetterSlideUp(true);
-      }, 700); // Wait for flap animation to complete
+      }, 700);
       
-      // Step 3: Show content after letter slides up
       const contentTimer = setTimeout(() => {
         setShowContent(true);
       }, 1200);
@@ -34,10 +31,8 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
     }
   }, [isOpen]);
 
-  // Decide ordering based on layout
   const isEnvelopeOnly = layout === "envelope-only";
 
-  // Founder image element
   const imageBlock = !isEnvelopeOnly && (
     <div className="relative group">
       <div className="w-48 h-60 md:w-64 md:h-80 overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
@@ -54,7 +49,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
     </div>
   );
 
-  // Envelope / letter element
   const envelopeBlock = (
     <div className="flex flex-col items-center">
       <div 
@@ -91,7 +85,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
           <div className="absolute top-4 right-6 w-12 h-12 rounded-full bg-amber-900/5 blur-md" />
           <div className="absolute bottom-8 left-8 w-16 h-10 rounded-full bg-amber-900/5 blur-lg" />
           
-          {/* Wax seal replaced with branded image */}
+          {/* Wax seal */}
           <div
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
             style={{ top: '55%' }}
@@ -105,7 +99,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
             </div>
           </div>
 
-          {/* Envelope flap with better shading */}
+          {/* Envelope flap */}
           <div
             className="absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-700 ease-out"
             style={{ 
@@ -118,7 +112,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
               zIndex: flapOpen ? 15 : 5
             }}
           >
-            {/* Flap fold line */}
             <div 
               className="absolute bottom-0 left-0 right-0 h-px"
               style={{
@@ -147,7 +140,7 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
           )}
         </div>
 
-        {/* Letter content - hidden initially, appears after flap opens */}
+        {/* Letter content */}
         <div
           className="absolute inset-0 rounded-2xl shadow-2xl p-5 overflow-hidden pointer-events-none"
           style={{ 
@@ -158,7 +151,6 @@ const FounderLetter = ({ name, role, bio, quote, imageUrl, layout = "image-envel
             zIndex: 10
           }}
         >
-          {/* Letter content */}
           <div 
             className="h-full overflow-y-auto pr-1 transition-opacity duration-700 font-work-sans"
             style={{ 
@@ -238,9 +230,9 @@ const AboutUs = () => {
       ref={sectionRef}
       className="py-12 md:py-14 relative overflow-hidden w-full"
       style={{
-        backgroundImage: "url('/assets/1-9.png')",
+        backgroundImage: "url('/assets/1-4.png')",
         backgroundSize: "cover",
-        backgroundPosition: "center top",
+        backgroundPosition: "center -10px",
         backgroundRepeat: "no-repeat",
         marginLeft: '50%',
         transform: 'translateX(-50%)'
@@ -254,7 +246,7 @@ const AboutUs = () => {
       </div>
 
       <div className="w-full relative z-10">
-        {/* Header without typewriter effect */}
+        {/* Header */}
         <div className="relative text-center mb-12 md:mb-16">
           <div
             className="relative z-10 cursor-default px-8 py-4"

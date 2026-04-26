@@ -23,14 +23,12 @@ const BrandIdentity = () => {
     <>
       {/* First Section - Image Background */}
       <div className="relative w-full h-screen overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url('/assets/1-7.png')`,
-            backgroundColor: '#8B2E1F',
-            backgroundPosition: '111111% center'
-          }}
+        
+        {/* Background Image — same pattern as SimpleCinematicCarousel */}
+        <img
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/assets/1-5.png"
+          alt="Background"
         />
         
         {/* Content Overlay */}
@@ -92,7 +90,7 @@ const BrandIdentity = () => {
                 Why Amaltas, you wonder?
               </p>
 
-              {/* Subtext - same font as the left italic text */}
+              {/* Subtext */}
               <p 
                 className="text-white text-lg md:text-xl lg:text-2xl italic leading-relaxed"
                 style={{ fontFamily: 'var(--font-avenir)' }}
