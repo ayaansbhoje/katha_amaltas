@@ -106,7 +106,7 @@ const FilmGallery = () => {
       style={{
         height: '85vh',
         color: '#d3a345',
-        backgroundImage: 'url(/assets/filmgallery_bg.jpg)',
+        backgroundImage: 'url(/assets/filmgallery_bg.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

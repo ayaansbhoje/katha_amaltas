@@ -180,7 +180,7 @@ const Navbar = () => {
         {/* ── Logo centre ── */}
         <Link to="/" className="absolute left-1/2 transform -translate-x-1/2">
           <img
-            src="/assets/Asset 5@4x (1).png"
+            src="/assets/katha_main_logo.webp"
             alt="Logo"
             className="h-12 md:h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity duration-300"
           />

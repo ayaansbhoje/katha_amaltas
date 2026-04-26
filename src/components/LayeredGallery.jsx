@@ -116,7 +116,7 @@ const LayeredGallery = () => {
     <div className="relative w-full min-h-screen h-[140vh] overflow-hidden">
       {/* Background Image */}
       <img 
-        src="/assets/filmgallery_bg.jpg" 
+        src="/assets/filmgallery_bg.webp" 
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover"
       />
