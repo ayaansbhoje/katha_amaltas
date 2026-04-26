@@ -4,25 +4,25 @@ const FilmStudioHero = () => {
   const slides = [
     {
       name: 'LISTENING',
-      image: '/assets/hero_img1.png',
+      image: '/assets/hero_img1.webp',
       category: 'BEFORE FILMING',
       header: ['We believe', 'stories outlive us.']
     },
     {
       name: 'TRUTH',
-      image: '/assets/hero_img.jpg',
+      image: 'assets/hero_img2.webp',
       category: 'BEFORE NARRATIVES',
       header: ['We believe', 'artist stories deserve documentaries.']
     },
     {
       name: 'PROCESS',
-      image: '/assets/hero_img3.png',
+      image: '/assets/hero_img3.webp',
       category: 'BEFORE POLISH',
       header: ['We believe', 'visual archives are essential to institutions.']
     },
     {
       name: 'RESEARCH',
-      image: '/assets/hero_img4.png',
+      image: '/assets/hero_img4.webp',
       category: 'BEFORE FORM',
       header: ['We believe', 'in human stories.']
     }
