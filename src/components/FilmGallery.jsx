@@ -10,14 +10,14 @@ const FilmGallery = () => {
 
   // Sample film stills/portfolio images
   const imagePool = [
-    'assets/gallery_img3.jpg',
-    'assets/gallery_img4.jpg',
-    'assets/gallery_img5.jpg',
-    'assets/gallery_img6.jpg',
-    'assets/gallery_img7.jpg',
-    'assets/gallery_img8.jpg',
-    'assets/gallery_img9.jpg',
-    'assets/gallery_img10.jpg',
+    'assets/gallery_img3.webp',
+    'assets/gallery_img4.webp',
+    'assets/gallery_img5.webp',
+    'assets/gallery_img6.webp',
+    'assets/gallery_img7.webp',
+    'assets/gallery_img8.webp',
+    'assets/gallery_img9.webp',
+    'assets/gallery_img10.webp',
   ];
 
   const handleMouseMove = (e) => {

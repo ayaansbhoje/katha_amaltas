@@ -84,7 +84,7 @@ const SimpleCinematicCarousel = () => {
       {/* Background Image — same pattern as FilmProcessCycle */}
       <img
         className="absolute inset-0 w-full h-full object-cover"
-        src="/assets/1-5.png"
+        src="/assets/1-5.webp"
         alt="Background"
       />
 

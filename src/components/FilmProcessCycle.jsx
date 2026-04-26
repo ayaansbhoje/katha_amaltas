@@ -48,7 +48,7 @@ const FilmProcessCycle = () => {
       {/* Background image */}
       <img
         className="absolute inset-0 w-full h-full object-cover"
-        src="/assets/1-4.png"
+        src="/assets/1-4.webp"
         alt="Background"
       />
 
