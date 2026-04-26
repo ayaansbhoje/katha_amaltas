@@ -11,7 +11,7 @@ const services = [
     description:
       " Intimate film portraits that document an artist's practice, process, and thinking. These films are built through listening, observation, and time — allowing the work to speak without performance or simplification.",
     category: "01",
-    image: "/assets/service_1.png",
+    image: "/assets/service_1.webp",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const services = [
     description:
       "Short-form and long-form documentaries focused on culture as it is lived — across people, spaces, traditions, and contemporary practice.",
     category: "02",
-    image: "/assets/service_2.png",
+    image: "/assets/service_2.webp",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const services = [
     description:
       "Films created to accompany exhibitions — including walkthroughs, installation documentation, and contextual films that support how a body of work is experienced in space.",
     category: "03",
-    image: "/assets/service_3.png",
+    image: "/assets/service_3.webp",
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const services = [
     description:
       "Digital-first films designed for smaller frames and shorter durations — adapting storytelling to contemporary platforms without losing emotional depth, authorship, or intent.",
     category: "04",
-    image: "/assets/service_4.png",
+    image: "/assets/service_4.webp",
   },
   {
     id: 5,
@@ -43,7 +43,7 @@ const services = [
     description:
       "Meticulous color grading, editing, and visual effects that transform raw footage into cinematic art.",
     category: "05",
-    image: "/assets/service_5.png",
+    image: "/assets/service_5.webp",
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ const services = [
     description:
       "Narrative and visual treatments developed for commissioned films, including advertising work. These outline tone, structure, and cinematic approach — serving as a bridge between intention and execution.",
     category: "06",
-    image: "/assets/service_6.png",
+    image: "/assets/service_6.webp",
   },
 ];
 
