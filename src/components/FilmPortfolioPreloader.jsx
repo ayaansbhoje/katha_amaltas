@@ -19,6 +19,16 @@ const heroImages = [
   '/assets/hero_img4.webp',
 ];
 
+// Service section images from ServiceSection
+const serviceImages = [
+  '/assets/service_1.webp',
+  '/assets/service_2.webp',
+  '/assets/service_3.webp',
+  '/assets/service_4.webp',
+  '/assets/service_5.webp',
+  '/assets/service_6.webp',
+];
+
 // Preload video function
 const preloadVideo = (src) => {
   return new Promise((resolve) => {
@@ -27,40 +37,44 @@ const preloadVideo = (src) => {
     video.muted = true;
     video.playsInline = true;
     video.setAttribute('preload', 'auto');
-    
+
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'video';
     link.href = src;
     document.head.appendChild(link);
-    
+
     let resolved = false;
-    
+
+    const cleanup = () => {
+      video.removeEventListener('canplaythrough', handleCanPlay);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('progress', handleProgress);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('error', handleError);
+    };
+
     const handleCanPlay = () => {
       if (resolved) return;
-      
+
       const buffered = video.buffered;
       let hasEnoughData = false;
-      
+
       if (buffered.length > 0) {
         const bufferedEnd = buffered.end(buffered.length - 1);
         const duration = video.duration || Infinity;
         hasEnoughData = bufferedEnd >= 3 || (duration > 0 && bufferedEnd >= duration * 0.5);
       }
-      
+
       if (hasEnoughData || video.readyState >= 4) {
         resolved = true;
-        video.removeEventListener('canplaythrough', handleCanPlay);
-        video.removeEventListener('loadeddata', handleLoadedData);
-        video.removeEventListener('progress', handleProgress);
-        video.removeEventListener('timeupdate', handleTimeUpdate);
-        video.removeEventListener('error', handleError);
+        cleanup();
         window.__preloadedVideos = window.__preloadedVideos || {};
         window.__preloadedVideos[src] = video;
         resolve(video);
       }
     };
-    
+
     const handleLoadedData = () => {
       if (!resolved && video.readyState >= 3) {
         setTimeout(() => {
@@ -70,7 +84,7 @@ const preloadVideo = (src) => {
         }, 500);
       }
     };
-    
+
     const handleProgress = () => {
       if (!resolved) {
         const buffered = video.buffered;
@@ -83,23 +97,20 @@ const preloadVideo = (src) => {
         }
       }
     };
-    
+
     const handleTimeUpdate = () => {
       if (!resolved && video.readyState >= 3) {
         handleProgress();
       }
     };
-    
+
     const handleError = () => {
       if (resolved) return;
       resolved = true;
-      video.removeEventListener('canplaythrough', handleCanPlay);
-      video.removeEventListener('loadeddata', handleLoadedData);
-      video.removeEventListener('progress', handleProgress);
-      video.removeEventListener('error', handleError);
+      cleanup();
       resolve(null);
     };
-    
+
     video.addEventListener('canplaythrough', handleCanPlay, { once: true });
     video.addEventListener('loadeddata', handleLoadedData, { once: true });
     video.addEventListener('progress', handleProgress);
@@ -107,9 +118,9 @@ const preloadVideo = (src) => {
     video.addEventListener('error', handleError, { once: true });
     video.src = src;
     video.load();
-    
+
     const playPromise = video.play().catch(() => {});
-    
+
     if (playPromise) {
       playPromise.then(() => {
         if (!resolved) {
@@ -128,7 +139,7 @@ const preloadVideo = (src) => {
               }
             }
           }, 200);
-          
+
           setTimeout(() => {
             clearInterval(checkBuffer);
             if (!resolved) {
@@ -138,7 +149,7 @@ const preloadVideo = (src) => {
         }
       });
     }
-    
+
     setTimeout(() => {
       if (!resolved) {
         handleCanPlay();
@@ -151,15 +162,15 @@ const preloadVideo = (src) => {
 const preloadImage = (src) => {
   return new Promise((resolve) => {
     const img = new Image();
-    
+
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
     link.href = src;
     document.head.appendChild(link);
-    
+
     let resolved = false;
-    
+
     const handleLoad = () => {
       if (resolved) return;
       resolved = true;
@@ -169,7 +180,7 @@ const preloadImage = (src) => {
       window.__preloadedImages[src] = img;
       resolve(img);
     };
-    
+
     const handleError = () => {
       if (resolved) return;
       resolved = true;
@@ -177,11 +188,11 @@ const preloadImage = (src) => {
       img.removeEventListener('error', handleError);
       resolve(null);
     };
-    
+
     img.addEventListener('load', handleLoad);
     img.addEventListener('error', handleError);
     img.src = src;
-    
+
     // Timeout fallback
     setTimeout(() => {
       if (!resolved) {
@@ -196,13 +207,13 @@ export default function FilmPortfolioPreloader({ onComplete }) {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [logoImageLoaded, setLogoImageLoaded] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(0);
-  const totalAssets = projectVideos.length + heroImages.length;
+  const totalAssets = projectVideos.length + heroImages.length + serviceImages.length;
 
   // Preload all videos and images in background with progress tracking
   useEffect(() => {
     const preloadAllAssets = async () => {
       let loadedCount = 0;
-      
+
       const updateProgress = () => {
         loadedCount++;
         setAssetsLoaded(loadedCount);
@@ -212,46 +223,64 @@ export default function FilmPortfolioPreloader({ onComplete }) {
 
       try {
         // Preload videos
-        const videoPromises = projectVideos.map((video) => 
+        const videoPromises = projectVideos.map((video) =>
           preloadVideo(video)
-            .then(() => {
-              updateProgress();
-            })
-            .catch(() => {
-              updateProgress();
-            })
+            .then(() => updateProgress())
+            .catch(() => updateProgress())
         );
-        
+
         // Preload hero images
-        const imagePromises = heroImages.map((image) => 
+        const heroImagePromises = heroImages.map((image) =>
           preloadImage(image)
-            .then(() => {
-              updateProgress();
-            })
-            .catch(() => {
-              updateProgress();
-            })
+            .then(() => updateProgress())
+            .catch(() => updateProgress())
         );
-        
-        await Promise.all([...videoPromises, ...imagePromises]);
+
+        // Preload service section images
+        const serviceImagePromises = serviceImages.map((image) =>
+          preloadImage(image)
+            .then(() => updateProgress())
+            .catch(() => updateProgress())
+        );
+
+        await Promise.all([
+          ...videoPromises,
+          ...heroImagePromises,
+          ...serviceImagePromises,
+        ]);
       } catch (error) {
         console.warn('Some assets failed to preload:', error);
       }
     };
 
     preloadAllAssets();
-  }, []);
+  }, [totalAssets]);
 
-  const handleImageLoad = () => {
+  const handleLogoLoad = () => {
     setLogoImageLoaded(true);
   };
+
+  // If logo fails or stalls, don't block the preloader forever
+  const handleLogoError = () => {
+    console.warn('Logo failed to load, continuing anyway');
+    setLogoImageLoaded(true);
+  };
+
+  useEffect(() => {
+    // Safety timeout in case logo onLoad never fires
+    const logoTimeout = setTimeout(() => {
+      setLogoImageLoaded(true);
+    }, 5000);
+    return () => clearTimeout(logoTimeout);
+  }, []);
 
   // Wait for both logo image to load AND all assets to be loaded
   useEffect(() => {
     if (logoImageLoaded && assetsLoaded >= totalAssets) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setSlideUp(true);
       }, 300);
+      return () => clearTimeout(timer);
     }
   }, [logoImageLoaded, assetsLoaded, totalAssets]);
 
@@ -276,17 +305,18 @@ export default function FilmPortfolioPreloader({ onComplete }) {
           slideUp ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
-        <img 
-          src="/assets/katha_main_logo.webp" 
+        <img
+          src="/assets/katha_main_logo.webp"
           alt="Logo"
-          onLoad={handleImageLoad}
+          onLoad={handleLogoLoad}
+          onError={handleLogoError}
           className="h-24 sm:h-28 md:h-36 lg:h-46 w-auto object-contain"
         />
-        
+
         {/* Loading Bar */}
         <div className="absolute bottom-32 sm:bottom-36 md:bottom-20 lg:bottom-16 left-1/2 transform -translate-x-1/2 w-64 md:w-80">
           <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-white transition-all duration-300 ease-out rounded-full"
               style={{ width: `${loadingProgress}%` }}
             />

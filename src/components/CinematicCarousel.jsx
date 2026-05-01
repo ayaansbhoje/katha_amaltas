@@ -4,10 +4,13 @@ const SimpleCinematicCarousel = () => {
   const sectionRef = useRef(null);
 
   const fullHeader = " WORKED WITH";
-  
+
   const [inView, setInView] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [rotation, setRotation] = useState(0);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
   const rafRef = useRef(null);
   const lastRef = useRef(null);
 
@@ -22,10 +25,23 @@ const SimpleCinematicCarousel = () => {
     { src: "assets/client_8.gif", title: "Space 8" },
     { src: "assets/client_9.gif", title: "Space 9" },
     { src: "assets/client_10.gif", title: "Space 10" },
-    { src: "assets/client_11.gif", title: "Space 11" }
+    { src: "assets/client_11.gif", title: "Space 11" },
   ];
 
-  const radius = 500;
+  // Desktop values — UNCHANGED
+  const desktopRadius = 500;
+  const desktopCardWidth = 178;
+  const desktopCardHeight = 238;
+
+  // Mobile values — tighter radius + slightly smaller cards
+  const mobileRadius = 180;
+  const mobileCardWidth = 88;
+  const mobileCardHeight = 118;
+
+  const radius = isMobile ? mobileRadius : desktopRadius;
+  const cardWidth = isMobile ? mobileCardWidth : desktopCardWidth;
+  const cardHeight = isMobile ? mobileCardHeight : desktopCardHeight;
+
   const theta = 360 / mediaItems.length;
 
   const handleMouseMove = (e) => {
@@ -35,6 +51,14 @@ const SimpleCinematicCarousel = () => {
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setMousePos({ x, y });
   };
+
+  // Track viewport for responsive radius/card sizing
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,9 +103,9 @@ const SimpleCinematicCarousel = () => {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex flex-col items-center overflow-hidden"
-      style={{ color: '#d3a345' }}
+      style={{ color: "#d3a345" }}
     >
-      {/* Background Image — same pattern as FilmProcessCycle */}
+      {/* Background Image */}
       <img
         className="absolute inset-0 w-full h-full object-cover"
         src="/assets/1-5.webp"
@@ -92,8 +116,8 @@ const SimpleCinematicCarousel = () => {
         {/* HEADER */}
         <header className="w-full px-6 pt-8 pb-6">
           <h1
-            className="text-lg sm:text-xl md:text-4xl  tracking-tight text-center"
-            style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#f8e6d2' }}
+            className="text-lg sm:text-xl md:text-4xl tracking-tight text-center"
+            style={{ fontFamily: "Bebas Neue, sans-serif", color: "#f8e6d2" }}
           >
             {fullHeader}
           </h1>
@@ -105,16 +129,16 @@ const SimpleCinematicCarousel = () => {
             <div
               className="relative w-full h-full"
               style={{
-                perspective: "1500px",
+                perspective: isMobile ? "900px" : "1500px",
                 perspectiveOrigin: "50% 45%",
-                transformStyle: "preserve-3d"
+                transformStyle: "preserve-3d",
               }}
             >
               <div
                 className="absolute top-1/2 left-1/2 w-0 h-0"
                 style={{
                   transform: `translateX(-50%) translateY(-50%) rotateX(-10deg) rotateY(${rotation}deg)`,
-                  transformStyle: "preserve-3d"
+                  transformStyle: "preserve-3d",
                 }}
               >
                 {mediaItems.map((item, index) => {
@@ -126,11 +150,6 @@ const SimpleCinematicCarousel = () => {
                   const opacity = 1;
                   const scale = 1;
 
-                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                  const cardWidth = isMobile ? 102 : 178;
-                  const cardHeight = isMobile ? 136 : 238;
-                  const mobileRadius = isMobile ? 250 : radius;
-
                   return (
                     <div
                       key={index}
@@ -138,11 +157,12 @@ const SimpleCinematicCarousel = () => {
                       style={{
                         width: `${cardWidth}px`,
                         height: `${cardHeight}px`,
-                        transform: `rotateY(${angle}deg) translateZ(${mobileRadius}px) scale(${scale})`,
+                        transform: `rotateY(${angle}deg) translateZ(${radius}px) scale(${scale})`,
                         left: `-${cardWidth / 2}px`,
-                        top: `-${cardHeight / 2 + 30}px`,
+                        top: `-${cardHeight / 2 + (isMobile ? 15 : 30)}px`,
                         opacity,
-                        boxShadow: '0 18px 38px rgba(0,0,0,0.35), 0 0 0 1px rgba(211,163,69,0.2)'
+                        boxShadow:
+                          "0 18px 38px rgba(0,0,0,0.35), 0 0 0 1px rgba(211,163,69,0.2)",
                       }}
                     >
                       <img
@@ -159,7 +179,10 @@ const SimpleCinematicCarousel = () => {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
                 <div
                   className="w-24 h-24 md:w-36 md:h-36 rounded-full blur-3xl"
-                  style={{ background: "radial-gradient(circle, rgba(211,163,69,0.12), transparent)" }}
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(211,163,69,0.12), transparent)",
+                  }}
                 />
               </div>
             </div>

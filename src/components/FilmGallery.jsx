@@ -20,15 +20,16 @@ const FilmGallery = () => {
     'assets/gallery_img10.webp',
   ];
 
-  const handleMouseMove = (e) => {
+  // Shared spawn logic for both mouse + touch
+  const spawnImage = (clientX, clientY) => {
     const now = Date.now();
-    // Spawn new image every 100ms
     if (now - lastSpawnTime.current < 100) return;
     lastSpawnTime.current = now;
 
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     const newImage = {
       id: imageIdCounter.current++,
@@ -37,18 +38,31 @@ const FilmGallery = () => {
       y,
       rotation: Math.random() * 40 - 20,
       scale: 0.7 + Math.random() * 0.3,
-      // Physics properties
       vx: (Math.random() - 0.5) * 2,
       vy: (Math.random() - 0.5) * 2,
       rotationSpeed: (Math.random() - 0.5) * 3,
       opacity: 1,
     };
 
-    setImages((prev) => [...prev, newImage]);
+    setImages((prev) => {
+      const next = [...prev, newImage];
+      return next.length > 20 ? next.slice(-20) : next;
+    });
+  };
 
-    // Remove old images to prevent memory issues
-    if (images.length > 20) {
-      setImages((prev) => prev.slice(-20));
+  const handleMouseMove = (e) => {
+    spawnImage(e.clientX, e.clientY);
+  };
+
+  const handleTouchStart = (e) => {
+    if (e.touches[0]) {
+      spawnImage(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches[0]) {
+      spawnImage(e.touches[0].clientX, e.touches[0].clientY);
     }
   };
 
@@ -72,7 +86,7 @@ const FilmGallery = () => {
               const newVy = img.vy + 0.15; // gravity
               const newX = img.x + img.vx;
               const newY = img.y + newVy;
-              
+
               return {
                 ...img,
                 x: newX,
@@ -102,9 +116,8 @@ const FilmGallery = () => {
 
   return (
     <div
-      className="relative overflow-hidden"
+      className="relative overflow-hidden min-h-[85vh] lg:h-[85vh]"
       style={{
-        height: '85vh',
         color: '#d3a345',
         backgroundImage: 'url(/assets/filmgallery_bg.webp)',
         backgroundSize: 'cover',
@@ -118,14 +131,14 @@ const FilmGallery = () => {
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+            className={`px-3 py-1.5 lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm font-medium transition-all ${
               mode === m
                 ? 'bg-white text-black'
                 : 'bg-black/30 hover:bg-black/50'
             }`}
-            style={{ 
+            style={{
               color: mode === m ? '#000' : '#f8e6d2',
-              fontFamily: 'Avenir, sans-serif'
+              fontFamily: 'Avenir, sans-serif',
             }}
           >
             {m.charAt(0).toUpperCase() + m.slice(1)}
@@ -137,10 +150,11 @@ const FilmGallery = () => {
       <section
         ref={containerRef}
         onMouseMove={handleMouseMove}
-        className="relative flex items-center justify-center cursor-none"
-        style={{ height: '85vh' }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        className="relative flex items-center justify-center cursor-none min-h-[85vh] lg:h-[85vh]"
       >
-        {/* Desktop Layout */}
+        {/* Desktop Layout — UNCHANGED */}
         <div className="hidden lg:block w-full h-full">
           {/* Left Header Text */}
           <div className="absolute left-16 top-1/4 z-40 pointer-events-none">
@@ -157,9 +171,9 @@ const FilmGallery = () => {
 
           {/* Center Image */}
           <div className="z-30 pointer-events-none absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ marginTop: '8vh' }}>
-            <img 
-              src="/assets/StudioVirtualBackground.png" 
-              alt="Stories that are lived, then filmed" 
+            <img
+              src="/assets/StudioVirtualBackground.png"
+              alt="Stories that are lived, then filmed"
               className="w-[140rem] h-auto object-contain"
             />
           </div>
@@ -183,53 +197,53 @@ const FilmGallery = () => {
         </div>
 
         {/* Mobile Layout */}
-        <div className="lg:hidden flex flex-col items-center justify-center w-full h-full px-6 py-8">
-          {/* Top - Left Headers */}
-          <div className="z-40 pointer-events-none text-center mb-6">
-            <h2 className="text-5xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+        <div className="lg:hidden flex flex-col items-center justify-center w-full px-6 py-10">
+          {/* Top — STORIES / THAT ARE / LIVED, */}
+          <div className="z-40 pointer-events-none text-center mb-4">
+            <h2 className="text-5xl font-bold leading-none" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
               STORIES
             </h2>
-            <h2 className="text-xl font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            <h2 className="text-lg font-bold mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
               THAT ARE
             </h2>
-            <h2 className="text-6xl font-bold mt-2" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            <h2 className="text-6xl font-bold mt-2 leading-none" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
               LIVED,
             </h2>
           </div>
 
-          {/* Center - Center Image */}
-          <div className="z-30 pointer-events-none my-4">
-            <img 
-              src="/assets/StudioVirtualBackground.png" 
-              alt="Stories that are lived, then filmed" 
-              className="w-full max-w-sm h-auto object-contain"
+          {/* Center image */}
+          <div className="z-30 pointer-events-none my-3">
+            <img
+              src="/assets/StudioVirtualBackground.png"
+              alt="Stories that are lived, then filmed"
+              className="w-full max-w-[260px] h-auto object-contain"
             />
           </div>
 
-          {/* Below Center - Right Bottom Text */}
-          <div className="z-40 pointer-events-none text-center my-6">
-            <h2 className="text-6xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+          {/* THEN / FILMED. */}
+          <div className="z-40 pointer-events-none text-center my-4">
+            <h2 className="text-6xl font-bold leading-none" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
               THEN
             </h2>
-            <h2 className="text-6xl font-bold" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
+            <h2 className="text-6xl font-bold leading-none mt-1" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em' }}>
               FILMED.
             </h2>
           </div>
 
-          {/* Bottom - Top Right Header */}
-          <div className="z-40 pointer-events-none max-w-sm">
-            <h3 className="text-lg font-bold text-center" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+          {/* Hint */}
+          <div className="z-40 pointer-events-none max-w-[260px] mt-3">
+            <h3 className="text-sm font-bold text-center" style={{ color: '#8B2020', fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '0.05em', lineHeight: '1.3' }}>
               HOVER OR TAP TO SEE PHOTOGRAPHS FROM OUR ARCHIVE
             </h3>
           </div>
         </div>
 
-        {/* Image Trail - Works on both desktop and mobile */}
+        {/* Image Trail — smaller on mobile */}
         <div className="absolute inset-0 pointer-events-none">
           {images.map((img) => (
             <div
               key={img.id}
-              className="absolute w-48 h-64 rounded-lg overflow-hidden shadow-2xl transition-opacity"
+              className="absolute w-24 h-32 lg:w-48 lg:h-64 rounded-lg overflow-hidden shadow-2xl transition-opacity"
               style={{
                 left: `${img.x}px`,
                 top: `${img.y}px`,
@@ -255,7 +269,6 @@ const FilmGallery = () => {
             </div>
           ))}
         </div>
-
       </section>
     </div>
   );
