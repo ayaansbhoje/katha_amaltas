@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CARD_HEIGHT = 380;
 const CARD_GAP = 24;
@@ -55,7 +55,7 @@ const services = [
   },
 ];
 
-/* ---------------- SERVICE CARD ---------------- */
+/* ---------------- SERVICE CARD (DESKTOP — UNCHANGED) ---------------- */
 
 const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
   const distance = index - activeIndex;
@@ -83,7 +83,6 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
         style={{ backgroundColor: "#D3A345" }}
       >
         <div className="flex h-full flex-col ">
-          {/* Image always on top */}
           <div className={`w-full ${isMobile ? "h-32" : "h-58"}`}>
             <img
               src={service.image}
@@ -91,7 +90,6 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
               alt={service.title}
             />
           </div>
-          {/* Text below */}
           <div
             className={`flex-1 ${isMobile ? "p-4" : "p-5"} flex flex-col justify-center`}
           >
@@ -132,25 +130,19 @@ const ServiceCard = ({ service, index, activeIndex, isMobile }) => {
   );
 };
 
-/* ---------------- SERVICE SECTION ---------------- */
+/* ---------------- DESKTOP SERVICE SECTION (UNCHANGED) ---------------- */
 
-const ServiceSection = () => {
+const DesktopServiceSection = () => {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [containerHeight, setContainerHeight] = useState(
     typeof window !== "undefined" ? window.innerHeight : 1000
   );
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
-  );
 
-  /* MATCH PROJECTSECTION HEIGHT LOGIC */
   useEffect(() => {
     const calculateHeight = () => {
       const viewportH = window.innerHeight;
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
       const scrollLength = (services.length + 1) * viewportH * 0.8;
       setContainerHeight(viewportH + scrollLength);
     };
@@ -160,7 +152,6 @@ const ServiceSection = () => {
     return () => window.removeEventListener("resize", calculateHeight);
   }, []);
 
-  /* SCROLL → PROGRESS */
   useEffect(() => {
     const onScroll = () => {
       if (!containerRef.current) return;
@@ -192,7 +183,6 @@ const ServiceSection = () => {
       className="relative bg-black"
       style={{ height: `${containerHeight}px` }}
     >
-      {/* FIXED VIEWPORT */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{
@@ -207,7 +197,6 @@ const ServiceSection = () => {
           pointerEvents: showFixed ? "auto" : "none",
         }}
       >
-        {/* Blurred backdrop matching active service */}
         <div className="absolute inset-0 overflow-hidden -z-10">
           <motion.img
             key={activeIndex}
@@ -221,11 +210,8 @@ const ServiceSection = () => {
           />
         </div>
 
-        <div className={`h-full flex relative z-10 ${isMobile ? "flex-col" : ""}`}>
-          {/* LEFT */}
-          <div
-            className={`${isMobile ? "w-full h-auto pt-12 pb-8" : "w-1/2 h-full"} flex flex-col justify-center ${isMobile ? "px-6 text-center items-center" : "px-20"}`}
-          >
+        <div className="h-full flex relative z-10">
+          <div className="w-1/2 h-full flex flex-col justify-center px-20">
             <span
               className="text-xs tracking-widest mb-6"
               style={{
@@ -237,7 +223,7 @@ const ServiceSection = () => {
               Services
             </span>
             <h2
-              className={`${isMobile ? "text-4xl" : "text-6xl"} mb-6`}
+              className="text-6xl mb-6"
               style={{
                 color: "#d3a345",
                 fontFamily: "'Bebas Neue', sans-serif",
@@ -252,7 +238,7 @@ const ServiceSection = () => {
               WE DO
             </h2>
             <p
-              className={`max-w-sm ${isMobile ? "text-center" : ""}`}
+              className="max-w-sm"
               style={{
                 color: "#d3a345",
                 fontFamily: "'Work Sans', sans-serif",
@@ -265,13 +251,10 @@ const ServiceSection = () => {
             </p>
           </div>
 
-          {/* RIGHT */}
-          <div
-            className={`${isMobile ? "w-full flex-1" : "w-1/2 h-full"} flex items-center justify-center relative`}
-          >
+          <div className="w-1/2 h-full flex items-center justify-center relative">
             <div
               className="relative w-full"
-              style={{ height: isMobile ? 320 : CARD_HEIGHT }}
+              style={{ height: CARD_HEIGHT }}
             >
               {services.map((service, index) => (
                 <ServiceCard
@@ -279,7 +262,7 @@ const ServiceSection = () => {
                   service={service}
                   index={index}
                   activeIndex={activeIndex}
-                  isMobile={isMobile}
+                  isMobile={false}
                 />
               ))}
             </div>
@@ -288,6 +271,215 @@ const ServiceSection = () => {
       </motion.div>
     </div>
   );
+};
+
+/* ---------------- MOBILE SERVICE SECTION (NEW — STILL CAROUSEL) ---------------- */
+
+const MobileServiceSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const handlePrev = () => {
+    setDirection(-1);
+    setActiveIndex((p) => (p === 0 ? services.length - 1 : p - 1));
+  };
+
+  const handleNext = () => {
+    setDirection(1);
+    setActiveIndex((p) => (p === services.length - 1 ? 0 : p + 1));
+  };
+
+  const activeService = services[activeIndex];
+
+  return (
+    <section className="relative bg-black py-12 overflow-hidden">
+      {/* Blurred backdrop */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.img
+          key={`bg-${activeIndex}`}
+          src={activeService.image}
+          alt=""
+          className="w-full h-full object-cover scale-110"
+          style={{ filter: "blur(12px)", opacity: 0.3 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.3 }}
+          transition={{ duration: 0.4 }}
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center text-center px-6">
+        <span
+          className="text-[10px] tracking-widest mb-3"
+          style={{
+            color: "#d3a345",
+            fontFamily: "'Avenir', sans-serif",
+            fontWeight: 400,
+          }}
+        >
+          Services
+        </span>
+        <h2
+          className="text-3xl mb-3"
+          style={{
+            color: "#d3a345",
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontWeight: 400,
+            textTransform: "uppercase",
+          }}
+        >
+          WHAT WE DO
+        </h2>
+        <p
+          className="max-w-xs text-[11px] mb-8 leading-relaxed"
+          style={{
+            color: "#d3a345",
+            fontFamily: "'Work Sans', sans-serif",
+            fontWeight: 400,
+          }}
+        >
+          We work across film, documentation, and cultural storytelling —
+          creating work that is research-led, visually grounded, and shaped from
+          inside the worlds it documents.
+        </p>
+
+        {/* Carousel */}
+        <div className="relative w-full flex items-center justify-center min-h-[280px]">
+          <button
+            onClick={handlePrev}
+            className="absolute left-1 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-transform active:scale-90 shadow-md"
+            style={{ backgroundColor: "#D3A345", color: "#650B0F" }}
+            aria-label="Previous service"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+
+          <div className="w-full max-w-[240px]">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={activeIndex}
+                custom={direction}
+                initial={{ opacity: 0, x: direction > 0 ? 30 : -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction > 0 ? -30 : 30 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-lg overflow-hidden"
+                style={{ backgroundColor: "#D3A345" }}
+              >
+                <div className="w-full h-28">
+                  <img
+                    src={activeService.image}
+                    className="w-full h-full object-cover"
+                    alt={activeService.title}
+                  />
+                </div>
+                <div className="p-3 flex flex-col text-left">
+                  <span
+                    className="text-[9px] tracking-widest mb-1"
+                    style={{
+                      color: "#650B0F",
+                      fontFamily: "'Avenir', sans-serif",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {activeService.category}
+                  </span>
+                  <h3
+                    className="text-sm mb-1.5 leading-tight"
+                    style={{
+                      color: "#650B0F",
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {activeService.title}
+                  </h3>
+                  <p
+                    className="text-[10px] leading-snug"
+                    style={{
+                      color: "#f8e6d2",
+                      fontFamily: "'Avenir', sans-serif",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {activeService.description}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-1 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-transform active:scale-90 shadow-md"
+            style={{ backgroundColor: "#D3A345", color: "#650B0F" }}
+            aria-label="Next service"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex gap-1.5 mt-6 items-center">
+          {services.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setDirection(idx > activeIndex ? 1 : -1);
+                setActiveIndex(idx);
+              }}
+              className="rounded-full transition-all duration-300"
+              style={{
+                backgroundColor:
+                  idx === activeIndex ? "#d3a345" : "rgba(211, 163, 69, 0.3)",
+                width: idx === activeIndex ? "18px" : "6px",
+                height: "6px",
+              }}
+              aria-label={`Go to service ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ---------------- MAIN EXPORT (BRANCHES BY VIEWPORT) ---------------- */
+
+const ServiceSection = () => {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isMobile ? <MobileServiceSection /> : <DesktopServiceSection />;
 };
 
 export default ServiceSection;
