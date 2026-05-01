@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Project videos - replace with your actual video paths from assets
 const projects = [
@@ -38,104 +38,33 @@ const projects = [
     description: "A film shaped by Jangarh Singh Shyam's visual language. Where myth, nature, and memory come together.",
     video: '/assets/JANGARH_FINAL_TESER.mov',
   },
-  
 ];
 
-// Wind Chime Component
-const WindChime = () => {
-  // Sample images for wind chime - you can replace these with your own image paths
-  const chimeImages = [
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop'
-  ];
-  const swayAnimations = [
-    { rotate: [0, 4, 0, -3, 0], duration: 3 },
-    { rotate: [0, -3, 0, 4, 0], duration: 3.5 },
-    { rotate: [0, 5, 0, -4, 0], duration: 4 }
-  ];
-  return (
-    <div className="relative flex items-start scale-75 md:scale-125">
-      <div className="relative">
-        <div
-          className="w-96 h-4 bg-gradient-to-r from-transparent to-transparent rounded-full"
-          style={{ backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(225,211,182,0.8) 50%, transparent 100%)' }}
-        />
-        <div className="flex justify-between px-8 mt-0">
-          {chimeImages.map((img, index) => (
-            <div key={index} className="flex flex-col items-center" style={{ transformOrigin: 'top center' }}>
-              <div
-                className="bg-gradient-to-b"
-                style={{
-                  width: '2px',
-                  height: `${160 + index * 60}px`,
-                  backgroundImage: 'linear-gradient(180deg, rgba(225,211,182,0.9), rgba(225,211,182,0.3))'
-                }}
-              />
-              <motion.div
-                initial={{ opacity: 0, rotate: 0 }}
-                animate={{ opacity: 1, rotate: swayAnimations[index].rotate }}
-                transition={{
-                  opacity: { delay: 0.5 + index * 0.2, duration: 0.8 },
-                  rotate: { delay: 1.3 + index * 0.3, duration: swayAnimations[index].duration, repeat: Infinity, ease: "easeInOut" }
-                }}
-                style={{ transformOrigin: 'top center' }}
-              >
-                <motion.div
-                  className="relative overflow-hidden rounded-sm shadow-2xl"
-                  style={{ width: `${120 + index * 20}px`, height: `${160 + index * 30}px` }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <img 
-                    src={img} 
-                    alt={`Chime image ${index + 1}`} 
-                    className="w-full h-full object-cover" 
-                    loading={index === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
-                </motion.div>
-                <div
-                  className="w-2 h-6 mt-1 rounded-full mx-auto"
-                  style={{ backgroundColor: 'rgba(225,211,182,0.5)' }}
-                />
-              </motion.div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+/* ---------------- FLYING POSTER (DESKTOP — UNCHANGED) ---------------- */
 
-// Flying Poster Component
 const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, activeProject }) => {
   const videoRef = useRef(null);
-  const posterSpacing = 55; // vw
-  const totalWidth = projects.length * posterSpacing; // vw
-  const startPosition = 25; // vw
+  const posterSpacing = 55;
+  const totalWidth = projects.length * posterSpacing;
+  const startPosition = 25;
 
-  // For mobile, calculate position based on active project to center it
   let xPosition;
   if (isMobile) {
-    // Center the active project, offset others
-    const offset = (index - activeProject) * 100; // 100vw per project
+    const offset = (index - activeProject) * 100;
     xPosition = offset;
   } else {
-    // Desktop: original scroll-based positioning
     xPosition = startPosition + (index * posterSpacing) - (scrollProgress * totalWidth);
   }
 
   const distanceFromCenter = Math.abs(xPosition);
   const zPosition = isActive ? 100 : -80 - distanceFromCenter * 1.2;
-  const rotateY = isMobile ? 0 : xPosition * 0.06; // No rotation on mobile for cleaner look
+  const rotateY = isMobile ? 0 : xPosition * 0.06;
   const rotateX = isMobile ? 0 : Math.sin(scrollProgress * Math.PI * 2 + index) * 2;
   const skewY = isMobile ? 0 : xPosition * 0.012;
 
   const scale = isActive ? 1 : 0.8;
   const opacity = isActive ? 1 : Math.max(0.25, 1 - distanceFromCenter * 0.012);
 
-  // Control video playback based on isActive
   useEffect(() => {
     if (videoRef.current) {
       if (isActive) {
@@ -161,12 +90,7 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
         scale: scale,
         opacity: opacity,
       }}
-      transition={{
-        type: "spring",
-        stiffness: 70,
-        damping: 22,
-        mass: 0.9,
-      }}
+      transition={{ type: "spring", stiffness: 70, damping: 22, mass: 0.9 }}
       style={{ transformStyle: 'preserve-3d' }}
     >
       <div
@@ -210,34 +134,26 @@ const FlyingPoster = ({ project, index, scrollProgress, isActive, isMobile, acti
   );
 };
 
-// Cinematic Gallery Component (fixed viewport with fade/slide)
-const CinematicGallery = () => {
+/* ---------------- DESKTOP CINEMATIC GALLERY (UNCHANGED) ---------------- */
+
+const DesktopCinematicGallery = () => {
   const containerRef = useRef(null);
   const [activeProject, setActiveProject] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [containerHeight, setContainerHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1000);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
-  const videoPreloadRefs = useRef({}); // Store video elements for preloading
+  const videoPreloadRefs = useRef({});
 
-  // Keep these in sync with FlyingPoster if you edit spacing
-  const posterSpacing = 55; // vw per poster
-  const totalWidthVW = projects.length * posterSpacing; // vw total horizontal extent
+  const posterSpacing = 55;
+  const totalWidthVW = projects.length * posterSpacing;
 
   useEffect(() => {
     const calculateHeights = () => {
       const vwToPx = (vw) => (vw / 100) * window.innerWidth;
       const horizontalPx = vwToPx(totalWidthVW);
-
       const viewportH = window.innerHeight;
       const viewportW = window.innerWidth;
-
-      // Check if mobile
-      setIsMobile(viewportW < 768);
-
-      // little buffer for nicer entry/exit
       const buffer = Math.round(viewportH * 0.06);
       const newContainerHeight = Math.max(viewportH, Math.ceil(viewportH + horizontalPx - viewportW + buffer));
-
       setContainerHeight(newContainerHeight);
     };
 
@@ -265,87 +181,51 @@ const CinematicGallery = () => {
       } else {
         const progress = scrollStart / scrollEnd;
         setScrollProgress(progress);
-        // On mobile, don't auto-change active project based on scroll
-        if (!isMobile) {
-          const projectIndex = Math.min(Math.floor(progress * projects.length), projects.length - 1);
-          setActiveProject(Math.max(0, projectIndex));
-        }
+        const projectIndex = Math.min(Math.floor(progress * projects.length), projects.length - 1);
+        setActiveProject(Math.max(0, projectIndex));
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [containerHeight, isMobile]);
+  }, [containerHeight]);
 
-  // Preload videos in background - doesn't affect visibility
   useEffect(() => {
     const preloadVideo = (index) => {
       if (!projects[index]?.video || videoPreloadRefs.current[index]) return;
-      
-      // Check if video was preloaded in preloader
       const preloadedVideo = window.__preloadedVideos?.[projects[index].video];
-      
       if (preloadedVideo) {
-        // Use the preloaded video element
         videoPreloadRefs.current[index] = preloadedVideo;
-        // Ensure it's ready to play
         if (preloadedVideo.readyState < 3) {
           preloadedVideo.load();
         }
       } else {
-        // Create new video element if not preloaded
         const video = document.createElement('video');
         video.src = projects[index].video;
         video.preload = 'auto';
         video.muted = true;
         video.playsInline = true;
         video.load();
-        
-        // Try to play to force loading
-        video.play().catch(() => {
-          // Ignore play errors
-        });
-        
+        video.play().catch(() => {});
         videoPreloadRefs.current[index] = video;
       }
     };
 
-    // Preload all videos immediately on mount (they should already be cached from preloader)
-    projects.forEach((_, index) => {
-      preloadVideo(index);
-    });
-    
-    // Also preload adjacent videos when active project changes
+    projects.forEach((_, index) => preloadVideo(index));
     const prevIndex = activeProject > 0 ? activeProject - 1 : projects.length - 1;
     const nextIndex = activeProject < projects.length - 1 ? activeProject + 1 : 0;
     const nextNextIndex = nextIndex < projects.length - 1 ? nextIndex + 1 : 0;
-    
     preloadVideo(activeProject);
     preloadVideo(prevIndex);
     preloadVideo(nextIndex);
     preloadVideo(nextNextIndex);
   }, [activeProject]);
 
-  // show the fixed viewport when scrollProgress is between 0 and 1
   const showFixedViewport = scrollProgress > 0 && scrollProgress < 1;
-
-  // Mobile navigation handlers
-  const handlePrevProject = () => {
-    if (isMobile) {
-      setActiveProject((prev) => (prev > 0 ? prev - 1 : projects.length - 1));
-    }
-  };
-
-  const handleNextProject = () => {
-    if (isMobile) {
-      setActiveProject((prev) => (prev < projects.length - 1 ? prev + 1 : 0));
-    }
-  };
 
   return (
     <div ref={containerRef} className="relative bg-zinc-900" style={{ height: `${containerHeight}px` }}>
-      {/* Fixed viewport — always rendered but animated in/out for smoothness */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: showFixedViewport ? 1 : 0, y: showFixedViewport ? 0 : 40 }}
@@ -361,9 +241,7 @@ const CinematicGallery = () => {
           overflow: 'hidden'
         }}
       >
-        {/* 3D stage */}
         <div className="absolute inset-0">
-          {/* Blurred backdrop matching active poster */}
           <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
             <video
               src={projects[activeProject]?.video}
@@ -376,7 +254,7 @@ const CinematicGallery = () => {
               style={{ filter: 'blur(12px)', opacity: 0.5 }}
             />
           </div>
-          {/* Header */}
+
           <motion.div
             className="absolute top-16 md:top-24 left-6 md:left-14 z-30"
             initial={{ opacity: 0, x: -30 }}
@@ -384,14 +262,12 @@ const CinematicGallery = () => {
             transition={{ duration: 0.6 }}
             style={{ pointerEvents: 'none' }}
           >
-            
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-light text-zinc-100 uppercase" style={{ fontFamily: 'Bebas Neue, sans-serif', textShadow: '0 0 50px rgba(217, 119, 6, 0.25)' }}>
               Extended <span style={{ color: '#d3a345' }}>Narratives</span>
             </h2>
             <p className="text-white text-xs tracking-[0.3em]  mt-2" style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}>Films made for horizontal spaces,<br />where duration and composition <br />carry the story.</p>
           </motion.div>
 
-          {/* Flying posters */}
           <div className="absolute inset-0" style={{ perspective: '1400px', perspectiveOrigin: '50% 50%', transformStyle: 'preserve-3d', zIndex: 5 }}>
             {projects.map((project, index) => (
               <FlyingPoster
@@ -400,13 +276,12 @@ const CinematicGallery = () => {
                 index={index}
                 scrollProgress={scrollProgress}
                 isActive={activeProject === index}
-                isMobile={isMobile}
+                isMobile={false}
                 activeProject={activeProject}
               />
             ))}
           </div>
 
-          {/* Project info */}
           <motion.div className="absolute bottom-8 md:bottom-14 right-6 md:right-14 w-72 md:w-96 z-30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ pointerEvents: 'none' }}>
             <motion.div key={activeProject} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-right">
               <h4 className="text-lg md:text-xl mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#d3a345' }}>{projects[activeProject]?.title}</h4>
@@ -434,66 +309,233 @@ const CinematicGallery = () => {
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Mobile Navigation Arrows */}
-          {isMobile && showFixedViewport && (
-            <>
-              {/* Left Arrow */}
-              <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                onClick={handlePrevProject}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-95 transition-transform shadow-xl"
-                aria-label="Previous project"
-                style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-6 h-6 text-amber-600"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-              </motion.button>
-
-              {/* Right Arrow */}
-              <motion.button
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                onClick={handleNextProject}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-95 transition-transform shadow-xl"
-                aria-label="Next project"
-                style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-6 h-6 text-amber-600"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </motion.button>
-            </>
-          )}
         </div>
       </motion.div>
     </div>
   );
 };
 
-// Main Hero Section Component
-const ProjectSection = () => {
+/* ---------------- MOBILE PROJECT SECTION (NEW — STILL CAROUSEL) ---------------- */
+
+const MobileProjectSection = () => {
+  const [activeProject, setActiveProject] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const videoRef = useRef(null);
+
+  const handlePrev = () => {
+    setDirection(-1);
+    setActiveProject((p) => (p === 0 ? projects.length - 1 : p - 1));
+  };
+
+  const handleNext = () => {
+    setDirection(1);
+    setActiveProject((p) => (p === projects.length - 1 ? 0 : p + 1));
+  };
+
+  // Restart video when active project changes
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load();
+      videoRef.current.play().catch(() => {});
+    }
+  }, [activeProject]);
+
+  const active = projects[activeProject];
+
   return (
-    <CinematicGallery />
+    <section className="relative bg-zinc-900 py-12 overflow-hidden">
+      {/* Blurred backdrop matching active project */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.video
+          key={`bg-${activeProject}`}
+          src={active.video}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover scale-110"
+          style={{ filter: 'blur(14px)', opacity: 0.35 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.35 }}
+          transition={{ duration: 0.4 }}
+        />
+        <div className="absolute inset-0 bg-zinc-900/40" />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center text-center px-5">
+        {/* Header */}
+        <h2
+          className="text-3xl font-light text-zinc-100 uppercase mb-2"
+          style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            textShadow: '0 0 50px rgba(217, 119, 6, 0.25)',
+          }}
+        >
+          Extended <span style={{ color: '#d3a345' }}>Narratives</span>
+        </h2>
+        <p
+          className="text-white text-[10px] tracking-[0.25em] mb-8 max-w-[260px]"
+          style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}
+        >
+          Films made for horizontal spaces, where duration and composition carry the story.
+        </p>
+
+        {/* Carousel */}
+        <div className="relative w-full flex items-center justify-center">
+          {/* Left button */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 z-20 w-9 h-9 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-90 transition-transform shadow-lg"
+            aria-label="Previous project"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+              style={{ color: '#d3a345' }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+
+          {/* Card */}
+          <div className="w-full max-w-[260px]">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={activeProject}
+                custom={direction}
+                initial={{ opacity: 0, x: direction > 0 ? 30 : -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction > 0 ? -30 : 30 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="relative rounded overflow-hidden aspect-[16/9]"
+                style={{
+                  boxShadow:
+                    '0 20px 60px -15px rgba(0,0,0,0.8), 0 0 50px rgba(182, 155, 100, 0.12)',
+                }}
+              >
+                <video
+                  ref={videoRef}
+                  src={active.video}
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/70 via-transparent to-zinc-900/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-amber-600/10 via-transparent to-transparent" />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right button */}
+          <button
+            onClick={handleNext}
+            className="absolute right-0 z-20 w-9 h-9 rounded-full bg-zinc-800/80 backdrop-blur-md border border-amber-600/40 flex items-center justify-center active:scale-90 transition-transform shadow-lg"
+            aria-label="Next project"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+              style={{ color: '#d3a345' }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Project info */}
+        <motion.div
+          key={`info-${activeProject}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
+          className="mt-6 max-w-[280px]"
+        >
+          <h4
+            className="text-base mb-1.5 leading-tight"
+            style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#d3a345' }}
+          >
+            {active.title}
+          </h4>
+          <p
+            className="text-[9px] tracking-[0.2em] uppercase mb-2 font-medium text-white"
+            style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}
+          >
+            {active.year}
+          </p>
+          <p
+            className="text-white/80 text-[11px] leading-relaxed"
+            style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}
+          >
+            {active.description}
+          </p>
+        </motion.div>
+
+        {/* Dot indicators */}
+        <div className="flex gap-1.5 mt-6 items-center">
+          {projects.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setDirection(idx > activeProject ? 1 : -1);
+                setActiveProject(idx);
+              }}
+              className="rounded-full transition-all duration-300"
+              style={{
+                backgroundColor:
+                  idx === activeProject ? '#d3a345' : 'rgba(63, 63, 70, 1)',
+                width: idx === activeProject ? '18px' : '6px',
+                height: '2px',
+              }}
+              aria-label={`Go to project ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Counter */}
+        <div
+          className="mt-3 text-[10px]"
+          style={{ fontFamily: 'Avenir-Regular, Avenir, sans-serif' }}
+        >
+          <span className="text-sm" style={{ color: '#d3a345' }}>
+            {String(activeProject + 1).padStart(2, '0')}
+          </span>
+          <span className="mx-1.5 opacity-40 text-white">/</span>
+          <span className="text-white opacity-60">
+            {String(projects.length).padStart(2, '0')}
+          </span>
+        </div>
+      </div>
+    </section>
   );
+};
+
+/* ---------------- MAIN EXPORT (BRANCHES BY VIEWPORT) ---------------- */
+
+const ProjectSection = () => {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return isMobile ? <MobileProjectSection /> : <DesktopCinematicGallery />;
 };
 
 export default ProjectSection;
