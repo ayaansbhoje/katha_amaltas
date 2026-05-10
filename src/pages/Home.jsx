@@ -36,9 +36,7 @@ const Home = () => {
             <BrandIdentity />
           </div>
 
-          <div id="about-us">
-            <AboutUs />
-          </div>
+         
 
           <div id="service-section">
             <ServiceSection />

@@ -284,7 +284,7 @@ const AboutUs = () => {
           <div className="relative group mt-8 md:mt-0">
             <div className="w-48 h-60 md:w-64 md:h-80 overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
               <img
-                src="/assets/g&k.webp"
+                src="/assets/the_duo_Center.webp"
                 alt="The Duo"
                 className="w-full h-full object-cover"
               />
