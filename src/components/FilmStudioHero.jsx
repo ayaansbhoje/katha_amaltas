@@ -97,6 +97,20 @@ const FilmStudioHero = () => {
     return () => clearInterval(timer);
   }, [imagesLoaded]);
 
+  const handleSlideChange = (indexOrUpdater) => {
+    const nextIndex = typeof indexOrUpdater === 'function'
+      ? indexOrUpdater(currentIndex)
+      : indexOrUpdater;
+
+    if (nextIndex === currentIndex || isTransitioning) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(nextIndex);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 300);
+  };
+
   const goToSlide = (index) => {
     if (index === currentIndex || isTransitioning) return;
     setIsTransitioning(true);
@@ -128,27 +142,23 @@ const FilmStudioHero = () => {
               bottom: 4rem;
             }
           }
-
-          /* Slide 1: slightly larger on all screen sizes */
-          .slide-bg-1 {
-            background-size: 104% !important;
-          }
         `}
       </style>
 
       <div>
         {/* Hero Section */}
         <div className="relative w-screen h-[80vh] md:h-screen overflow-hidden">
-
           {/* Background Image with Fade Transition */}
           <div
-            className={`absolute inset-0 transition-opacity duration-700 slide-bg-${currentIndex}`}
+            className="absolute inset-0 transition-opacity duration-700"
             style={{
               backgroundImage: `url(${slides[currentIndex].image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               opacity: isTransitioning ? 0 : 1,
+              transform: currentIndex === 1 ? 'scale(1.08)' : 'scale(1)',
+              transformOrigin: 'center center',
               zIndex: 1
             }}
           >
