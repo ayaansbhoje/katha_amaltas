@@ -3,8 +3,7 @@ import FilmPortfolioPreloader from '../components/FilmPortfolioPreloader';
 import Navbar from '../components/Navbar';
 
 import FilmStudioHero from '../components/FilmStudioHero';
-import BrandIdentity from '../components/BrandIdentity';
-import AboutUs from '../components/AboutUs';
+import TheDuoSection from '../components/theduo';
 import ProjectSection from '../components/ProjectSection';
 import CinematicCarousel from '../components/CinematicCarousel';
 import ServiceSection from '../components/ServiceSection';
@@ -33,7 +32,7 @@ const Home = () => {
           </div>
 
           <div id="brand-identity">
-            <BrandIdentity />
+            <TheDuoSection />
           </div>
 
          
