@@ -3,8 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SECTIONS = [
   { id: 'film-studio-hero',   label: 'Prologue'            },
-  { id: 'brand-identity',     label: 'The Name'            },
-  { id: 'about-us',           label: 'The Duo'             },
+  { id: 'brand-identity',     label: 'The Duo'             },
   { id: 'service-section',    label: 'What We Do'          },
   { id: 'film-gallery',       label: 'Visual Notes'        },
   { id: 'layered-gallery',    label: 'Vertical Stories'    },

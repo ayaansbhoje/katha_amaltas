@@ -35,8 +35,6 @@ const Home = () => {
             <TheDuoSection />
           </div>
 
-         
-
           <div id="service-section">
             <ServiceSection />
           </div>
