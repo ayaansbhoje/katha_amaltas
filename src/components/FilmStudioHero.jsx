@@ -127,18 +127,11 @@ const FilmStudioHero = () => {
             .hero-dots {
               bottom: 4rem;
             }
-            /* Slides 0 & 1: shift right on mobile */
-            .slide-bg-0,
-            .slide-bg-1 {
-              background-position: 72% center !important;
-            }
           }
 
-          /* Slide 1: slightly larger on desktop only */
-          @media (min-width: 768px) {
-            .slide-bg-1 {
-              background-size: 112% !important;
-            }
+          /* Slide 1: slightly larger on all screen sizes */
+          .slide-bg-1 {
+            background-size: 104% !important;
           }
         `}
       </style>
