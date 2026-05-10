@@ -31,6 +31,15 @@ const FilmStudioHero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Check if images are preloaded and use them, otherwise preload
   useEffect(() => {
@@ -131,6 +140,14 @@ const FilmStudioHero = () => {
     );
   }
 
+  // On mobile only, shift slides 0 & 1 visually to the right
+  const getBackgroundPosition = () => {
+    if (isMobile && (currentIndex === 0 || currentIndex === 1)) {
+      return '30% center';
+    }
+    return 'center';
+  };
+
   return (
     <>
       <style>
@@ -154,7 +171,7 @@ const FilmStudioHero = () => {
             style={{
               backgroundImage: `url(${slides[currentIndex].image})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundPosition: getBackgroundPosition(),
               backgroundRepeat: 'no-repeat',
               opacity: isTransitioning ? 0 : 1,
               transform: currentIndex === 1 ? 'scale(1.08)' : 'scale(1)',
