@@ -159,6 +159,94 @@ const FounderLetter = ({ name, role, bio }) => {
   );
 };
 
+// ─── Compact envelope for mobile (side-by-side) ────────────────────────────
+const FounderLetterCompact = ({ name, role, bio }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [flapOpen, setFlapOpen] = useState(false);
+  const [letterSlideUp, setLetterSlideUp] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setFlapOpen(true);
+      const s = setTimeout(() => setLetterSlideUp(true), 700);
+      const c = setTimeout(() => setShowContent(true), 1200);
+      return () => { clearTimeout(s); clearTimeout(c); };
+    } else {
+      setFlapOpen(false);
+      setLetterSlideUp(false);
+      setShowContent(false);
+    }
+  }, [isOpen]);
+
+  return (
+    <div className="flex flex-col items-center w-full max-w-[260px]" style={{ position: "relative", zIndex: isOpen ? 50 : 10 }}>
+      <div
+        className="relative w-full h-44 cursor-pointer group"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{ perspective: "800px" }}
+      >
+        {/* Base */}
+        <div
+          className="absolute inset-0 rounded-lg overflow-visible transition-all duration-300"
+          style={{
+            transformStyle: "preserve-3d",
+            background: "linear-gradient(145deg, #faf6f0 0%, #f0e8dc 50%, #e8dcc8 100%)",
+            boxShadow: "0 2px 8px rgba(26,54,93,0.12), inset 0 1px 2px rgba(255,255,255,0.5)",
+          }}
+        >
+          {/* Flap */}
+          <div
+            className="absolute top-0 left-0 right-0 h-20 origin-top transition-all duration-700 ease-out"
+            style={{
+              transformStyle: "preserve-3d",
+              background: "linear-gradient(180deg, #e8dcc8 0%, #f0e8dc 50%, #faf6f0 100%)",
+              clipPath: "polygon(0 0, 50% 100%, 100% 0)",
+              transform: flapOpen ? "rotateX(-180deg) translateZ(8px)" : "rotateX(0deg)",
+              zIndex: flapOpen ? 15 : 5,
+            }}
+          />
+          {/* Address lines */}
+          <div className="absolute bottom-4 left-4 right-4 space-y-1 opacity-30">
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent" />
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-900 to-transparent w-4/5 ml-2" />
+          </div>
+          {!isOpen && (
+            <div className="absolute bottom-1 left-0 right-0 flex justify-center">
+              <p className="text-[9px] font-serif italic" style={{ color: "#704d3b", opacity: 0.75 }}>
+                Tap to open
+              </p>
+            </div>
+          )}
+        </div>
+        {/* Letter slide */}
+        <div
+          className="absolute inset-0 rounded-xl shadow-xl p-3 overflow-hidden pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, #f5f0e8 0%, #faf7f2 100%)",
+            transform: letterSlideUp ? "translateY(-110px)" : "translateY(0)",
+            transition: "transform 0.7s ease-out, opacity 0.7s ease-out",
+            opacity: letterSlideUp ? 1 : 0,
+            zIndex: 10,
+          }}
+        >
+          <div
+            className="h-full overflow-y-auto transition-opacity duration-700"
+            style={{ opacity: showContent ? 1 : 0, transitionDelay: showContent ? "200ms" : "0ms" }}
+          >
+            <p className="text-xs text-[#704d3b] leading-relaxed">{bio}</p>
+          </div>
+        </div>
+      </div>
+      {/* Name & role */}
+      <div className="text-center mt-2">
+        <h3 className="text-xl text-white" style={{ fontFamily: "Bebas Neue, sans-serif" }}>{name}</h3>
+        <p className="text-sm text-white" style={{ fontFamily: "Avenir, sans-serif" }}>{role}</p>
+      </div>
+    </div>
+  );
+};
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 const TheDuoSection = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -190,56 +278,51 @@ const TheDuoSection = () => {
 
   return (
     <>
-      {/* ── BrandIdentity shell: size & bg image untouched ── */}
+      {/* ── Shell: fixed height only on desktop; mobile grows to fit ── */}
       <div
         ref={sectionRef}
-        className="relative w-full h-[75vh] md:h-screen overflow-hidden"
+        className="relative w-full min-h-[75vh] md:h-screen md:overflow-hidden"
       >
-        {/* Background image — same src, same sizing as BrandIdentity */}
+        {/* Background image */}
         <img
           className="absolute inset-0 w-full h-full object-cover"
           src="/assets/1-5.webp"
           alt="Background"
         />
 
-        {/* Subtle decorative blurs (from AboutUs) */}
+        {/* Decorative blurs */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-pink-200/30 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-40 h-40 bg-blue-900/10 rounded-full blur-3xl" />
         </div>
 
-        {/* ── Duo content ── */}
-        <div className="relative z-10 h-full flex flex-col justify-center items-center px-4 -mt-12">
-          {/* Header */}
-          <div
-            className="text-center mb-10 md:mb-14"
-            style={{
-              opacity: hasAnimated ? 1 : 0,
-              transform: hasAnimated ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.5s",
-            }}
-          >
-            <div
-              className="text-4xl md:text-6xl lg:text-7xl text-white uppercase"
-              style={{ fontFamily: "Bebas Neue, sans-serif" }}
-            >
-              THE DUO
-            </div>
-            <div
-              className="text-xl md:text-2xl lg:text-3xl text-white mt-2"
-              style={{ fontFamily: "Avenir, sans-serif" }}
-            >
-              Two People. One Practice.
-            </div>
-          </div>
+        {/* ── Content ── */}
+        <div className="relative z-10 flex flex-col items-center px-4 py-10 md:h-full md:justify-center md:-mt-12">
 
-          {/* Three-column: envelope · center image · envelope */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-12 lg:gap-16">
-            <FounderLetter {...founders[0]} />
+          {/* ── MOBILE layout: envelope1 → header → image → envelope2 ── */}
+          <div className="flex flex-col items-center gap-5 w-full md:hidden">
+            <FounderLetterCompact {...founders[0]} />
 
-            {/* Centre image — no overlay, slightly larger */}
-            <div className="relative z-20 group mt-8 md:mt-0">
-              <div className="w-44 h-56 md:w-60 md:h-[22rem] overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
+            {/* Header */}
+            <div
+              className="text-center"
+              style={{
+                opacity: hasAnimated ? 1 : 0,
+                transform: hasAnimated ? "translateY(0)" : "translateY(20px)",
+                transition: "all 0.5s",
+              }}
+            >
+              <div className="text-4xl text-white uppercase" style={{ fontFamily: "Bebas Neue, sans-serif" }}>
+                THE DUO
+              </div>
+              <div className="text-xl text-white mt-1" style={{ fontFamily: "Avenir, sans-serif" }}>
+                Two People. One Practice.
+              </div>
+            </div>
+
+            {/* Center image */}
+            <div className="relative z-20">
+              <div className="w-36 h-48 overflow-hidden rounded-lg shadow-xl">
                 <img
                   src="/assets/the_duo_Center.webp"
                   alt="The Duo"
@@ -249,8 +332,47 @@ const TheDuoSection = () => {
               </div>
             </div>
 
-            <FounderLetter {...founders[1]} />
+            <FounderLetterCompact {...founders[1]} />
           </div>
+
+          {/* ── DESKTOP layout: unchanged ── */}
+          <div className="hidden md:flex md:flex-col md:items-center w-full">
+            {/* Header */}
+            <div
+              className="text-center mb-14"
+              style={{
+                opacity: hasAnimated ? 1 : 0,
+                transform: hasAnimated ? "translateY(0)" : "translateY(20px)",
+                transition: "all 0.5s",
+              }}
+            >
+              <div className="text-6xl lg:text-7xl text-white uppercase" style={{ fontFamily: "Bebas Neue, sans-serif" }}>
+                THE DUO
+              </div>
+              <div className="text-2xl lg:text-3xl text-white mt-2" style={{ fontFamily: "Avenir, sans-serif" }}>
+                Two People. One Practice.
+              </div>
+            </div>
+
+            {/* Three-column row */}
+            <div className="flex flex-row items-center justify-center gap-12 lg:gap-16">
+              <FounderLetter {...founders[0]} />
+
+              <div className="relative z-20 group">
+                <div className="w-60 h-[22rem] overflow-hidden rounded-lg shadow-xl transition-transform hover:scale-105">
+                  <img
+                    src="/assets/the_duo_Center.webp"
+                    alt="The Duo"
+                    className="w-full h-full object-cover"
+                    style={{ imageRendering: "auto" }}
+                  />
+                </div>
+              </div>
+
+              <FounderLetter {...founders[1]} />
+            </div>
+          </div>
+
         </div>
       </div>
 
