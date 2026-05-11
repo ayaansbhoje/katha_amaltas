@@ -133,9 +133,9 @@ const FilmProcessCycle = () => {
           <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-1 bg-gradient-to-r from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none lg:block hidden"></div>
           <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-32 bg-gradient-to-r from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none lg:block hidden" style={{ clipPath: 'polygon(0 50%, 100% 0, 100% 100%)' }}></div>
           
-          {/* Mobile Light beam (downward) */}
-          <div className="absolute left-1/2 -translate-x-1/2 -bottom-32 h-40 w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none lg:hidden"></div>
-          <div className="absolute left-1/2 -translate-x-1/2 -bottom-32 h-40 w-32 bg-gradient-to-b from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none lg:hidden" style={{ clipPath: 'polygon(50% 0, 0 100%, 100% 100%)' }}></div>
+          {/* Mobile Light beam — positioned right in local space so after rotate-90 it points visually downward toward the screen */}
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-1 bg-gradient-to-r from-cyan-400/60 via-cyan-300/30 to-transparent animate-pulse pointer-events-none lg:hidden"></div>
+          <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-32 bg-gradient-to-r from-cyan-400/20 via-cyan-300/10 to-transparent blur-xl animate-pulse pointer-events-none lg:hidden" style={{ clipPath: 'polygon(0 50%, 100% 0, 100% 100%)' }}></div>
         </div>
 
         {/* Projection Screen Section */}
@@ -181,8 +181,6 @@ const FilmProcessCycle = () => {
                 ))}
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
